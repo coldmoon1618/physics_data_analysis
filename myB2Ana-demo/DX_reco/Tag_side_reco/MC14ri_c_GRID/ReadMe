@@ -1,0 +1,35 @@
+#!/bin/csh
+# Download mode-specific files to mcTypes
+./download_mcTypes.sh
+
+# Organize to decMode dirs
+root -l -b -q BuildHaddDecModes.C
+source hadd_decModes.sh
+
+mkdir histo_plots
+# Draw stacked plots for BB+qq or just BB
+root -l -b -q DrawStacked.C
+# Draw stacked vs normalized Draw("same") for different matched
+root -l -b -q DrawMatched.C
+
+mkdir fit_plots
+# Shows Gaussian not good fit, Johnson is better for the pure signal
+mkdir looseMatched_plots
+root -l -b -q GaussFitLooseMatched.C
+root -l -b -q 'JohnsonFit.C(0)'#Loose matched
+# TODO: Johnson+Gaussian fit on matched too
+# Johnson is almost 100% the proportion
+
+# Johnson+Gaussian fits signal+background "better"
+# So does it with pure background, which means background not pure Argus
+# Because: an Argus + another Argus =/= new Argus
+root -l -b -q 'JohnsonFit.C(1)'#All candidates
+root -l -b -q CombineFit.C #TODO Adjust paramOn box size without GUI?
+
+# All these scripts that aren't sorted out properly
+	ChargBkgFit.C
+	MixedBkgFit.C
+	QQbarArgus.C
+	QQbarBkgFit.C
+
+#Dec 5, 2021

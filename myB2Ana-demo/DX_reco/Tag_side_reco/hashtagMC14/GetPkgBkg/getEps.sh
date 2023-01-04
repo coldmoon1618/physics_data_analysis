@@ -1,0 +1,7 @@
+# Fit the highest yield 6 groups for sigBox yield, work in progress
+python3 ConditionalFit.py  --fInput 'AllModes_MC.root' --cutStr 'iMcType==1&&mySignal>0.5&&decMode==0&&subMode==2' --mynsig 31614 --mynbkg  38067  --groupID '1' --saveHist 0 --fitName 'Matched_Group01_CB.root      ' --sigPDF 'CB'
+python3 ConditionalFit.py  --fInput 'AllModes_MC.root' --cutStr 'iMcType==1&&mySignal>0.5&&decMode==0&&(subMode==3||subMode==6||subMode==8||subMode==10)' --groupID '2' --saveHist 0 --fitName 'Matched_Group02_Johnson.root '                  
+python3 ConditionalFit.py  --fInput 'AllModes_MC.root' --cutStr 'iMcType==1&&mySignal>0.5&&decMode==0&&(subMode==5||subMode==13)' --mynsig  51614 --mynbkg   78067 --groupID '3' --saveHist 0  --fitName 'Matched_Group03_Johnson.root '                
+python3 ConditionalFit.py  --fInput 'AllModes_MC.root' --cutStr 'iMcType==1&&mySignal>0.5&&decMode==1&&(subMode==1||subMode==2||subMode==5)' --groupID '6' --saveHist 0  --fitName 'Matched_Group06_CB.root      ' --sigPDF 'CB'   
+python3 ConditionalFit.py  --fInput 'AllModes_MC.root' --cutStr 'iMcType==1&&mySignal>0.5&&decMode==1&&(subMode==3||subMode==6||subMode==10||subMode==13||subMode==14)' --groupID '7' --saveHist 0 --mynsig 60000 --mynbkg 70000 --fitName 'Matched_Group07_CB.root      ' --sigPDF 'CB'   
+python3 ConditionalFit.py  --fInput 'AllModes_MC.root' --cutStr 'iMcType==1&&mySignal>0.5&&decMode==3&&(subMode==2||subMode==13)' --groupID '9' --saveHist 0 --fitName 'Matched_Group09_Johnson.root '                

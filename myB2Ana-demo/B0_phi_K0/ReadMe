@@ -1,0 +1,80 @@
+The active directories and core files are as follows:
+
+├── include_Cpp (For B_phi_Ks ana structures)
+├── A_CP_study
+│   ├── FitScripts
+│   │   ├── AcpFitParams_b2.root
+│   │   ├── Debug.C
+│   │   ├── RecoDeT_RecoFlav.C
+│   │   ├── RecoDeT_TruthFlav.C
+│   │   ├── TruthDeTau_RecoFlav.C
+│   │   └── TruthDeTau_TruthFlav.C
+│   ├── GetTruthWdW.C
+│   ├── Multiplicity.C
+│   ├── PlotW.C
+│   ├── ReadMe
+│   ├── SaveAcpParams.C
+│   ├── SigMC_B0_1.root
+│   ├── SigMC_cand.root
+│   ├── SigMC_resp.root
+│   ├── getResponse.sh
+│   └── rootlogon.C -> /Users/zhai/Desktop/myB2Ana/include_Cpp/rootlogon.C
+├── BDT_response
+│   ├── BDTG_result.root
+│   ├── CompareResponse.C
+│   ├── Data_cand.root
+│   ├── Data_resp.root
+│   ├── FullMC_cand.root
+│   ├── FullMC_resp.root
+│   ├── GetResponse.C
+│   ├── OptimizeCut.C
+│   ├── ReadMe
+│   ├── Responses.pdf
+│   ├── SigMC_cand.root -> /Users/zhai/Desktop/myB2Ana/B0_phi_K0/A_CP_study/SigMC_cand.root
+│   ├── SigMC_resp.root
+│   ├── TrainBDTG.C
+│   ├── dataset
+│   │   └── weights
+│   │       ├── TrainBDTG_BDTG.class.C
+│   │       └── TrainBDTG_BDTG.weights.xml
+│   ├── qqbar.root
+│   ├── rootlogon.C -> /Users/zhai/Desktop/myB2Ana/include_Cpp/rootlogon.C
+│   ├── runThisDir.sh
+│   └── signal55.root
+├── Optimize_deE_BDT
+│   ├── FullMC_resp.root -> /Users/zhai/Desktop/myB2Ana/B0_phi_K0/tmva/TestSet/FullMC_resp.root
+│   ├── OptimizeCut.C
+│   └── rootlogon.C -> /Users/zhai/Desktop/myB2Ana/include_Cpp/rootlogon.C
+├── ReadMe
+└── fit_Mbc_deE
+    ├── FitMbc
+    │   ├── FitMbcBDTcut.C
+    │   └── FullMC_resp.root -> /Users/zhai/Desktop/myB2Ana/B0_phi_K0/tmva/TestSet/FullMC_resp.root
+    ├── cut_Mbc_fit_deE
+    │   ├── DrawStacked.C
+    │   ├── FitBkgDeE.C
+    │   ├── FitDeE.C
+    │   ├── FitDoubleGaus.C
+    │   ├── FullMC_cand.root
+    │   └── rootlogon.C -> /Users/zhai/Desktop/myB2Ana/include_Cpp/rootlogon.C
+    ├── cut_deE_fit_Mbc
+    │   ├── Ana_resp.root -> /Users/zhai/Desktop/myB2Ana/B0_phi_K0/tmva/AleSet/Ana_resp.root
+    │   ├── Data_resp.root -> /Users/zhai/Desktop/myB2Ana/B0_phi_K0/tmva/AleSet/Data_resp.root
+    │   ├── DrawStacked.C
+    │   ├── FitMbcBDTcut.C
+    │   ├── FitSingleGaus.C
+    │   ├── FullMC_cand.root
+    │   ├── KeepBkgOnly.C
+    │   ├── TightCutParBkg.root
+    │   ├── all_bkg_resp.root
+    │   ├── par_bkg_resp.root
+    │   └── rootlogon.C -> /Users/zhai/Desktop/myB2Ana/include_Cpp/rootlogon.C
+    └── fit_2D_Mbc_deE
+        ├── FitFull2D.C
+        ├── FitMbcBDTcut.C
+        ├── FitSignal2D.C
+        ├── FullMC_cand.root
+        ├── FullMC_resp.root -> /Users/zhai/Desktop/myB2Ana/B0_phi_K0/tmva/FullMC_resp.root
+        └── rootlogon.C -> /Users/zhai/Desktop/myB2Ana/include_Cpp/rootlogon.C
+
+Oct 21, 2021

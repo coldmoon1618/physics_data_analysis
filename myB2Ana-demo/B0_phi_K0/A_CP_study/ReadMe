@@ -1,0 +1,26 @@
+Get BDT response
+    getResponse.sh
+    SigMC_resp.root
+
+Make cuts on isSignal and BDT_res before saving to Acp params
+    SaveAcpParams.C
+    FitScripts/AcpFitParams_b2.root
+
+MC truth counting
+    GetTruthWdW.C
+    Result printed to terminal
+
+Make measured vs BDT_output r value plot
+    PlotW.C
+
+FitScripts/
+    TruthDeTau_TruthFlav.C
+    TruthDeTau_RecoFlav.C
+    RecoDeT_TruthFlav.C
+    RecoDeT_RecoFlav.C
+
+Provide Multiplicity info related to the FT saving bug
+    Script: Multiplicity.C
+    Input:  SigMC_B0_1.root
+
+Sept 13, 2021

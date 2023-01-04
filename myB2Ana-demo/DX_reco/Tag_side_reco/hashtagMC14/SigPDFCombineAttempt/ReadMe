@@ -1,0 +1,6 @@
+Tried to check chiProb of the differences between sigPDFs, this was later abanboned in favor of a simplier approach:
+-Keep Johnson for the ones well fit
+-Switch to Gaussian for low stat if that still fits well
+-Try CB for high stat ones that might asks for better fit for the tail
+
+Feb 20, 2022

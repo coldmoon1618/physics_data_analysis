@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[left=0.2in,right=0.2in,top=0.4in,bottom=0.2in,]{geometry}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{import}
+\graphicspath{ {/Users/zhai/Desktop/myB2Ana/DX_reco/Tag_side_reco/hashtagMC14} }
+\begin{document}
+\tableofcontents
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{Overview}
+\import{subsections/}{./IntroOverview.tex}
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{Fit results}
+\subsection{Mode00 submode fits}
+\import{subsections/}{./Mode00.tex}
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\subsection{Mode01 submode fits}
+\import{subsections/}{./Mode01.tex}
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\subsection{Mode03 submode fits}
+\import{subsections/}{./Mode03.tex}
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\subsection{Mode15 submode fits}
+\import{subsections/}{./Mode15.tex}
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\subsection{Modes with $J/\psi$ [25,26,27,28] submode fits}
+\import{subsections/}{./ModeJpsi.tex}
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\subsection{Other DecModes}
+\import{subsections/}{./ModeOthers.tex}
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\import{subsections/}{./ModeMerge.tex}
+\end{document}

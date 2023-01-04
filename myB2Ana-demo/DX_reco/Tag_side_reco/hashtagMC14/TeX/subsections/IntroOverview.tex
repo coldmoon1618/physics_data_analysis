@@ -1,0 +1,45 @@
+We selected a uniform \verb+SigProb>0.5+ cut for an estimated overall purity at about 68\% for Data (190/fb)
+and estimated 72\% purity for MC(300/fb). (Figure \ref{fig:cut05})
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_MC.root['SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_MC.root['SigProb>0.5']_pull.pdf}
+\caption{Fit Data(190/fb) and MC(300/fb) at cut 0.5, bad pull distribution motivates separating background shapes according to decay modes and final state particles.}
+\label{fig:cut05}
+\end{center}
+\end{figure}
+%https://www.tablesgenerator.com/
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=3in]{TeX/YieldRelTot_decModes.pdf}
+\caption{Estimated relative percentage yield for each decModes based on matched MC with SigProb$>$0.5 cut. }
+\label{fig:RelYield}
+\end{center}
+\end{figure}
+The goal is to estimate yield per 1/fb of data. compared to previous BaBar analysis of around 1k per 1/fb at roughtly 70\% purity.
+The current selected Data sample covers about 190/fb, from \verb+proc12+ through \verb+bucket25+,
+and the approach is:
+\begin{itemize}
+\item Fit bigger DecModes by submodes, discard ones with purity lower than 40\%, relative yield below 0.5\% or difficult shapes.
+\item Fit smaller DecModes without division of submodes and make similar selections.
+\item LATER: examine peaking background percentage.
+\end{itemize}
+On the other hand, the signal PDF of some particularly clean DecModes or submodes with low yields can be fixed to some other bigger modes based on FSPs.
+Figure \ref{fig:RelYield} served as a guide to go through the fitting process,  
+but the actual relative percentage will be included later, treating submodes of bigger DecModes and inclusive smaller DecModes on the same ground.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=2in]{TeX/Mode013.pdf}
+\caption{Discrepancy between MC estimate and Data fit results not negligible.}
+\label{fig:mode1thru3}
+\end{center}
+\end{figure}
+For example, after eliminating some submodes, we see a non-negligible shift in the relative yields of Mode00, Mode01, and Mode03. (Figure \ref{fig:mode1thru3}) 
+Some of the reasons behind such discrepancy observed between matching and fitting could be:
+\begin{itemize}
+\item Matched true signals can still fall into background-like distributions.
+\item Different percentage of yield discarded due to different background level.
+\item Inherent Data vs MC discrepancy of FEI performance.
+\end{itemize}

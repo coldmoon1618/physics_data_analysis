@@ -1,0 +1,181 @@
+This files gives the corresponding PC geometry info
+to get from a schematic PC mapping to a more realistic
+one
+
+Sources PHENIX softwares:
+(I)PadSimReco line 147~198
+(II)dPadGeom.idl
+
+We are only concerned with PC1 (0,x,x) and PC3 (2,x,x)
+Y.Zhai June 11, 2019
+
+==================================================
+==================================================
+PAD CHAMBER GEOMETRY INFO
+*The ones particularly useful
+==================================================
+			PC1		PC3
+* x-offset		-24.31		-95.7
+* z-offset		-89.5575	-178.69
+  attenuation factors	0.60		1.20
+  anode2anode spacing	0.84		1.54
+* pixel length		0.82		1.622
+* side pixel width	0.27		0.55
+* center pixel width	0.15		0.31
+* pxl space line width	0.025		0.025
+* cell space line width	0.1		0.2
+* number of sectors	16		8
+  nWires/sector		58		116
+  nPads arross wires	20		40
+  nPads long wire	216		216
+* nSectors/arm		8		4
+  inner R of ea sector	248.891		492.012
+* z-gap between N & E	0.0		8.106
+* phi @ bot of E arm		213.75
+* phi @ top of E arm		123.75
+* phi @ bot of W arm		-33.75
+* phi @ top of W arm		 56.25
+
+  Using the above info we know that 
+  PCE={213.75, 191.25, 168.75, 146.25, 123.75}
+  PCW={-33.75, -11.25,  11.25,  33.75,  56.25}
+  |---------------top of PC----------|
+  |  (I)  adjustment factor = 0.707  | 
+  |----------------------------------|
+  |  (II) adjustment factor = 1      |
+  |----------------------------------|
+  |  (III)adjustment factor = 0.924  |
+  |----------------------------------|
+  |  (IV) adjustment factor - 0.707  |
+  |---------------bot of PC----------|
+
+PC1W		PC1E
+(I)		(I)
+4008 4016	4024 4032
+4007 4015	4023 4031
+(II)		(II)
+4006 4014	4022 4030
+4005 4013	4021 4029
+(III)		(III)
+4004 4012	4020 4028
+4003 4011	4019 4027
+(IV)		(IV)
+4002 4010	4018 4026
+4001 4009	4017 4025
+
+PC3W		PC3E
+(I)		(I)
+4072 4080	4088 4096
+4071 4079	4087 4095
+(II)		(II)
+4070 4078	4086 4094
+4069 4077	4085 4093
+(III)		(III)
+4068 4076	4084 4092
+4067 4075	4083 4091
+(IV)		(IV)
+4066 4073	4082 4090
+4065 4073	4081 4089
+==================================================
+==================================================
+(I)PadSimReco line 147~198
+==================================================
+  147   dPadGeom->set_pdxoff(0, 0, -24.31);
+  148   dPadGeom->set_pdxoff(1, 0, -81.2);
+  149   dPadGeom->set_pdxoff(2, 0, -95.7);
+
+  150   dPadGeom->set_pdzoff(0, 0, -89.5575);
+  151   dPadGeom->set_pdzoff(1, 0, -152.475);
+  152   dPadGeom->set_pdzoff(2, 0, -178.69);
+
+  153   dPadGeom->set_pdgas(0, 0, 0.60);
+  154   dPadGeom->set_pdgas(1, 0, 1.00);
+  155   dPadGeom->set_pdgas(2, 0, 1.20);
+
+  156   dPadGeom->set_aasep(0, 0, 0.84);
+  157   dPadGeom->set_aasep(1, 0, 1.40);
+  158   dPadGeom->set_aasep(2, 0, 1.65);
+
+  159   dPadGeom->set_pxlen(0, 0, 0.82);
+  160   dPadGeom->set_pxlen(1, 0, 1.375);
+  161   dPadGeom->set_pxlen(2, 0, 1.622);
+
+  162   dPadGeom->set_wside(0, 0, 0.27);
+  163   dPadGeom->set_wside(1, 0, 0.47);
+  164   dPadGeom->set_wside(2, 0, 0.55);
+
+  165   dPadGeom->set_wcent(0, 0, 0.15);
+  166   dPadGeom->set_wcent(1, 0, 0.26);
+  167   dPadGeom->set_wcent(2, 0, 0.31);
+
+  168   dPadGeom->set_pxsep(0, 0, 0.025);
+  169   dPadGeom->set_pxsep(1, 0, 0.025);
+  170   dPadGeom->set_pxsep(2, 0, 0.025);
+
+  171   dPadGeom->set_clsep(0, 0, 0.1);
+  172   dPadGeom->set_clsep(1, 0, 0.15);
+  173   dPadGeom->set_clsep(2, 0, 0.2);
+
+  174   dPadGeom->set_npdsec(0, 0, 16);
+  175   dPadGeom->set_npdsec(1, 0, 8);
+  176   dPadGeom->set_npdsec(2, 0, 8);
+
+  177   dPadGeom->set_npdwr(0, 0, 58);
+  178   dPadGeom->set_npdwr(1, 0, 116);
+  179   dPadGeom->set_npdwr(2, 0, 116);
+
+  180   dPadGeom->set_npdx(0, 0, 20);
+  181   dPadGeom->set_npdx(1, 0, 40);
+  182   dPadGeom->set_npdx(2, 0, 40);
+
+  183   dPadGeom->set_npdz(0, 0, 216);
+  184   dPadGeom->set_npdz(1, 0, 216);
+  185   dPadGeom->set_npdz(2, 0, 216);
+
+  186   dPadGeom->set_sectperarm(0, 0, 8);
+  187   dPadGeom->set_sectperarm(1, 0, 4);
+  188   dPadGeom->set_sectperarm(2, 0, 4);
+
+  189   dPadGeom->set_inradius(0, 0, 248.891);
+  190   dPadGeom->set_inradius(1, 0, 419.173);
+  191   dPadGeom->set_inradius(2, 0, 492.012);
+
+  192   dPadGeom->set_zgap(0, 0, 0.0);
+  193   dPadGeom->set_zgap(1, 0, 8.106);
+  194   dPadGeom->set_zgap(2, 0, 8.106);
+
+  195   dPadGeom->set_phibote(0, 213.75);
+  196   dPadGeom->set_phitope(0, 123.75);
+
+  197   dPadGeom->set_phibotw(0, -33.75);
+  198   dPadGeom->set_phitopw(0, 56.25);
+=============================================
+(II)dPadGeom.idl
+=============================================
+    1 /* dPadGeom.idl */
+    2 
+    3 /* Contains the user control parameters for the pad chamber geometry */
+    4 
+    5 struct dPadGeom {
+    6   float pdxoff[3];          /* x-offset for PCX */
+    7   float pdzoff[3];          /* z-offset for PCX */
+    8   float pdgas[3];           /* attenuation factors */
+    9   float aasep[3];           /* anode-to-anode spacing */
+   10   float pxlen[3];           /* pixel length */
+   11   float wside[3];           /* side pixel width */
+   12   float wcent[3];           /* center pixel width */
+   13   float pxsep[3];           /* pixel space line width */
+   14   float clsep[3];           /* cell space line width */
+   15   short npdsec[3];          /* number of sectors */
+   16   short npdwr[3];           /* number of wires per sector */
+   17   short npdx[3];            /* number of pads across wires */
+   18   short npdz[3];            /* number of pads along wire */
+   19   short sectperarm[3];      /* number of sectors per arm */
+   20   float inradius[3];        /* inner inscribed radius of each sector */
+   21   float zgap[3];            /* gap between 2 parts at Z=0 along the wire */
+   22   float phibote;            /* phi coordinate at bottom of east arm */
+   23   float phitope;            /* phi coordinate at top of east arm */
+   24   float phibotw;            /* phi coordinate at bottom of west arm */
+   25   float phitopw;            /* phi coordinate at top of west arm */
+   26 };
+=============================================

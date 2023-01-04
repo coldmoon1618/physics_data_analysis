@@ -1,0 +1,58 @@
+Get offline files from KEKCC:
+    download.sh*
+        AllModes_Data.root
+        AllModes_MC.root
+
+Make groupID skims:
+    cutStrings.py
+        Change in progress
+    SkimTreeMC.py
+        Groups_MC.root
+    SkimTreeData.py
+        Groups_Data.root
+
+Core fit scripts:
+    ConditionalFit.py
+        FitGroupsResults/
+        Results/
+            Outputs from above fittings 
+            Convert csv to Tex tables [in progress]
+            ../count.csv should be here too
+    titleStr.py
+    MakePlots.py
+        [repo]AnaNote/fit_plots/
+    DrawDePBhistos.py
+
+Fit on groupID files:
+    [All 3 functions]
+        DataPDF.sh*
+        allMCPDF.sh*
+        sigPDF.sh*
+    [Only the chosen functions]
+        exclB0_float.sh
+        exclB0_fixBkg.sh
+        justB0_fixSig.sh
+
+Compare Data vs MC yield:
+    [All Gaussians, easy to fit, check graphs, should be enough for magnitude estimation]
+    GaussianFit.sh
+    DataVsMcYieldCheck/
+        results.csv
+   
+Postponed projects:
+    improveMatching/
+
+No longer active:
+    GetPkgBkg/
+        Calculating delta_PB in SkimTree*.py scripts
+    SigPDFCombineAttempt/
+    decMode_plots/
+    coefChart.csv
+    DrawStacked.C
+        AllModes_comp.pdf
+    TeX/
+        Previous summary pages before AnaNote repo 
+    fit_plots/
+        Freeze to Overview in TeX dir
+
+Mar 22, 2022

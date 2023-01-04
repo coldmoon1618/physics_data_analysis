@@ -1,0 +1,87 @@
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{cc}
+
+\begin{tabular}{|rrrrrrrr|}
+\hline
+subMode  &  nSig &  nBkg &  signf&  purity(\%)&eNSig & relYield(\%)  & notes\\
+\hline
+0        &  154  &  516  &  9    &  53       &  13.93& 0.4           & low yield\\
+1        &  308  &  1632 &  11   &  43       &  12.94& 0.7           & \\
+2        &  10989&  19466&  87   &  70       &  1.37 & 26.4          & \\
+3        &  777  &  1522 &  23   &  67       &  5.22 & 1.9           & \\
+4        &  480  &  3526 &  13   &  36       &  9.58 & 1.2           & low purity\\
+5        &  13032&  24050&  94   &  69       &  1.31 & 31.3          & \\
+6        &  889  &  1620 &  25   &  68       &  16.35& 2.1           & \\
+7        &  122  &  605  &  7    &  48       &  23.97& 0.3           & low yield\\
+8        &  199  &  241  &  12   &  79       &  9.17 & 0.5           & \\
+9        &  0    &  2    &  0    &  0        &  0.00 & 0.0           & no yield\\
+10       &  215  &  921  &  10   &  50       &  9.87 & 0.5           & \\
+11       &  570  &  1173 &  20   &  68       &  6.37 & 1.4           & \\
+12       &  474  &  3080 &  13   &  37       &  5.84 & 1.1           & low purity\\
+13       &  12447&  25313&  90   &  65       &  1.29 & 29.9          & \\
+14       &  937  &  1805 &  25   &  68       &  5.00 & 2.3           & \\
+\hline
+Kept&40164&&&&&96.6&\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|ll|}
+\hline
+submode& FSPs\\
+\hline
+0 & $\pi^0 \pi^0 \pi^+ K_S^0 $ \\
+1 & $\pi^0 \pi^- \pi^+ \pi^+ $ \\
+2 & $\pi^0 \pi^- \pi^+ K^+ $ \\
+3 & $\pi^0 \pi^+ K^- K^+ $ \\
+4 & $\pi^0 \pi^0 \pi^- \pi^+ \pi^+ $ \\
+5 & $\pi^0 \pi^0 \pi^- \pi^+ K^+ $ \\
+6 & $\pi^0 \pi^- \pi^+ \pi^+ K_S^0 $ \\
+7 & $\pi^0 \pi^0 \pi^+ K^- K^+ $ \\
+8 & $\pi^0 \pi^+ K_S^0 K^- K^+ $ \\
+9 & $\pi^0 \pi^0 \pi^0 \pi^- \pi^+ \pi^+ $ \\
+10 & $\pi^0 \pi^0 \pi^0 \pi^- \pi^+ K^+ $ \\
+11 & $\pi^0 \pi^0 \pi^- \pi^+ \pi^+ K_S^0 $ \\
+12 & $\pi^0 \pi^- \pi^- \pi^+ \pi^+ \pi^+ $ \\
+13 & $\pi^0 \pi^- \pi^- \pi^+ \pi^+ K^+ $ \\
+14 & $\pi^0 \pi^0 \pi^- \pi^- \pi^+ \pi^+ K^+ $ \\
+\hline
+&\\
+\hline
+\end{tabular}
+\\
+\end{tabular}
+\caption{Full fit results. Keep only the modes that pass both: purity$>$40\% and relYield$>$0.5\%.}
+\end{center}
+\end{table}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==1']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==1']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==2']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==2']_pull.pdf}
+
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==3']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==3']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==5']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==5']_pull.pdf}
+
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==6']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==6']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==8']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==8']_pull.pdf}
+
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==10']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==10']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==11']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==11']_pull.pdf}
+
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==13']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==13']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==14']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==1','subMode==14']_pull.pdf}
+\caption{Fitting plots of all Mode01 submodes that passed selection.}
+\label{fig:passMode01}
+\end{center}
+\end{figure}

@@ -1,0 +1,35 @@
+Training samples:
+
+Custom MC
+B0_phi_KS0/Full_reco/useNtuple/signal_cand_outs/train_samples/signal55.root
+MC13a
+extraSpace/May14/train/qqbar.root
+
+Both need to be updated to MC14
+
+Training
+    root -l -b -q TrainBDTG.C
+
+Response for generic MC
+    root -l -b -q 'GetResponse.C("FullMC")'
+    FullMC_cand.root
+    FullMC_resp.root
+
+Response for 200*2k SigMC
+    root -l -b -q 'GetResponse.C("SigMC")'
+    SigMC_cand.root
+    SigMC_resp.root
+
+Data
+    root -l -b -q 'GetResponse.C("Data")'
+    Data_cand.root
+    Data_resp.root
+
+Sideband validation between generic MC and data
+    root -l -b -q CompareResponse.C
+    Responses.pdf
+
+One-dimensional S/sqrt(S+B) and ROC curve based on BDT response
+    OptimizeCut.C 
+
+Sept 13, 2021

@@ -1,0 +1,77 @@
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{cc}
+
+\begin{tabular}{|rrrrrrrr|}
+\hline
+subMode  &  nSig &  nBkg &  signf&  purity(\%)&eNSig & relYield(\%)  & notes\\
+\hline
+0        &  1    &  0    &  0    &  0        &  93.37& 0.0           & no yield\\
+1        &  40   &  72   &  5    &  70       &  19.10& 0.3           & low yield\\
+2        &  5639 &  6434 &  65   &  76       &  3.52 & 38.1          &\\
+3        &  124  &  113  &  10   &  76       &  19.08& 0.8           &\\
+4        &  31   &  32   &  5    &  81       &  22.52& 0.2           & low yield\\
+5        &  3935 &  3715 &  56   &  80       &  2.09 & 26.6          &\\
+6        &  139  &  65   &  11   &  90       &  9.28 & 0.9           &\\
+7        &  13   &  3    &  3    &  102      &  29.98& 0.1           & low yield\\
+8        &  0    &  36   &  0    &  0        &  (BAD)& 0.0           & no yield\\
+9        &  0    &  0    &  0    &  0        &  0.00 & 0.0           & no yield\\
+10       &  0    &  0    &  0    &  0        &  (BAD)& 0.0           & no yield\\
+11       &  29   &  30   &  5    &  76       &  18.05& 0.2           & low yield\\
+12       &  0    &  83   &  0    &  0        &  (BAD)& 0.0           & no yield\\
+13       &  4691 &  3845 &  62   &  81       &  1.68 & 31.7          &\\
+14       &  158  &  68   &  12   &  95       &  8.28 & 1.1           &\\
+\hline
+Kept&14686&&&&&99.2&\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|ll|}
+\hline
+submode& FSPs\\
+\hline
+0 & $\pi^0 \pi^- \pi^+ \pi^+ K_S^0 $ \\
+1 & $\pi^- \pi^- \pi^+ \pi^+ \pi^+ $ \\
+2 & $\pi^- \pi^- \pi^+ \pi^+ K^+ $ \\
+3 & $\pi^- \pi^+ \pi^+ K^- K^+ $ \\
+4 & $\pi^0 \pi^- \pi^- \pi^+ \pi^+ \pi^+ $ \\
+5 & $\pi^0 \pi^- \pi^- \pi^+ \pi^+ K^+ $ \\
+6 & $\pi^- \pi^- \pi^+ \pi^+ \pi^+ K_S^0 $ \\
+7 & $\pi^0 \pi^- \pi^+ \pi^+ K^- K^+ $ \\
+8 & $\pi^- \pi^+ \pi^+ K_S^0 K^- K^+ $ \\
+9 & $\pi^0 \pi^0 \pi^- \pi^- \pi^+ \pi^+ \pi^+ $ \\
+10 & $\pi^0 \pi^0 \pi^- \pi^- \pi^+ \pi^+ K^+ $ \\
+11 & $\pi^0 \pi^- \pi^- \pi^+ \pi^+ \pi^+ K_S^0 $ \\
+12 & $\pi^- \pi^- \pi^- \pi^+ \pi^+ \pi^+ \pi^+ $ \\
+13 & $\pi^- \pi^- \pi^- \pi^+ \pi^+ \pi^+ K^+ $ \\
+14 & $\pi^0 \pi^- \pi^- \pi^- \pi^+ \pi^+ \pi^+ K^+ $ \\
+\hline
+&\\
+\hline
+\end{tabular}
+\\
+\end{tabular}
+\caption{Full fit results. Keep only the modes that pass both: purity$>$40\% and relYield$>$0.5\%.}
+\end{center}
+\end{table}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==2']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==2']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==3']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==3']_pull.pdf}
+
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==5']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==5']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==6']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==6']_pull.pdf}
+
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==13']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==13']_pull.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==14']_fit.pdf}
+\includegraphics[width=1.5in]{fit_plots/AllModes_Data.root['decmode==3','subMode==14']_pull.pdf}
+\caption{Fitting plots of all Mode03 submodes that passed selection.}
+\label{fig:passMode03}
+\end{center}
+\end{figure}

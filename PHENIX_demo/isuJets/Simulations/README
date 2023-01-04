@@ -1,0 +1,53 @@
+Set up : 
+  Build and install:
+    offline/AnalysisTrain/ISUJetTrkClus,
+    offline/analysis/ISUJets/PythiaParticles
+    offline/analysis/ISUJets/anaISUJetTrkClus/makeJets 
+  Edit parameters in submit_condor.sh: ckin, run_year, outdir, libdir, srcdir, species
+To run : /submit_condor.sh nevents$1, fIndex_ini$2 fIndex_fin $3 
+[No additional editing needed for pythia simulations 200,510 in the Run12/13/15 configurations] 
+
+Structure:
+  submit_condor.sh            nevents$1, fIndex_ini$2 fIndex_fin $3
+  -> Which calls submit.sh    roots$1, ckin$2, run$3, nevents$4, index$5, outdir$6, libdir$7, srcdir$8, species$9
+  -> Which submits ISUJetSim.job
+  -> Which runs runJetSim.csh
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example sim file sizes and numbers
+Run13Sim
+/sphenix/user/yzhai/ISUJetAna/output/ckin#
+ ckin10     1-20000 (19401 files 5000evt) 
+ ckin20     1- 2000 ( 1863 files 5000evt)
+ ckin30     1- 8000 ( 7631 files 5000evt)
+ ckin40     1- 5000 (
+ ckin50     1- 5000 ( 4248 files 5000evt)
+ ckin60     1- 5000 (            4000evt)
+ ckin70
+ ckin80     1-10000 ( 5951 files 3000evt) 
+ ckin81     1- 1000 (      files 3000evt) April 30,2019
+ ckin90
+ckin100     1-10000 ( 4946 files 1000evt)
+ckin110
+ckin120     1- 2000 (  712 files  500evt)
+ckin130
+ckin140
+ckin150     1- 2000 (  568 files   200evt)
+         2001-10000 ( 4302 files   100evt)
+(deleted other big files except for ckin10 1-49)
+
+Run12Sim 
+/sphenix/user/yzhai/ISUJetAna/run12_output/ckin#
+ ckin10     1- 1000 (  978 files 5000evt)
+ ckin80     1-10000 (      files 3000evt)
+ckin150     1- 1000 (      files  100evt)
+(deleted other big files except for ckin10 1-49)
+
+April 30,2019: The files in the /sphenix/user/yzhai/ISUJetAna/output/ckin81 folders:
+Run13SimParticles.root pythia.out pisaToDst.out Run13SimOutput.err Run13SimOutput.out SimDST.root Run13SimOutput.log
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Updates:
+- 5/4/2019 J. Lajoie
+- May 6, 2019 YZhai
+ 

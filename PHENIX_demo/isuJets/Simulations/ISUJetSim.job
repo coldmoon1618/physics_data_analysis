@@ -1,0 +1,10 @@
+Universe                = vanilla
+Notification            = Error
+Initialdir              = $ENV(PWD)
+GetEnv                  = False
+Input                   = /dev/null
+Executable              = runJetSim.csh
+Notification            = never
+PeriodicHold            = (NumJobStarts>=5 && JobStatus == 1)
+should_transfer_files   = NO
+Queue

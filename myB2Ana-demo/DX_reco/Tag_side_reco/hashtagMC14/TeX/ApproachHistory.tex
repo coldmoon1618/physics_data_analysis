@@ -1,0 +1,374 @@
+\documentclass{article}
+\usepackage[left=0.2in,right=0.2in,top=0.4in,bottom=0.2in,]{geometry}
+\usepackage{graphicx}
+\graphicspath{ {/Users/zhai/Desktop/myB2Ana/DX_reco/Tag_side_reco/hashtagMC14} }
+\begin{document}
+\tableofcontents
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section*{Overview}
+\begin{itemize}
+\item Motivation: improve inclusive BR measurement, put FEI technique to use
+\item Fit each submode with \verb+SigProb>0.5+ cut, discard submodes below 40\% purity.
+\item Discard unwanted submodes for other reasons such as below 1\% relative yield.
+\item LATER: examine peaking background percentage
+\end{itemize}
+
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{Data vs MC scale factor (unsucessful)}
+\subsection{Fit data vs MC and calculate scale factors}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.2']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.2']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.2']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.2']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.3']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.3']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.3']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.3']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.4']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.4']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.4']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.4']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.6']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.6']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.6']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.6']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.7']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.7']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.7']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.7']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.8']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.8']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.8']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.8']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.9']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_Data.root['SigProb>0.9']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.9']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/AllModes_MC.root['SigProb>0.9']_pull.pdf}
+\caption{Fitting of Data(156/fb) and MC(300/fb).}
+\label{fig:DatVsMC}
+\end{center}
+\end{figure}
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ccccc}
+\hline
+Cuts & nSigData & nSigMC & nBkgData & nBkgMC\\
+SigProb$>$0.2 & 403821 & 1312014 & 1612676 & 3650435\\
+SigProb$>$0.3 & 320364 & 1014990 & 898173 & 2027378\\
+SigProb$>$0.4 & 262240 & 810166 & 546072 & 1225835\\
+SigProb$>$0.5 & 215733 & 647983 & 344939 & 764916\\
+SigProb$>$0.6 & 176546 & 512197 & 219948 & 477873\\
+SigProb$>$0.7 & 140838 & 393150 & 138005 & 290115\\
+SigProb$>$0.8 & 107739 & 286690 & 83314 & 166255\\
+SigProb$>$0.9 & 71406 & 183295 & 48414 & 88187\\
+\hline
+\end{tabular}
+\caption{Fit yields for Data(156/fb) and MC(300/fb).}
+\end{center}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ccc}
+\hline
+Data/MC & nSigRatio & nBkgRaio\\
+SigProb$>$0.2 & 0.59 & 0.85\\
+SigProb$>$0.3 & 0.61 & 0.85\\
+SigProb$>$0.4 & 0.62 & 0.86\\
+SigProb$>$0.5 & 0.64 & 0.87\\
+SigProb$>$0.6 & 0.66 & 0.89\\
+SigProb$>$0.7 & 0.69 & 0.91\\
+SigProb$>$0.8 & 0.72 & 0.96\\
+SigProb$>$0.9 & 0.75 & 1.06\\
+\hline
+\end{tabular}
+\caption{Scale factor for nSig and nBkg normalized by integrated luminosity.}
+\label{tab:scaled}
+\end{center}
+\end{table}
+
+\subsection{Validate scale factors with Mode00}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=2in]{TeX/old156plots/yieldRelMode_Mode00.pdf}
+\caption{Estimated relative yield using MC counting (`mySignal\>0.5 and SigProb\>0.1') for each Mode00 submode in permille, red line at 1\%.}
+\end{center}
+\end{figure}
+Keeping only the submodes that have percentage yield greater than 1\% relative to \verb+Mode00+, which are:
+\begin{itemize}
+\item 0, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14
+\end{itemize}
+
+As shown in Figure \ref{fig:subFit}, \verb+submode4+ can be eliminated due to hard-to-fit shape. 
+So the list is now:\begin{itemize}
+\item 0, 2, 3, 5, 6, 10, 11, 12, 13, 14
+\end{itemize}
+
+\begin{figure}[h!]
+\begin{center}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==0','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==0','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==2','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==2','SigProb>0.1']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==3','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==3','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==4','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==4','SigProb>0.1']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==5','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==5','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==6','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==6','SigProb>0.1']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==10','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==10','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==11','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==11','SigProb>0.1']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==12','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==12','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==13','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==13','SigProb>0.1']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==14','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_MC.root['subMode==14','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Blank.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Blank.pdf}
+
+\caption{MC Fit each submode not eliminated by relative percentage.}
+\label{fig:subFit}
+\end{center}
+\end{figure}
+
+\newpage
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{rrrr}
+\hline
+subMode& nSig yield& scaled $S/\sqrt{S+B}$ & scaled $S/(S+B)$(\%)\\
+\hline
+0 & 8620 & 45 & 41 \\
+2 & 49313 & 108 & 41 \\
+3 & 5437 & 36 & 41 \\
+5 & 84601 & 141 & 41 \\
+6 & 20100 & 69 & 41 \\
+10 & 24708 & 76 & 41 \\
+11 & 23599 & 75 & 41 \\
+12 & 7462 & 42 & 41 \\
+13 & 82603 & 139 & 41 \\
+14 & 10499 & 50 & 41 \\
+\hline
+\end{tabular}
+\caption{MC Mode00 fit results and predictions from scale factors.}
+\label{tab:MCFit01}
+\end{center}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{rrrrr}
+\hline
+subMode& nSig yield& $S/\sqrt{S+B}$ & $S/(S+B)$(\%) & $\sigma_{\mbox{nsig}}$(\%)\\
+\hline
+0 &  	2295 	&  	25 	& 	27 	&	5.6	\\
+2 & 	22241 	& 	94 	& 	40 	&	1.3	\\
+3 &  	2617 	& 	33 	& 	35 	&	4.9	\\
+5 & 	38390	&	131	&	45	&	1.0	\\
+6 & 	6991 	& 	48 	& 	33	&	2.5 	\\
+10 & 5691 	& 	41	&	29	&	3.9 	\\
+11 & 5010 	& 	32	& 	21 	&	2.6 	\\
+12 & 2173		& 	18	& 	15	&	7.6	\\
+13 & 34012	&	109	& 	35	& 	1.1 	\\
+14 & 5293		& 	46	& 	41	& 	2.6	\\
+\hline
+\end{tabular}
+\caption{Data fit resultls, submode12 used 0.2 cut.}
+\label{tab:DatFit01}
+\end{center}
+\end{table}
+
+\newpage
+As shown by Table \ref{tab:MCFit01} vs Table \ref{tab:DatFit01},
+the scale factors are not reliable, fitting criteria now simplified to: 
+\begin{itemize}
+\item Minimum SigProb cut: 0.1
+\item Minimum purity: 40\%
+\end{itemize}
+
+Different cuts to reach minimum purity requirement means relative yield percentage will shift compared to estimate based on \verb+isSignal+. So the proper way is to fit all the existing submodes first and then decide to eliminate low relative percentage yield after cuts settled.  
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{Fit submodes, vary cuts (deprecated)}
+The strategy to go through different submodes within each major DecModes:
+\begin{itemize}
+\item Fit all of them with minimum SigProb cut: 0.1
+\item Step of increment of SigProb: 0.1 until minimum purity: 40\%
+\item Find relative yield percentage after the fitting, ignore peaking background effect for now.
+\end{itemize}
+
+The fitting plots are in Figure \ref{fig:fitPlotsVarCut}, results presented in Table \ref{tab:DatFitMode00} and Figure \ref{fig:histMode00}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{rrrrrrrrr}
+\hline
+submode & SigProb cut & Significance & purity(\%) & nSigYield & nBkgYield & e\_nsig(\%) & yield/total(\%) \\ \hline
+0  & 0.4 & 26  & 41 & 1614  & 8067   & 5.15  & 1.4  \\
+1  & 0.7 & 16  & 47 & 525   & 1259   & 8.93  & 0.4  \\
+2  & 0.1 & 94  & 40 & 22241 & 153126 & 1.27  & 18.8 \\
+3  & 0.2 & 31  & 43 & 2216  & 9332   & 4.37  & 1.9  \\
+4  & 0.7 & 22  & 41 & 1165  & 3119   & 6.08  & 1.0  \\
+5  & 0.1 & 131 & 45 & 38390 & 179813 & 0.95  & 32.5 \\
+6  & 0.2 & 52  & 43 & 6262  & 27096  & 2.32  & 5.3  \\
+7  & 0.6 & 11  & 44 & 261   & 591    & 12.29 & 0.2  \\
+8  & 0.1 & 23  & 44 & 1168  & 5278   & 5.46  & 1.0  \\
+9  &  0.6   &     &    &       &        &       & 0.0  \\
+10 & 0.4 & 34  & 43 & 2760  & 9648   & 4.18  & 2.3  \\
+11 & 0.5 & 33  & 43 & 2524  & 7857   & 3.37  & 2.2  \\
+12 & 0.7 & 26  & 51 & 1487  & 2423   & 10.25 & 1.3  \\
+13 & 0.2 & 115 & 44 & 30444 & 137027 & 0.86  & 25.7 \\
+14 & 0.2 & 47  & 50 & 4367  & 12528  & 2.73  & 3.7  \\ \hline
+Total  &             &              &            & 118241    &           &            &\\ \hline
+\end{tabular}
+\caption{Data fit results to all Mode00 submodes}
+\label{tab:DatFitMode00}
+\end{center}
+\end{table}
+%https://www.tablesgenerator.com/
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=4in]{TeX/old156plots/yieldStatMode00_Data_var.pdf}
+\caption{Yield percentage from Table \ref{tab:DatFitMode00} visualized as histogram.}
+\label{fig:histMode00}
+\end{center}
+\end{figure}
+
+\begin{figure}[p!]
+\begin{center}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==0','SigProb>0.4']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==0','SigProb>0.4']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==1','SigProb>0.7']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==1','SigProb>0.7']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==2','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==2','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==3','SigProb>0.2']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==3','SigProb>0.2']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==4','SigProb>0.7']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==4','SigProb>0.7']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==5','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==5','SigProb>0.1']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==6','SigProb>0.2']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==6','SigProb>0.2']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==7','SigProb>0.6']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==7','SigProb>0.6']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==8','SigProb>0.1']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==8','SigProb>0.1']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==9','SigProb>0.6']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==9','SigProb>0.6']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==10','SigProb>0.4']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==10','SigProb>0.4']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==11','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==11','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==12','SigProb>0.7']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==12','SigProb>0.7']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==13','SigProb>0.2']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==13','SigProb>0.2']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==14','SigProb>0.2']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==14','SigProb>0.2']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Blank.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Blank.pdf}
+\caption{Data fit to every submode in Mode00, minimum 0.1 cut, minimum purity 40\%.} 
+\label{fig:fitPlotsVarCut}
+\end{center}
+\end{figure}
+
+%-------------------------------------------------------------------------------------------------------------------------------------
+\newpage
+\section{Fit submodes, fixed 0.5 cut}
+We settled on a fixed \verb+SigProb>0.5+ for all the submodes for an overall purity of around 68\%. 
+(See Figure \ref{fig:DatVsMC}), then discard ones that:
+\begin{itemize}
+\item Purity lower than 40\%
+\item Relative yield below 1\%
+\item Hard to fit/bad shapes
+\end{itemize}
+
+The goal is to estimate yield per 1/fb of data.
+The choice of \verb+SigProb>0.5+ was because the TeX/old FEI\_note.pdf estimated a 72\% purity with \verb+SigProb>0.3+ cut.
+And at the cut it estimated yield for about 1.5k of B reconstructed per 1/ab, compared to previous BaBar analysis of 1k per 1/fb.
+
+After discarding unwanted submodes, the estimated yield will be updated.
+For better luminosity counting, the Data samples covers about 190/fb, from \verb+proc12+ through \verb+bucket25+.
+
+\begin{figure}[p!]
+\begin{center}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==0','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==0','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==1','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==1','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==2','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==2','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==3','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==3','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==4','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==4','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==5','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==5','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==6','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==6','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==7','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==7','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==8','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==8','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==9','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==9','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==10','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==10','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==11','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==11','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==12','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==12','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==13','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==13','SigProb>0.5']_pull.pdf}
+
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==14','SigProb>0.5']_fit.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Mode00_Data.root['subMode==14','SigProb>0.5']_pull.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Blank.pdf}
+\includegraphics[width=1.5in]{TeX/old156plots/Blank.pdf}
+\caption{Data fit to every submode in Mode00, all at 0.5 cut.} 
+\label{fig:fitPlotsMode00}
+\end{center}
+\end{figure}
+
+\end{document}
