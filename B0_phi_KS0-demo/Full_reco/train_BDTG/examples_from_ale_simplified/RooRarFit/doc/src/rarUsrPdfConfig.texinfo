@@ -1,0 +1,133 @@
+@c This file is meant to be included other texinfo file
+@c rarUsrPdf configs
+@c $Id: rarUsrPdfConfig.texinfo,v 1.3 2007/06/29 08:37:51 zhanglei Exp $
+
+
+@anchor{sec_UsrPdf}
+@cindex rarUsrPdf Configs
+@cindex configuration, rarUsrPdf
+@cindex pdf configuration, rarUsrPdf
+@node rarUsrPdfConfig
+@subsection rarUsrPdf
+
+@t{rarUsrPdf} is a wrapper to build user-defined PDF.
+So for it to work for user-defined PDF, one needs to modify the source code,
+basically file @t{rarUsrPdf.cc} in working release dir.
+Please follow instructions at the very beginning of the source file:
+@example
+// Please change this cc file to make use of your PDF.
+// In many cases, you just need to change codes inside marks:
+//====================================================================>
+//                                                                    v
+//                                                                    v
+//  and
+//                                                                    ^
+//                                                                    ^
+//====================================================================>
+@end example
+There are two main parts need to be changed:
+@enumerate
+@item Include header file of user-defined PDF
+@example
+//==================================================================>
+// Please include your RooFit Pdf header here                       v
+// #include "mydir/myPdf.hh"                                        v
+
+//                                                                  ^
+//                                                                  ^
+//==================================================================>
+@end example
+@item Create @t{RooAbsReal}'s and @t{RooAbsPdf}
+in function @t{rarUsrPdf::init()}
+@example
+  //==================================================================>
+  // change the lines in between the marks as you want                v
+  //                                                                  v
+  // first get its obs
+  _x=createAbsReal("x", "observable"); assert(_x);
+  // Config pdf params
+  // instead of a b c etc, you can give them more meaningful names and titles
+  // for example
+  // _a=createAbsReal("mean", "#mu", 0, -10, 10);
+  // _b=createAbsReal("sigma", "#sigma", 0, -10, 10);
+  // if you give them different names, please use those names
+  // in the PDF config sections,
+  // for example, a is now mean, b sigma, etc.
+  // [myPdf Config]
+  // configStr = UsrPdf
+  // x = AbsReal Def
+  // mean = AbsReal Def
+  // sigma = AbsReal Def
+  
+  // Default param creation
+  _a=createAbsReal("a", "a", 0, -10, 10);
+  _b=createAbsReal("b", "b", 0, -10, 10);
+  _c=createAbsReal("c", "c", 0, -10, 10);
+  _d=createAbsReal("d", "d", 0, -10, 10);
+  _e=createAbsReal("e", "e", 0, -10, 10);
+  _params.Print("v");
+  
+  // YOU MUST CREATE YOUR PDF AND SET IT TO _thePdf
+  // create pdf
+  //_thePdf=new myPdf(Form("the_%s", GetName()),_pdfType+" "+GetTitle(),
+  // *_x, *_a, *_b, *_c, *_d, *_e);
+  //                                                                  ^
+  // change the lines in between the marks as you want                ^
+  //==================================================================>
+@end example
+@end enumerate 
+
+Config Directives:
+@itemize @bullet
+@cindex configStr, rarUsrPdf config
+@item @t{configStr = UsrPdf ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{UsrPdf}.
+This config is required to have this pdf configured as @t{rarUsrPdf}.
+
+@cindex x, rarUsrPdf config
+@item @t{x = AbsReal Def}
+@cindex a, rarUsrPdf config
+@item @t{a = AbsReal Def}@*
+or@*
+@t{<name_chosen_for_a> = AbsReal Def}
+@cindex b, rarUsrPdf config
+@item @t{b = AbsReal Def}@*
+or@*
+@t{<name_chosen_for_b> = AbsReal Def}
+@cindex c, rarUsrPdf config
+@item @t{c = AbsReal Def}@*
+or@*
+@t{<name_chosen_for_c> = AbsReal Def}
+@cindex d, rarUsrPdf config
+@item @t{d = AbsReal Def}@*
+or@*
+@t{<name_chosen_for_d> = AbsReal Def}
+@cindex e, rarUsrPdf config
+@item @t{e = AbsReal Def}@*
+or@*
+@t{<name_chosen_for_e> = AbsReal Def}
+@end itemize
+@t{x} is the default observable of the pdf.
+@t{a} is the ... of the pdf.
+@t{b} is the ... of the pdf.
+@t{c} is the ... of the pdf.
+@t{d} is the ... of the pdf.
+@t{e} is the ... of the pdf.
+@c
+All the variables can be defined as @t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@cindex example, rarUsrPdf
+@cindex example, UsrPdf
+An example is shown below:
+@example
+[myPdf Config]
+configStr = UsrPdf
+x = myObs
+a = 36 L(0 - 100)
+b = 36 L(0 - 100)
+c = 36 L(0 - 100)
+d = 36 L(0 - 100)
+e = 36 L(0 - 100)
+@end example

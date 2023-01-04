@@ -1,0 +1,76 @@
+@c This file is meant to be included other texinfo file
+@c Pdf action configurations
+@c $Id: pdfAction.texinfo,v 1.11 2007/06/29 08:37:49 zhanglei Exp $
+
+
+@cindex Fitter action configuration, RooRarFit
+@cindex Action configuration
+@cindex Configuration, fitter action
+@cindex RooRarFit action configuration
+@node pdfAction
+@section Fitter Actions
+
+After every pdf is created,
+fitter action section is used to direct the fitter to finish its jobs.
+The default action section, @t{[Fitter Action]},
+can be changed by command line option,
+@cindex command line option, -A
+@cindex -A, command line option
+@t{-A "<fitter action section>"}.
+@c
+The default for all pdf actions are no action.
+It is advisable to have several sections with one action
+per section, and then run the fitter with @t{-A} option to specify which
+action to fulfill.
+@c
+@c In the following sub-sections, we will explain all fitter actions.
+@c By default, all actions are disabled unless explicitly requested.
+
+Each action works like a pipe: it has input from other action or initial
+values, it then outputs param/root files as
+other actions' input or final results for user to review.
+Each action initializes its params by reading in intermediate param file,
+and each action also has configs to override those intermediate params
+after reading them in.
+
+The param value overriding order is: Initial values from pdf config sections
+will be overridden by input param file (except for pdfFit action if
+@t{prePdfReadParams} and @t{prePdfReadSecParams} are default);
+then values from input param file are overridden by 
+values specified in action section and param section with config
+@t{xxxReadSecParams},
+finally, the constant attributions will be overridden/specified
+with configs @t{postPdfFloat}, @t{preMLFix}, and @t{preMLFloat}
+in pdf config and/or action sections.
+Before params are saved into param files, they will be set to constant.
+
+@menu
+* pdfFitAction::
+* toyStudyAction::
+* mlFitAction::
+* scanPlotAction::
+* projPlotAction::
+* contourPlotAction::
+* sPlotAction::
+@end menu
+
+@c pdfFit Action
+@include pdfFitAction.texinfo
+
+@c toyStudy Action
+@include toyStudyAction.texinfo
+
+@c mlFit Action
+@include mlFitAction.texinfo
+
+@c scan plot Action
+@include scanPlotAction.texinfo
+
+@c projection plot Action
+@include projPlotAction.texinfo
+
+@c contour plot Action
+@include contourPlotAction.texinfo
+
+@c sPlot Action
+@include sPlotAction.texinfo

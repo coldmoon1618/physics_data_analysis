@@ -1,0 +1,257 @@
+@c This file is meant to be included other texinfo file
+@c Questions and Answers
+@c $Id: QA.texinfo,v 1.21 2007/06/29 08:37:49 zhanglei Exp $
+
+
+@cindex Questions and Answers
+@cindex FAQ
+@node QA
+@chapter Questions and Answers
+
+@enumerate
+@cindex How to build this doc
+@item How to build this doc?
+
+In release dir, type @t{gmake RooRarFit.guide}
+
+Make sure you have the right versions of @t{texinfo} and @t{doxygen}.
+
+@cindex Why do I see lots of warning messages
+@cindex annoying warning messages
+@item Why do I see lots of warning messages like
+ `RooArgSet::readFromStream(Read Config String List):
+  argument XXXX not in list, ignored' in my log file?
+
+Please update @t{RooFit} to the latest version
+(@t{V02-00-05} as of 08/05/05).
+
+@cindex Segmentation violations in toyAction.
+@item Why I have segmentation violation in toy study action?
+
+It is due to a known bug in @t{RooMCStudy}.
+Please @uref{@value{COMMONURL}/patches, patch} your @t{RooFitCore}
+until further @t{RooFit} release fixes it.
+
+@cindex Long splitting string
+@item My splitting rule for a model is very long, is there any limits on it?
+
+@t{RooFit} does have limit on how long a splitting rule can go for a model.
+(The limitation will be removed in the next major @t{RooFit} release.)
+The current default value is 4096, you can make it 10 times larger by applying
+the @uref{@value{COMMONURL}/patches, patches}.
+
+@cindex blind yield
+@cindex blinding, yield
+@item How to blind yields?
+
+CP parameters @t{C} and @t{S} are the variables can be set to blind easily.
+You can choose to blind your yields (or any variable),
+but it is not quite as easy.
+@example
+[yourYieldModel Config]
+yBlindCat = yBlindCat RooCategory "Yield blind state" useIdx Blind 1 Unblind 0
+Comps = Sig Chmls Bkg
+Coeffs = nbSig nbChmls nbBkg
+nbSig = nbSig RooUnblindOffset "blind nSig" "keep yield of mode xxx blind" 10 nSig yBlindCat
+nbChmls = nbChmls RooUnblindOffset "blind nChmls" "keep yield of mode xxx blind" 10 nChmls yBlindCat
+nbBkg = nbBkg RooUnblindOffset "blind nBkg" "keep yield of mode xxx blind" 20 nBkg yBlindCat
+nSig = nSig 200 L(10 - 500)
+nChmls = nChmls 1000 L(0 - 10000)
+nBkg = nBkg 2000 L(0 - 10000)
+@end example
+You may also want to add option @t{"b"} to config @t{mlFitOption}
+in action section to suppress RooFit messages from fit.
+
+@cindex sxf
+@cindex self crossfeed
+@item I would like to include a component in my fit for self crossfeed signal
+ events.  I will then fix the fraction of self crossfeed, and then in my
+ final fit just float the total signal yield.
+
+Sample configs dealing with sxf Pdf in that fashion can be found
+in @uref{@value{COMMONURL}/Sample_configs/sxfSig.config, sxfSig.config}.
+Please notice that this config file is NOT complete.
+
+@itemize @bullet
+@item I would like to see also the `total' signal PDF, i.e.
+ the sum of the two components, fit to the complete dataset.
+
+ Those plots as projection of the two components are given by default,
+ however, you should not fit the full dataset on the combined pdf,
+ otherwise we end up with using the old pdf setting without SXF separation.
+@end itemize
+
+@cindex Embed BB background events only
+@item I am trying to set up a toy job where I embed signal MC and BB MC
+  events with continuum background events generated from the PDFs and then
+  fit with only the signal and continuum background components
+  (no BB component in the fit). I want to use this type of fit to determine
+  if I need a BB component or not.
+
+Suppose your fitter has been setup correctly with two yield components,
+@t{nSig} and @t{nBkg}, your signal MC dataset is @t{sigMC},
+and BB dataset is @t{bbMC}.
+In your action section for toy study, change or add:
+@example
+toySrc_nSig = sigMC 90 // 90 embedded signal events for nSig
+toySrc_nBkg = bbMC 27 pdf "@@0-27 nBkg" // Bkg has two parts, 27 from bbMC, the rest from pdf
+@end example
+
+@cindex Pull for embedded yield
+@cindex Embedded yield, pull
+@item Why my pulls for embedded yields look wrong?
+
+@xref{toyStudyAction} (2nd paragraph).
+
+@cindex Number of embedded events in root file
+@item How to get number of embedded events from individual samples
+in toy study output @t{root} file?
+
+Entries for number of embedded events from individual samples
+in toy study @t{root} file are named as @t{embdEvt_<toySrc_name>},
+for example, embedded event number for @t{sigMC} is in
+entry named @t{embdEvt_sigMC}.
+
+@cindex Fit to get simultaneous pdf parameters
+@item I have deSig pdf params split,
+how can I get the split params for simultaneous pdf in the fit?
+
+In @t{[deSig Config]} section, add/change
+@example
+pdfFit = simFit
+@end example
+(@xref{commonPdfConfig}).
+
+@cindex Fit components of product pdf together
+@item How to fit components of product pdf together?
+
+For example, @t{SigPdf} is product PDF, in section @t{[SigPdf Config]}
+add/change config
+@example
+ndFit = yes
+@end example
+
+@cindex Create user-defined PDF
+@item How to create/add my own @t{RooAbsPdf}?
+
+@xref{rarUsrPdfConfig}.
+
+@cindex Fix/float param per action
+@item I have built a model. Can I fix/float on fit action basis
+  some params previous floated/fixed when I built it in PDF config sections?
+
+Yes. For example, if you have @t{nSig} as yield and float it, but want
+to fix it for sPlot, in action section for sPlot, add/change:
+@example
+preMLFix = nSig
+@end example
+Please go through configs @t{postPdfFloat}, @t{preMLFix},
+and @t{preMLFloat} for more detailed instructions.
+
+@cindex How to patch RooFit
+@item How to patch RooFit?
+
+@example
+cd RooFitCore
+patch -N < ../RooRarFit/doc/patches/RooFitCore-Vxx-xx-xx.patch
+@end example
+
+@cindex How to build and load shared libs
+@item How to build and load shared libs?
+
+Compile and link @t{RooFit} and @t{RooRarFit}:
+@example
+gmake RooFitCore.lib ROPT=-Shared
+gmake RooFitModels.lib ROPT=-Shared
+gmake RooRarFit.all ROPT=-Shared
+@end example
+Edit @t{RooLogon.C}, change/add lines:
+@example
+loadLib("RooFitCore");
+loadLib("RooFitModels");
+loadLib("RooRarFit");
+@end example
+
+If you build @t{RooFit} with
+@example
+gmake RooFitCore.rootlib
+gmake RooFitModels.rootlib
+@end example
+Please replace @t{loadLib} for @t{RooFit} with @t{loadSrtLib}, ie,
+@example
+loadSrtLib("RooFitCore");
+loadSrtLib("RooFitModels");
+loadLib("RooRarFit");
+@end example
+
+@cindex What is in the combined RooPlot?
+@item What is in the combined RooPlot from @t{combine.C}?
+
+How many sub-mode do you have? If you have two, I expect five curves;
+if you have one, I expect four curves.
+(if you do not have all the systematics, you might have some curve overlaid.)
+If you can right-click on the curves, their names tell you everything.
+Sub-modes have name called @t{NLL_curve_ModeX},
+where @t{X} is the index number as you input.
+The curve called @t{NLL_curve_total} is the total NLL curve
+@emph{without} any systematics.
+The one next below it, called @t{NLL_curve_unCorr},
+is the total NLL curve with correlated systematics @emph{only}.
+The one further below, called @t{NLL_curve_Corr},
+is the total NLL curve with @emph{all} systematics included.
+The final combined results are derived from @t{NLL_curve_Corr},
+with statistic from @t{NLL_curve_total}.
+
+@cindex Can I embed a fraction of event for embedded toys?
+@cindex Embedding a fraction of event
+@item Can I embed a fraction of event, for example, 11.3, for embedded toys?
+This does not make sense to me since you can only get integer events
+from datasets.
+
+Yes, you can. Here is how it works.
+If you allow Poisson fluctuation, it will embed number of events
+per experiment which is subject to Poisson fluctuation with mean at 11.3.
+If you do not allow Poisson fluctuation,
+it will generate 11 or 12 events randomly per toy experiment
+with mean at 11.3.
+
+@cindex Can I use toy sample for mlFit, scanPlot, sPlot, etc?
+@cindex Use toy sample for mlFit, scanPlot, sPlot, etc.
+@item Can I use toy sample for mlFit, scanPlot, sPlot, etc?
+
+Yes. For @t{toyStudy},
+the first toy sample generated will be saved as @t{"toySample"},
+so in the same action section, other actions following @t{toyStudy}
+can use the sample, for example, to do @t{sPlot}.
+Just give @t{toySample} as config for input data, for example
+@example
+[ToySPlotAct]
+// toy options
+toyStudy = yes
+preToyReadParams = A mlFit
+preToyReadSecParams = MCParamSec
+toyNexp = 1 // # experiments
+toyNevt = 0 extended
+// init values
+nKKKst = 70  +/- 44 C L(-1000 - 1000)
+nKsKsKs = 20  +/- 44 C L(-1000 - 1000)
+nKKPiZ = 2.3 +/- 100 C L(0 - 1000)
+nSig = 100 +/- 20.00 L(-100 - 500)
+// for embedded toy study
+toySrc_nSig = sigMC "@@0 nSig"
+// ml fit
+mlFit = yes
+mlFitData = toySample
+preMLReadParams = no
+preMLReadSecParams = no
+postMLWriteParams = no
+// sPlot
+sPlot = yes
+sPlotData = toySample
+sPlotSaveSWeight = yes
+sPlotVars = mes de
+preSPlotReadParams = no
+preSPlotReadSecParams = no
+@end example
+
+@end enumerate

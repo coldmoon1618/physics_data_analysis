@@ -1,0 +1,56 @@
+@c This file is meant to be included other texinfo file
+@c rarMultPdf configs
+@c $Id: rarMultPdfConfig.texinfo,v 1.2 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@anchor{sec_MultPdf}
+@cindex rarMultPdf Configs
+@cindex configuration, rarMultPdf
+@cindex pdf configuration, rarMultPdf
+@node rarMultPdfConfig
+@subsection rarMultPdf Configs
+
+@t{rarMultPdf} is a wrapper of @t{RooGenericPdf} to build a special 
+pdf to deal with different fit ranges  for multiple sub mode in simPdf fit.
+
+@itemize @bullet
+@cindex configStr, rarMultPdf config
+@item @t{configStr = MultPdf ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{MultPdf}.
+This config is required to have this pdf configured as @t{rarMultPdf}.
+
+@cindex Comps, rarMultPdf config
+@item @t{Comps = <compPdfName1> [<compPdfName2> ... <compPdfNameN>]}@*
+This config specifies components for @t{rarMultPdf},
+and is mandatory for any pdf inherited from @t{rarCompBase}.
+
+@c @cindex ndFit, rarProd config
+@c @item @t{ndFit = <no|yes>}@*
+@c Do @t{ndFit} in @t{pdfFit} action if set to @t{yes} (default @t{no}).
+@c @t{ndFit} (n-dimensional fit) will fit product pdf all together
+@c instead of fit individual components.
+
+@end itemize
+
+@cindex example, rarMultPdf
+@cindex example, MultPdf
+An example is shown below:
+@example
+[mESigS Config]
+configStr = MultPdf
+Comps = mESig mEStep
+[mESig Config]
+configStr = TwoGauss
+x = mEta
+meanC =  0.540 L(0.52 - 0.58)
+meanT =  0.530 L(0.52 - 0.58)
+sigmaC = 0.012 L(0.0  - 0.02)
+sigmaT = 0.030 L(0.0  - 0.1)
+fracC =  0.65   L(0.0  - 1.0)
+[mEStep Config]
+configStr = Generic
+x = mEta
+formula = "@@1 <= @@0 && @@0 <= @@2" x mEStepLo mEStepHi
+mEStepLo = mEStep_mEStepLo 0.485 C L( 0 - 1.0)
+mEStepHi = mEStep_mEStepHi 0.605 C L( 0 - 1.0)
+@end example

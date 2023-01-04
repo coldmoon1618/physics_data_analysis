@@ -1,0 +1,41 @@
+//
+// Combine two RooCurves by a formula
+//
+RooCurve*
+combCurves(const RooCurve* crv1, const RooCurve* crv2, const char* formula,
+	   const char* valid = "1", const char* newName)
+{
+  RooCurve* newCurve = new RooCurve();
+  if (0 != newName) newCurve->SetName(newName);
+  Double_t x1 = -1.E30;
+  Double_t x2 = -1.E30;
+  Double_t y1, y2;
+  Int_t n1 = crv1->GetN();
+  Int_t n2 = crv2->GetN();
+  RooRealVar y1RV("y1RV", "", 0.), y2RV("y2RV", "", 0.);
+  RooFormulaVar yComb("yComb", "", formula, RooArgSet(y1RV, y2RV));
+  RooFormulaVar testOK("testOK", "", valid, RooArgSet(y1RV, y2RV));
+
+  bool needPt = true;
+  int i(0), j(0);
+  while (i < n1-1 && j < n2-1) {
+    while (i < n1-1 && (needPt || x1 < x2)) {
+      needPt = false;
+      crv1->GetPoint(++i, x1, y1);
+      y1RV.setVal(y1);
+    }
+    while (j < n2-1 && (needPt || x2 < x1)) {
+      needPt = false;
+      crv2->GetPoint(++j, x2, y2);
+      y2RV.setVal(y2);
+    }
+    if (x1 == x2 && 0 != testOK.getVal()) {
+      //      cout << i << " " << j << " " << x1 << " " << x2 << "  " << y1 << "  " << y2 << endl;
+      newCurve->addPoint(x1, yComb.getVal());
+    }
+    needPt = true;
+  }
+  //  newCurve->Print("v");
+
+  return newCurve;
+}

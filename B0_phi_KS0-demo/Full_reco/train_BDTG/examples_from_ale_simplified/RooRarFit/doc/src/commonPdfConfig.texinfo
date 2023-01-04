@@ -1,0 +1,331 @@
+@c This file is meant to be included other texinfo file
+@c Pdf configs common to all RooRarFit PDFs
+@c $Id: commonPdfConfig.texinfo,v 1.23 2007/08/22 17:19:44 zhanglei Exp $
+
+
+@cindex Configs Common to All RooRarFit PDFs
+@cindex Common pdf configs
+@cindex configuration, common to all RooRarFit PDFs
+@cindex RooRarFit pdf configuration common to all RooRarFit PDFs
+@node commonPdfConfig
+@subsection Configs Common to All RooRarFit PDFs
+
+There are some configs in PDF config section which are common to
+all RooRarFit PDFs.
+
+@itemize @bullet
+@cindex configStr, pdf config
+@cindex pdf config, configStr
+@item @t{configStr = <pdfType>
+                     ["<pdf Title>"]}@*
+This config specifies the type of the pdf and also gives optional pdf title.
+Every pdf, except @t{rarMLFitter}, which is created by @t{main},
+should have this config.
+
+@cindex paramSec, pdf config
+@cindex pdf config, paramSec
+@item @t{paramSec_<pdfType>
+                  = "<param Config Section>"}
+@item @t{paramSec = "<param Config Section>"}@*
+With these two configs, any other configs except @t{configStr}
+can be put into another config section specified.
+@t{paramSec_<pdfType>} has higher priority than @t{paramSec}.
+This is a convenient feature if you want to reuse configs
+of other pdf config section.
+
+@anchor{item_xtraGenerators}
+@cindex xtraGenerators, pdf config
+@cindex pdf config, xtraGenerators
+@item @t{xtraGenerators = <generator1> [<generator2> ...]}@*
+This config specifies names of pdf for observables
+which usually have no distribution information in fit models.
+Pdfs specified here will be used to generate those observables.
+
+@anchor{item_protDataVars}
+@cindex protDataVars, pdf config
+@cindex pdf config, protDataVars
+@item @t{protDataVars = [<obs1> ...]}@*
+This config specifies names of observables
+which usually have no distribution information in pdf models,
+so their distributions are given by prototype dataset in toy studies.
+It is advisable to have such observables added here in their own pdf section
+instead of action section,
+so that your @t{protDataVars} can change dynamically.
+The name of observable can be local name if it is observable in this pdf,
+or it should be that in datasets.
+
+@anchor{item_conditionalObs}
+@cindex conditionalObs, pdf config
+@cindex pdf config, conditionalObs
+@item @t{conditionalObs =  [<obs1> ...]}@*
+This config specifies names of observables
+which usually have no distribution information in pdf models,
+@emph{and should be taken out of normalization for fit}.
+@c and their distributions are given by prototype dataset in toy studies.
+It is advisable to have such observables added here in their own pdf section
+instead of action section,
+so that your @t{conditionalObs} can change dynamically.
+The name of observable can be local name if it is observable in this pdf,
+or it should be that in datasets.
+
+@c @t{conditionalObs} and @t{protDataVars} are interchangeable.
+Please use config @t{protDataVars} if possible
+because fit with this config (@t{conditionalObs}) is very slow.
+
+@cindex protDataEVars, pdf config
+@cindex pdf config, protDataEVars
+@item @t{protDataEVars = [<obs1> ...]}@*
+This config specifies names of observables
+the distributions of which you want to get from prototype dataset
+for @emph{E}mbedded events in toy studies.
+For example, the signal source data are usually from signal MC,
+but you certainly want the MC/realData bit in the embedded event
+set to real data as in your prototype dataset.
+It is advisable to have such observables added here in their own pdf section
+instead of action section, so that your protDataEVars can change dynamically.
+The name of observable can be local name if it is observable in this pdf,
+or it should be that in datasets.
+
+Please notice you do NOT need this config (@t{protDataEVars}) for most
+observables even if you do not have PDF to describe the distributions of
+them, in which case you should use config @t{protDataVars}.
+@t{protDataEVars} is for special case to embed events so that category/tag bit
+will be set to the right value even the sources are not from the right ones,
+for example, embed events from MC sample, and you have a category in the fit
+that requires real data type, then you have to replace the category type
+of MC with type real data.
+
+@cindex fitData, pdf config
+@cindex pdf config, fitData
+@item @t{fitData = <datasetName> ["<optional cut string>"]}@*
+This config specifies the default dataset for this pdf to do pdfFit,
+or other relevant operation.
+When not specified, the default dataset will be set to
+that of the pdf which creates this pdf.
+@c At least the final mlFitter should have this config,
+@c because it is the originator of all RooRarFit PDFs.
+You can give this config an optional string as the second token,
+which will be applied to the dataset for additional cuts.
+
+@c @cindex extraParams, pdf config
+@c @cindex xtraParams, pdf config
+@c @cindex pdf config, xtraParams
+@c @item @t{xtraParams = [fullNamed] <xtraParamName1> [<xtraParamName2>]}@*
+@c This config specifies extra parameters  associated with this RooRarFit PDF.
+@c The extra params created may or my not be directly used by this Pdf.
+@c One usage for extra parameters is to specify splitting specializations.
+@c If the first arg is @t{fullNamed},
+@c all the following configs are supposed to be full names.
+
+@cindex extraPdfs, pdf config
+@cindex xtraPdfs, pdf config
+@cindex pdf config, xtraPdfs
+@item @t{xtraPdfs = <xtraPdfName1> [<xtraPdfName2> ...]}@*
+This config specifies extra PDFs associated with this RooRarFit PDF.
+Extra PDFs are created for purposes like getting parameters for
+other PDFs in final PDF, etc.
+@t{<xtraPdfName1>}, ...,
+are the names of those extra RooRarFit PDFs to be created.
+
+@cindex pdfFit, pdf config
+@cindex pdf config, pdfFit
+@item @t{pdfFit = <yes|no|simFit|simFitOnly>}@*
+Do pdfFit in pdfFit action for this pdf (default @t{yes}).
+If this config is set to @t{simFit} and the final pdf model is
+@t{Simultaneous} pdf,
+@t{RooSimultaneous} pdf built for this pdf will also be fit to
+the default dataset. (See example in
+@uref{@value{COMMONURL}/Sample_configs/KsKsKl.config, KsKsKl.config}
+).
+If this config is set to @t{simFitOnly},
+the prototype pdf will not be fitted.
+
+@cindex firstFitOnly, pdf config
+@cindex pdf config, firstFitOnly
+@item @t{firstFitOnly = <yes|no>}@*
+pdfFit action is done for the first time only as the pdf is created (default).
+If set to @t{no}, pdfFit will be done every time it is referred to and
+results from the last fit are effective.
+
+@cindex fitRange, pdf config
+@cindex pdf config, fitRange
+@item @t{fitRange_<obsName> = <Min> <Max>}@*
+It sets @b{pdfFit} ranges for observable @t{<obsName>}.
+If not specified, the range will be set to the full ranges
+when it is created.
+
+@cindex pdfPlot, pdf config
+@cindex pdf config, pdfPlot
+@item @t{pdfPlot = <yes|no>}@*
+Do pdfPlot in pdfFit action for this pdf (default @t{yes}).
+For how to disable plotting for one variable in a pdf,
+see next item.
+
+@cindex plotting, disable with plotBins, pdf config
+@cindex plotBins, disable plotting
+@cindex plotBins, pdf config
+@cindex pdf config, plotBins
+@item @t{plotBins_<obsName> = <nBins>}@*
+It sets plot bins for observable @t{<obsName>}.
+If not specified, the number of plot bins
+is set to the value when the observable is created (@t{B(<nBins>)});
+if set to -1, the plot of this var is disabled.
+
+@cindex plotRange, pdf config
+@cindex pdf config, plotRange
+@item @t{plotRange_<obsName> = <Min> <Max>}@*
+It sets plot ranges for observable @t{<obsName>}.
+If not specified, the range will be set to the full ranges
+when it is created.
+
+@cindex plotting, projWData, pdf config
+@cindex projWData, plotting, pdf config
+@item @t{projWData_<obsName> = <no|yes|dataName>}@*
+It specifies reference dataset of observable @t{<obsName>}
+for its pdf plotting.
+The default is @t{no}, no reference dataset,
+which is true for most of pdf plotting.
+For some type of pdf, however, you need to set this reference dataset,
+because that pdf does not have the distribution information
+of other observables in it.
+For example, in @emph{dt} pdf for background,
+there is no distribution information for @emph{dtErr} usually,
+so when it is integrated over @emph{dtErr} to get the plot of @emph{dt},
+the fitter will assume flat distribution of
+@emph{dtErr} and then you will not get the right plot.
+If you set the config to @t{yes}, the default dataset for the pdf will
+be used,
+or you can explicitly give a dataset name to the config.
+
+@cindex compsOnPlot, pdf config
+@cindex pdf config, compsOnPlot
+@item @t{compsOnPlot = <no|yes>}@*
+This config controls when the RooFit pdf is composite,
+if its component pdf need to be plotted.
+The default is @t{no} for rarBasePdf,
+but sub RooRarFit PDFs can override it, for example
+in rarTwoGauss, the default is @t{yes}.
+Anyway, you can always set desirable value by yourself using this config.
+
+@cindex compsDataOnPlot, pdf config
+@cindex pdf config, compsDataOnPlot
+@item @t{compsDataOnPlot  = <no|yes|refPdf>}@*
+This config specifies when the RooFit pdf is composite,
+and @t{compsOnPlot} is set to @t{yes},
+if the data points for each component are plotted (default @t{no}).
+If it is set to @t{yes}, this pdf itself will be used as reference
+to plot each component's data points;
+or you can explicitly give a reference pdf name
+to the config.
+
+@cindex paramsOnPlot, pdf config
+@cindex pdf config, paramsOnPlot
+@item @t{paramsOnPlot = <yes|no>}@*
+Params on PDF plot, default yes.
+
+@cindex chi2OnPlot, pdf config
+@cindex pdf config, chi2OnPlot
+@item @t{chi2OnPlot = <yes|no|dof|nbin>}@*
+Chi square on PDF plot, default yes.
+The number showing is chisquare over DOF by default,
+and you can set this config to @t{nbin}
+so chisquare over number of bins will be displayed.
+
+@cindex plotWCat, pdf action
+@item @t{plotWCat_<obs> = <no|CatName1...>}
+@item @t{plotWCat = <no|CatName1...>}@*
+pdfPlot will also be done for each type of the cats
+specified here (default @t{no}).
+
+@cindex prePdfFix, pdf config
+@cindex pdf config, prePdfFix
+@item @t{prePdfFix = <paramName1> [va1] [<paramName2> [val2] ...]}@*
+This config specifies parameters to be fixed before pdfFit.
+It is useful when those parameters have already been determined and
+you do not want them to float in pdfFit for THIS pdf config section only.
+It will not change the attributions of those parameters they will be floated
+or fixed in the param files, or in mlFit, etc.
+The name should be full name if the parameter is not defined
+in the same section;
+the name can also be name of the pdf itself, or its component pdfs.
+If the name is a pdf name, all the @emph{direct} parameters of that pdf
+will be included.
+If the name is param name and the next arg is a number,
+that param will be set to that value and fixed.
+After fitFit, param values will remain the same as you specify here,
+and their constant properties will be restored.
+
+Please notice that if a pdf name is specified, only its @emph{direct}
+parameters will be included, ie, if it is composite PDF, you need
+to specify its components' PDF names or params to include
+params from its components, otherwise params from component PDFs
+will @emph{NOT} be fixed.
+
+@cindex prePdfFloat, pdf config
+@cindex pdf config, prePdfFloat
+@item @t{prePdfFloat = <paramName1> [<paramName2> ...]}@*
+This config specifies parameters to be floated before pdfFit.
+It is usually unnecessary because params for PDF are usually defined as
+floating ones, but if it is more convenient to declare params as constant,
+and if it is needed, use this config to float those params in PDF fit.
+The name should be full name if the parameter is not defined
+in the same section; the name can also be name of the pdf itself,
+or its component pdfs. If the name is a pdf name,
+all the direct parameters of that pdf will be included.
+
+Both @t{prePdfFix} and @t{prePdfFloat} affect @emph{ONLY}
+the PDF where they are immediately at.
+If they are in a sub-PDF and this PDF is part of a total PDF,
+you need to have @t{prePdfFix} or @t{prePdfFloat} in the total PDF
+if you want to fix/float those params in the total PDF.
+
+@cindex postPdfFloat, pdf config
+@cindex pdf config, postPdfFloat
+@item @t{postPdfFloat = <paramName1> [<paramName2> ...]}@*
+This config specifies parameters to be floated after pdfFit.
+The name should be full name if it is not defined in the same section,
+and it can be the name of the pdf itself.
+If the name is a pdf name, all the direct parameters of that pdf
+will be included.
+
+This config can be put into action section so it works at per action basis.
+
+@cindex preMLFix, pdf config
+@cindex pdf config, preMLFix
+@item @t{preMLFix = <paramName1> [<paramName2> ...]}@*
+This config specifies parameters to be fixed before all actions except pdfFit.
+The name should be full name if it is not defined in the same section,
+and it can be the name of the pdf itself.
+If the name is a pdf name, all the direct parameters of that pdf
+will be included.
+It is used to undo @t{postPdfFloat}.
+
+This config can be put into action section so it works at per action basis.
+
+@cindex preMLFloat, pdf config
+@cindex pdf config, preMLFloat
+@item @t{preMLFloat = <paramName1> [<paramName2> ...]}@*
+This config specifies parameters to be floated
+before all actions except pdfFit.
+The name should be full name if it is not defined in the same section,
+and it can be the name of the pdf itself.
+If the name is a pdf name, all the direct parameters of that pdf
+will be included.
+It is used to expand @t{postPdfFloat}.
+
+This config can be put into action section so it works at per action basis.
+
+@cindex Ignored, pdf config
+@cindex pdf config, Ignored
+@item @t{Ignored = <paramName1> [<paramName2> ...]}@*
+This config specifies parameters to be ignored after actions,
+which means those params will not be output to param files.
+This is useful when you do not want the fitter to override
+param initial values.
+The name should be full name if it is not defined in the same section,
+and it can be the name of the pdf itself.
+If the name is a pdf name, all the direct parameters of that pdf
+will be ignored.
+
+@end itemize
+

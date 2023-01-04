@@ -1,0 +1,17 @@
+
+Processing Apr21CutFlow.C...
+20000  events
+Total exact BphiKs chain : 19743
+
+phi mKK cuts	ind:10833	acc:10833
+	Rel Acc Eff=0.548701	Abs Acc Eff=0.548701	Abs Ind Eff=0.548701
+
+Ks0 mKs cuts	ind:8866	acc:8866
+	Rel Acc Eff=0.818425	Abs Acc Eff=0.449071	Abs Ind Eff=0.449071
+
+B0 delE cuts	ind:7093	acc:7093
+	Rel Acc Eff=0.800023	Abs Acc Eff=0.359267	Abs Ind Eff=0.359267
+
+B0  Mbc cuts	ind:7093	acc:7093
+	Rel Acc Eff=1	Abs Acc Eff=0.359267	Abs Ind Eff=0.359267
+

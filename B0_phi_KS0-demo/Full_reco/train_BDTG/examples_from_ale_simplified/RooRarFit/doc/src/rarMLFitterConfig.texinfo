@@ -1,0 +1,374 @@
+@c This file is meant to be included other texinfo file
+@c rarMLFitter configs
+@c $Id: rarMLFitterConfig.texinfo,v 1.16 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@anchor{sec_rarMLFitterConfig}
+@cindex master config section, rarMLFitter
+@cindex rarMLFitter Configs
+@cindex configuration, rarMLFitter
+@cindex pdf configuration, rarMLFitter
+@node rarMLFitterConfig
+@subsection rarMLFitter Configs
+
+The final mlFitter, an object of class @t{rarMLFitter},
+is instantiated by @t{main} function of the program,
+and its config section,
+@cindex name, final mlFitter
+@t{[mlFitter Config]},
+can be changed by command line option,
+@cindex command line option, -C
+@cindex -C, command line option
+@t{-C "<mlFitter config section>"}.
+@c
+This is the master PDF config section, the configs of which might affect
+all other PDF sections.
+
+@itemize @bullet
+@anchor {item_FullNameSchema}
+@cindex fullNameSchema, rarMLFitter config
+@item @t{fullNameSchema = <prefix|suffix|self>}@*
+This config specifies how the full name of a variable,
+if not given, is generated.
+This config affects all RooRarFit PDFs.
+The default is @t{prefix} which creates full name by prepending name of
+the creating pdf to the variable config name;
+@t{suffix} creates  full name by appending the pdf name to
+the variable config name;
+@t{self} sets the full name as the variable config name.
+@t{self} should not be used for PDF, and it is the default
+method for @t{rarDatasetDef} because any variable
+created in dataset definition section should be unique by itself.
+
+This config is fixed to @t{prefix} and no change is permitted.
+
+@anchor {item_outParamOrder}
+@cindex outParamOrder, rarMLFitter config
+@item @t{outParamOrder = <ascend|descend|unsorted>}@*
+It controls how the final output params are sorted.
+The order, based on param names, could be
+ascending (@t{ascend}, default),
+descending (@t{descend}),
+or in the original order as they are created (@t{unsorted}).
+
+@cindex Comps, rarMLFitter config
+@item @t{Comps = <compPdfName1> [<compPdfName2> ...]}@*
+This config specifies prototype pdf models for mlFitter.
+If the final mlFitter is not simultaneous pdf,
+only the first component is used.
+This config is mandatory for any pdf inherited from @t{rarCompBase}.
+
+@cindex simultaneousFit, rarMLFitter config
+@item @t{simultaneousFit = <no|yes>}@*
+This config specifies if the final mlFitter is SimPdf built by
+@t{RooSimPdfBuilder} or not (default @t{no}).
+If set to @t{yes}, you need to have configs for @t{RooSimPdfBuilder} to get
+the SimPdf built. Detailed info on how to use these configs can be found
+from @t{RooSimPdfBuilder} online document.
+
+@cindex yield splitting in simultaneousFit
+Essentially, the splitting can be done manually
+by fitting on to separate sub-datasets for individual categories.
+So for each category, the yields, @t{nSig}, @t{nBkg}, etc.
+need to be split, which means for @t{n} number of category types,
+there should be @t{n} sub-yields.
+To get the total yield, just sum up all these values.
+It is then convenient to have the total yield,
+and @t{n-1} sub-yield fractions as free parameters:
+@example
+subY1=Ntot*(1-frac2...-fracn),
+subY2=Ntot*frac2,
+...
+subYn=Ntot*fracn.
+@end example
+That is the basic idea for the coeffs splitting of the extended AddPdf,
+@t{rarMLPdf}.
+For each category, you will need similar splitting settings.
+
+@cindex yieldSplitMethod, rarMLFitter config
+@item @t{yieldSplitMethod = <auto|manual>}
+
+@c There are three ways in the fitter to specify how to get
+@c yield splitting done.
+
+If this config is set to @t{manual},
+the user has full control over yield splitting.
+He can choose to split directly on yields,
+or to construct the yield with @t{RooFormulaVar},
+and split the formula variables, etc.
+It is not recommended unless the other two methods do not meet your needs,
+and you know exactly what to do to achieve your goals.
+
+Since it is a quite complicated issue to split yield for each category,
+you'd better let the fitter do it for you.
+The other two options are for this purpose.
+In either case, as stated in previous item, for every splitting category,
+the yield variable multiplies a splitting fraction variable.
+For example, if @t{runBlock} is one of the splitting categories,
+for signal yield, the variable will be automatically re-defined to
+@t{nSig*fracRunBlock}, where @t{nSig} is the final yield,
+and @t{fracRunBlock} is the automatically created splitting fraction
+variable for @t{runBlock}.
+If there are four run blocks, @t{fracRunBlock} will be split
+into four variables for the four run blocks.
+If @t{nSig} is the signal yield name, @t{runBlock} is run block category
+name, and four category types are @t{run1}, @t{run2}, @t{run3}, and @t{run4},
+the name of @t{fracRunBlock} will be @t{Frac_nSig_runBlock},
+and the four split variables are
+@example
+Frac_nSig_runBlock_run1,
+Frac_nSig_runBlock_run2,
+Frac_nSig_runBlock_run3,
+Frac_nSig_runBlock_run4.
+@end example
+You can give, for example, @t{Frac_nSig_runBlock}, a different name,
+or even assign it to an existing var, by explicitly giving its definition
+in this section, like
+@example
+Frac_nSig_runBlock = e_run_sig 1 C L(0 - 1)
+@end example
+and the four split variables are then
+@example
+e_run_sig_run1,
+e_run_sig_run2,
+e_run_sig_run3,
+e_run_sig_run4.
+@end example
+
+@c If @t{yieldSplitMethod} is set to @t{semi},
+@c you do not need to (actually are not allowed to) specify
+@c splitting rules for yield fraction in the SimPdfBuilder configs.
+@c All you need to do is to put the category name into @t{splitCats}.
+@c However, you can specify which category type to be the non-free
+@c @t{RooFormulaVar} for a yield with config @t{nonFreeCatTypes}
+@c @itemize @bullet
+@c @cindex nonFreeCatTypes, rarMLFitter config
+@c @item @t{nonFreeCatTypes = Frac_<yield1>_<cat1>[<catType1>] ...}@*
+@c For example, if @t{run3} is non-free frac for @t{nSig},
+@c and @t{T02} non-free for @t{nBkg}, you can specify:
+@c @example
+@c nonFreeCatTypes = Frac_nSig_runBlock[run1] Frac_nBkg_tagCat[T02]
+@c @end example
+@c The fitter will choose the first types for all other unspecified fractions
+@c as the non-free @t{RooFormulaVar}s.
+@c @end itemize
+
+If @t{yieldSplitMethod} is set to @t{auto} (default),
+@t{RooFit} will impose unity constraint on the fractions
+if you specify the cat type in square bracket for those fractions.
+For each yield and splitting category pair, you have to specify
+the non-free cat type in square bracket;
+otherwise the fitter will abort once it detects such situation. 
+
+@c @cindex fitterAsGenerator, rarMLFitter config
+@c @cindex Generator, using fitter
+@c @item @t{fitterAsGenerator = <no|yes>}@*
+@c If set to @t{no} (default),
+@c @t{RooRarFit} will constrcut toy event generator from
+@c final fitter, additional generator specified by user with
+@c @uref{#item_xtraGenerators, @t{xtraGenerators}}, etc.
+@c To use the master mlFitter as toy event generator
+@c (as in the old way to generate toy sample),
+@c this config must be set to @t{yes}.
+
+@c @anchor{item_useGeneratorOnly}
+@c @cindex useGeneratorOnly, rarMLFitter config
+@c @item @t{useGeneratorOnly = <yes|no>}@*
+@c If set to @t{yes} (default), all observables will be
+@c generated from generator rather than prototype dataset, ie,
+@c @uref{#item_protDataVars, @t{protDataVars}} will be disabled.
+@c To generate @t{protDataVars} from prototype dataset,
+@c this config must be set to @t{no},
+@c otherwise, prototype dataset will be used to get total number of events only.
+
+@anchor {item_fracRule}
+@cindex fracRule, rarMLFitter config
+@item @t{fracRule = <catGroup1>...}
+@item @t{fracRule_<yieldName> = <catGroup1>...}@*
+By default, each yield has separate splitting fraction
+for each category, but in some cases, for example,
+if fractions for two categories are correlated,
+it might be desirable to split more than one category together.
+For example, if you want to split (double-split) runBlock and tagCat together
+for @t{nSig}, split tagCat and XCat together for @t{nChmls}, you can have
+@example
+fracRule_nSig   = "runBlock tagCat" XCat
+fracRule_nChmls = runBlock "tagCat XCat"
+@end example
+For @t{runBlock tagCat} combined splitting, you will have
+@t{Frac_nSig_runBlock_tagCat} as the splitting fraction var,
+and the split vars will be
+@t{Frac_nSig_runBlock_tagCat_@{Run1;04T0@}}, etc.
+
+@anchor {item_fracSrc}
+@cindex fracSrc, rarMLFitter config
+@item @t{fracSrc = <datasetName>}
+@item @t{fracSrc_<yieldName> = <datasetName>}
+@item @t{fracSrc_<yieldName>_<catName> = <datasetName>}@*
+These configs specify, when @t{yieldSplitMethod} is @t{auto},
+the source for splitting fractions.
+The default source is @t{fitData}.
+@t{fracSrc}, if specified, is for all yields, and all cats;
+@t{fracSrc_<yieldName>}, if specified, is for all cats of yield @t{yieldName};
+@t{fracSrc_<yieldName>_<catName>}, if specified, is
+for cat @t{catName} of yield @t{yieldName}.
+@c
+Those configs can be put into actions so they can be on per action basis.
+
+@cindex splitSpecials, rarMLFitter config
+@item @t{splitSpecials = [fullNamed] <specialVar1> [<specialVar2>...]}
+@item @t{<specialVar1> = AbsReal Def}
+@item @t{<specialVar2> = AbsReal Def}
+@item @t{...}@*
+This config specifies names and definitions of
+specializations for splitting.
+If you want to set a specific value for a split variable,
+or to give it a different definition than @t{RooRealVar},
+you can add that split variable into this config.
+If the first arg is @t{fullNamed},
+all the following configs are supposed to be full names.
+
+@end itemize
+
+@anchor{sec_paramIO}
+After pdf has been created from top to bottom,
+action section will be invoked to finish fitting jobs.
+Intermediate fitting results will be saved for later uses.
+It is crucial for each action to get desired initial values
+from the right param files.
+So the fitter is designed to have param file name for each fitter, action,
+etc., generated automatically.
+User can specify param file creation rules and refer
+to the destination param file by the rules.
+For each action, there are configs to specify IO param files. You can also
+have those param file configs in the master section, which will override
+those in action section.
+@itemize @bullet
+@cindex postPdfWriteParams, master pdf config
+@item @t{postPdfWriteParams = <notSet|no|yes|paramFileID>}@*
+If specified, it will override @t{postPdfWriteParams} of pdfFit
+action for this master section.
+
+@cindex preMLReadParams, master pdf config
+@item @t{preMLReadParams = <notSet|no|yes|paramFileID>}@*
+If specified, it will override @t{preMLReadParams} of mlFit
+action for this master section.
+
+@cindex postMLWriteParams, master pdf config
+@item @t{postMLWriteParams = <notSet|no|yes|paramFileID>}@*
+If specified, it will override @t{postMLWriteParams} of mlFit
+action for this master section.
+
+@cindex preToyReadParams, master pdf config
+@item @t{preToyReadParams = <notSet|no|yes|paramFileID>}@*
+If specified, it will override @t{preToyReadParams} of toyStudy
+action for this master section.
+
+@cindex toyDataFilePrefix, master pdf config
+@item @t{toyDataFilePrefix = <notSet|toySampleNameID>}@*
+If specified, it will override @t{toyDataFilePrefix} of toyStudy
+action for this master section.
+
+@cindex preProjPlotReadParams, master pdf config
+@item @t{preProjPlotReadParams = <notSet|no|yes|paramFileID>}@*
+If specified, it will override @t{preProjPlotReadParams} of projPlot
+action for this master section.
+
+@cindex preContourPlotReadParams, master pdf config
+@item @t{preContourPlotReadParams = <notSet|no|yes|paramFileID>}@*
+If specified, it will override @t{preContourPlotReadParams} of contourPlot
+action for this master section.
+
+@cindex preSPlotReadParams, master pdf config
+@item @t{preSPlotReadParams = <notSet|no|yes|paramFileID>}@*
+If specified, it will override @t{preSPlotReadParams} of sPlot
+action for this master section.
+
+@anchor{item_paramFileID}
+@cindex paramFileID
+@cindex toySampleNameID
+@item @t{<paramFileID>} or @t{<toySampleNameID>} specifications@*
+It can have one or more of the following pairs to specify the param/toysample.
+@itemize @bullet
+@cindex param file naming wrt config file
+@item @t{F "<configFileName>"}@*
+
+The naming rules depending on config file name will be changed
+to the value specified here.
+The default value is the name of this job's config file.
+
+@cindex param file naming wrt dataset input section
+@item @t{D "<datasetInputSecName>"}@*
+The naming rules depending on dataset input section name will be changed
+to the value specified here.
+The default value is the name of this job's dataset input section.
+
+@cindex param file naming wrt master pdf config section
+@item @t{C "<masterPdfSecName>"}@*
+The naming rules depending on master pdf config section name will be changed
+to the value specified here.
+The default value is the name of this job's master pdf config section.
+
+@cindex param file naming wrt action type
+@item @t{A "<actionTypeName>"}@*
+The naming rules depending on action type name will be changed
+to the value specified here.
+The action types include @t{pdfFit} and @t{mlFit} for intermediate param file.
+You can use arbitrary name, and you just need to refer to
+the same name accordingly.
+
+@cindex param file naming wrt param name
+@item @t{N "<conceptualParamFileName>"}@*
+The naming rules depending on conceptual param file name will be changed
+to the value specified here.
+There is no default abstract name for intermediate param file.
+You can use arbitrary name here, and you just need to refer to
+the same name accordingly.
+@end itemize
+
+@cindex mlFitData, master pdf config
+@item @t{mlFitData = <datasetName> ["<optional cut string>"]}@*
+If specified, it will override @t{mlFitData} of mlFit action
+for this master section.
+
+@cindex projPlotData, master pdf config
+@item @t{projPlotData_<obs> = <datasetName> ["<optional cut string>"]}
+@item @t{projPlotData = <datasetName> ["<optional cut string>"]}@*
+If specified, it will override @t{projPlotData} or
+@t{projPlotData_<obs>} of projPlot action for this master section.
+
+@cindex scanPlotData, master pdf config
+@item @t{scanPlotData = <datasetName>}@*
+If specified, it will override @t{scanPlotData} of scanPlot action
+for this master section.
+
+@cindex sPlotData, master pdf config
+@item @t{sPlotData_<obs> = <datasetName> ["<optional cut string>"]}
+@item @t{sPlotData = <datasetName> ["<optional cut string>"]}@*
+If specified, it will override @t{sPlotData} or
+@t{sPlotData_<obs>} of sPlot action for this master section.
+
+@end itemize
+
+
+@cindex example, rarMLFitter
+@cindex example, mlFitter
+An example is shown below:
+@example
+[mlFitter Config]
+Comps = yieldModel
+fitData = onData
+
+simultaneousFit = yes
+
+// SimPdfBuilder configs
+physModels = the_yieldModel // Please remember the RooFit pdf is created with a
+                            // "the_" before the name of RooRarFit PDF object.
+splitCats = kltype tagCat
+protDataVars = kltype tagCat
+the_yieldModel  = kltype : sigma1_deSigTriGauss      \\
+                  kltype,tagCat : sigma2_deSigTriGauss, P01_esNN2SigPoly \\
+                  kltype : Frac_nSig_kltype[ifr], Frac_nBkg_kltype[ifr] \\
+                  tagCat : Frac_nSig_tagCat[04T0], Frac_nBkg_tagCat[04T0]
+                  
+@end example

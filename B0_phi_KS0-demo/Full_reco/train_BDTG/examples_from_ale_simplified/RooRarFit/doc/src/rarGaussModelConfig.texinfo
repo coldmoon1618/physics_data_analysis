@@ -1,0 +1,63 @@
+@c This file is meant to be included other texinfo file
+@c rarGaussModel configs
+@c $Id: rarGaussModelConfig.texinfo,v 1.2 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@cindex rarGaussModel Configs
+@cindex configuration, rarGaussModel
+@cindex pdf configuration, rarGaussModel
+@node rarGaussModelConfig
+@subsection rarGaussModel Configs
+
+@t{rarGaussModel} is a wrapper of @t{RooGaussModel} to build
+Gaussian Resolution Model.
+
+@itemize @bullet
+@cindex configStr, rarGaussModel config
+@cindex configStr, GaussModel
+@item @t{configStr = GaussModel ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{GaussModel}.
+This config is required to have this pdf configured as @t{rarGaussModel}.
+
+@cindex x, rarGaussModel config
+@item @t{x = RealVar Def}
+@cindex mean, rarGaussModel config
+@item @t{mean = AbsReal Def}
+@cindex sigma, rarGaussModel config
+@item @t{sigma = AbsReal Def}
+@cindex msSF, rarGaussModel config
+@item @t{msSF = AbsReal Def}
+@cindex meanSF, rarGaussModel config
+@item @t{meanSF = AbsReal Def}
+@cindex sigmaSF, rarGaussModel config
+@item @t{sigmaSF = AbsReal Def}@*
+@c
+@t{x} is the default observable of the pdf.
+No derived dependent is allowed in rarGaussModel
+so please make sure @t{x} is observable defined in datasets.
+@t{msSF} is the scale for @t{mean} and @t{sigma};
+@t{meanSF} is the scale for @t{mean}, and @t{sigmaSF} for @t{sigma}.
+One can choose to specify @t{msSF} for both @t{mean} and @t{sigma},
+or choose @t{meanSF} for @t{mean}, and/or @t{sigmaSF} for @t{sigma},
+or if none is chosen, the default values are 1.
+All the parameters can be defined as @t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+@cindex FlatScaleFactorIntegral, rarGaussModel config
+@item @t{FlatScaleFactorIntegral = <yes|no>}@*
+This optional config specifies to use FlatScaleFactorIntegral or not.
+The default is @t{yes}.
+To disable FlatScaleFactorIntegral, this config must be set to @t{no}.
+@end itemize
+
+@cindex example, rarGaussModel
+@cindex example, GaussModel
+An example is shown below:
+@example
+[dtSigModel Config]
+configStr=GaussModel
+x=dt
+mean=-0.1715 L(-5 - +5)
+sigma=1.0893 L(.5 - 5)
+msSF=dtErr
+@end example

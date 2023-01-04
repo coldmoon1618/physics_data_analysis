@@ -1,0 +1,109 @@
+
+   Flat File Format for Colorado-Milan Quasi-2 Body Analyses
+  -----------------------------------------------------------
+
+Column		Variable		Ntuple var name			Default	Range
+--------------------------------------------------------------------------------------
+col#  1		deltaT			bDeltaT
+col#  2		sigma(deltaT)		bCovDeltaT
+col#  3		bZTrueZReco		bTrueZReco
+col#  4		bTrueDeltaZ		bTrueDeltaZ
+col#  5		bTrueZUpsilon		bTrueZUpsilon
+col#  6		bTrueDeltaT		bTrueDeltaT
+col#  7		onOffRes		(MC=0; onpeak=1; offpeak=2)
+					if (runNumber >= 200000)
+					   _onOffRes = 0.;
+					else if (EbeamCM >= 5.275)
+					   _onOffRes = 1.;
+					else _onOffRes = 2.;
+col#  8		bHasAssoc		bHasAssoc
+col#  9		other mass
+col# 10		bTag04Tag		bTag04Tag
+col# 11		bTag04Cat		bTag04Cat
+col# 12		bMoriondTag		bMoriondTag
+col# 13		bTrueTag		bTrueTag
+col# 14		bMoriondCat		bMoriondCat
+col# 15		bProbB0			bProbB0
+col# 16		bTrueRecFlav		bTrueRecFlav
+col# 17		Charge(DirectCP)	
+col# 18		bRecType		bRecType
+col# 19		helicity						0.
+col# 20		mass 4
+col# 21		mass 3
+col# 22		abs(cosThetaThrust)	fabs(bCosTB[])
+col# 23		DIRC pull (Pion hyp)					0.	[-100;100]
+col# 24		DIRC pull (Kaon hyp)					0.	[-100;100]
+col# 25		mass 2
+col# 26		mass 1
+col# 27		fisher			Tag04Fisher				[-4.0;5.0]
+col# 28		bDeltaE			bDeltaE					[-0.2;0.2]
+col# 29		bM_es			bM_es					[5.20;5.29]
+col# 30		runNumber		runNumber
+col# 31		upperID (in hex)	sprintf(IDval, "%8x", upperID);
+					  _upperID.setVal(IDval);
+col# 32		lowerID (in hex)	sprintf(IDval, "%8x", lowerID);
+					  _lowerID.setVal(IDval);
+col# 33		MC truth		bMcMatch
+                                        initialize col#33 = 0;
+					if( data==signal_MC && !MCtruth ) set col#33 = 1;
+					if( data==bkg_MC    && MCtruth  ) set col#33 = 1;
+col# 34		deltaE(K)-deltaE(pi)	dEKmdEpi
+col# 35		helicity2
+col# 36		bLgdFisher		LGDFisher
+col# 37		bLTCFisher		LTCFisher
+col# 38		bVertexProb		bVertexProb[]			<-- B vertex probability
+col# 39		KsVertexProb		resVertexProb[kShortIdx]	<-- Ks vertex probability (for Ks modes)
+col# 40		Egam			gamE[]
+col# 41		0
+------------------------------------------------------------------------
+
+The numbering of the masses (1, 2, 3, 4) follows the numbers
+in the decay : B->R1+R3, R1->r2+X, R3->r4+Y
+
+The BReco flat file format can be found at :
+
+  http://www.slac.stanford.edu/BFROOT/www/Physics/CP/beta/doc/fitFormat.html
+
+
+Definition of column #18 : bRecType
+
+> bRecType is a 4 digit number : CRDG
+> (calculated as 1000*C+100*R+10*D+G with the numbers given below)
+> C = 5 ((Q2B) charmless) (C can not be < 5 since already taken by JPsi & breco etc)
+> R = resonance:
+>   - eta' = 0
+>   - omega = 1
+>   - phi = 2
+>   - eta = 3
+> D = decay of resonance
+>   o for eta':
+>     - eta pipi (eta->2gamma) = 0
+>     - eta pipi (eta->3pi) = 2
+>     - rho gamma = 4
+>   o for eta:
+>     - 2gamma = 0
+>     - 3pi = 2
+>   o for omega:
+>     - 3pi = 0
+>   o for phi:
+>     - KK = 0
+> G = group of B decays:
+>   - Ks = 0
+>   - K+/- = 1
+>   - pi0 = 2
+>   - pi+/- = 3
+>   - K*0 (K+pi-) = 4
+>   - K*0 (KSpi0) = 5
+>   - K*+ (Kspi+) = 6
+>   - K*+ (K+pi0) = 7
+>   - Ks -> pi0pi0 = 8
+>   - KL = 9
+>   - rho0 = 10
+>   - rho+ = 11
+>   - phi = 12
+>   - omega = 13
+>   - eta -> 2gamma = 14
+>   - eta -> 3pi = 15
+>   - eta' -> etapipi -> 2gamma = 16
+>   - eta' -> etapipi -> 3pi = 17
+>   - eta' -> rhogamma = 18

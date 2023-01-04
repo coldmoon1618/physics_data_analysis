@@ -1,0 +1,42 @@
+//void comProjPlots()
+{
+gROOT.Reset();
+gROOT->LoadMacro("NewPad.C");
+gROOT->LoadMacro("combPlots.C");
+gROOT->LoadMacro("combCurves.C");
+gROOT->SetStyle("BABAR");
+
+TFile f1("results/rhoka1_projection_signal.root");
+//TFile f1("results/rhoka1_projection_f0.root");
+RooPlot* mES1 = f1.Get("proj_mES");
+RooPlot* deltaE1 = f1.Get("proj_deltaE");
+
+
+TFile f2("results/rhoka2_projection_signal.root");
+//TFile f2("results/rhoka2_projection_f0.root");
+RooPlot* mES2 = f2.Get("proj_mES");
+RooPlot* deltaE2 = f2.Get("proj_deltaE");
+
+
+Double_t leftMargin = 0.17;
+gStyle->SetNdivisions(405,"x");
+gStyle->SetNdivisions(405,"y");
+
+TCanvas *c = new TCanvas("c", "all", 000, 000, 600, 500);
+
+gStyle->SetPadTopMargin(0.05);
+gStyle->SetPadRightMargin(0.05);
+gStyle->SetPadBottomMargin(0.25);
+gStyle->SetPadLeftMargin(0.15);
+
+combPlots(mES1, mES2, "m_{ES} (GeV) ", "Events / 2 MeV");
+//combPlots(deltaE1, deltaE2, "#Delta E (GeV) ", "Events / 10 MeV");
+
+BABARSmartLabel(-1,-1,-1,"Preliminary");
+
+c->Print("rhoka12_mES_proj_signal.eps");
+//c->Print("rhoka12_mES_proj_f0.eps");
+//c->Print("rhoka12_deltaE_proj_signal.eps");
+//c->Print("rhoka12_deltaE_proj_f0.eps");
+
+}

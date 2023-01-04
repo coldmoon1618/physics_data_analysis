@@ -1,0 +1,36 @@
+@c This file is meant to be included other texinfo file
+@c Sample configs
+@c $Id: sampleConfigs.texinfo,v 1.4 2007/06/29 08:37:51 zhanglei Exp $
+
+
+@cindex Sample configs, RooRarFit
+@cindex Configuration, Samples
+@node sampleConfigs
+@section Sample Configs
+
+You can find sample config files
+@uref{@value{COMMONURL}/Sample_configs, here}
+(Babar internal only).
+Please copy the sample config file and its dsd file to @t{workdir}
+to run.
+A few typical config files are explained below:
+
+@itemize @bullet
+@item @uref{@value{COMMONURL}/Sample_configs/omks.config, omks.config}@*
+Config file for omegaKz analysis. You can find pretty much everything
+for the analysis, yield fit, BR fit, S, C, toy study (scanning, etc.), etc.
+
+@cindex k/pi fitting
+@cindex PID fitting example
+@item @uref{@value{COMMONURL}/Sample_configs/omh.config, omh.config}@*
+Config file for omegaH analysis. You can find configs for K/pi fitting.
+
+@cindex vv fitting
+@item @uref{@value{COMMONURL}/Sample_configs/omrho.config, omrho.config}@*
+Config file for omegaRho analysis. You can find configs for B-->VV analysis.
+
+@cindex physCat splitting
+@item @uref{@value{COMMONURL}/Sample_configs/ksboth.config, ksboth.config}@*
+Config file for eta'Ks analysis. You can find configs for physCat splitting.
+
+@end itemize

@@ -1,0 +1,16 @@
+File lists for MC13a
+    ep3_10ifb.txt
+    ep3_1iab.txt
+
+Skip events without signal channel, make no cuts to assess cutflow
+    CutFlow_MC13a.py
+Skip events without candidates, preselection cuts already made
+    Reco_MC13a.py
+Does the same thing as above on SigMC files
+    SigMC.py
+Submit gbasf2 jobs for the first two scripts
+    submit_jobs_rec.sh*
+
+TODO: update reco release to 05-02-17 and official MC to MC14
+
+Sept 30, 2021

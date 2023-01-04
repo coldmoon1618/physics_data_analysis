@@ -1,0 +1,147 @@
+Index: RooAbsReal.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooAbsReal.cc,v
+retrieving revision 1.110
+diff -u -r1.110 RooAbsReal.cc
+--- RooAbsReal.cc	29 Mar 2005 17:44:20 -0000	1.110
++++ RooAbsReal.cc	18 Aug 2005 05:03:19 -0000
+@@ -270,7 +270,7 @@
+   // Set minimum value of output associated with this object
+ 
+   // Check if new limit is consistent
+-  if (_plotMin>_plotMax) {
++  if (value>_plotMax) {
+     cout << "RooAbsReal::setPlotMin(" << GetName() 
+ 	 << "): Proposed new integration min. larger than max., setting min. to max." << endl ;
+     _plotMin = _plotMax ;
+@@ -284,7 +284,7 @@
+   // Set maximum value of output associated with this object
+ 
+   // Check if new limit is consistent
+-  if (_plotMax<_plotMin) {
++  if (value<_plotMin) {
+     cout << "RooAbsReal::setPlotMax(" << GetName() 
+ 	 << "): Proposed new integration max. smaller than min., setting max. to min." << endl ;
+     _plotMax = _plotMin ;
+Index: RooArgSet.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooArgSet.cc,v
+retrieving revision 1.55
+diff -u -r1.55 RooArgSet.cc
+--- RooArgSet.cc	22 Mar 2005 13:05:14 -0000	1.55
++++ RooArgSet.cc	16 Apr 2005 09:11:56 -0000
+@@ -709,8 +709,8 @@
+ 	if (!argRet && flagReadAtt) arg->setAttribute(flagReadAtt,kTRUE) ;
+ 	retVal |= argRet ;
+       } else {
+-	cout << "RooArgSet::readFromStream(" << GetName() << "): argument " 
+-	     << token << " not in list, ignored" << endl ;
++	//cout << "RooArgSet::readFromStream(" << GetName() << "): argument " 
++	//     << token << " not in list, ignored" << endl ;
+ 	parser.zapToEnd() ;
+       }
+     } else {
+Index: RooMCStudy.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooMCStudy.cc,v
+retrieving revision 1.27
+diff -u -r1.27 RooMCStudy.cc
+--- RooMCStudy.cc	25 Feb 2005 14:22:58 -0000	1.27
++++ RooMCStudy.cc	15 Jun 2007 00:06:39 -0000
+@@ -95,7 +95,7 @@
+   RooCmdConfig pc(Form("RooMCStudy::RooMCStudy(%s)",model.GetName())) ;
+   
+   pc.defineObject("fitModel","FitModel",0,0) ;
+-  pc.defineObject("condObs","ProjectedDependents",0,0) ;
++  pc.defineObject("condObs","ProjectedObservables",0,0) ;
+   pc.defineObject("protoData","PrototypeData",0,0) ;
+   pc.defineInt("randProtoData","PrototypeData",0,0) ;
+   pc.defineInt("verboseGen","Verbose",0,0) ;
+@@ -338,6 +338,7 @@
+     
+     // Add to list or delete
+     if (keepGenData) {
++      if (!_genDataList.FindObject(genSample))
+       _genDataList.Add(genSample) ;
+     } else {
+       delete genSample ;
+Index: RooSimPdfBuilder.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooSimPdfBuilder.cc,v
+retrieving revision 1.29
+diff -u -r1.29 RooSimPdfBuilder.cc
+--- RooSimPdfBuilder.cc	25 Feb 2005 14:23:02 -0000	1.29
++++ RooSimPdfBuilder.cc	27 Oct 2005 18:17:04 -0000
+@@ -480,7 +480,7 @@
+   TIterator* iter = _protoPdfSet.createIterator() ;
+   RooAbsPdf* proto ;
+   while (proto=(RooAbsPdf*)iter->Next()) {
+-    buildConfig->addOwned(* new RooStringVar(proto->GetName(),proto->GetName(),"",4096)) ;
++    buildConfig->addOwned(* new RooStringVar(proto->GetName(),proto->GetName(),"",40960)) ;
+   }
+   delete iter ;
+ 
+@@ -503,7 +503,7 @@
+   const char* spaceChars = " \t" ;
+ 
+   // Retrieve physics index category
+-  char buf[2048] ;
++  char buf[20480] ;
+   strcpy(buf,((RooStringVar*)buildConfig.find("physModels"))->getVal()) ;
+   RooAbsCategoryLValue* physCat(0) ;
+   if (strstr(buf," : ")) {
+Index: RooAddPdf.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooAddPdf.cc,v
+retrieving revision 1.66
+diff -u -r1.66 RooAddPdf.cc
+--- RooAddPdf.cc	29 Mar 2005 14:00:02 -0000	1.66
++++ RooAddPdf.cc	30 Aug 2006 21:51:42 -0000
+@@ -47,6 +47,7 @@
+ #include "RooFitCore/RooPlot.hh"
+ #include "RooFitCore/RooRealVar.hh"
+ #include "RooFitCore/RooAddGenContext.hh"
++#include "RooFitCore/RooGenContext.hh"
+ #include "RooFitCore/RooRealConstant.hh"
+ #include "RooFitCore/RooNameReg.hh"
+ using std::cout;
+@@ -850,6 +851,39 @@
+ RooAbsGenContext* RooAddPdf::genContext(const RooArgSet &vars, const RooDataSet *prototype, 
+ 					const RooArgSet* auxProto, Bool_t verbose) const 
+ {
++  // check which gen to return
++  // if negative coeff exist, use RooGenContext
++  Bool_t useDefault(kTRUE);
++  if (_allExtendable) {
++    for (Int_t i=0 ; i<_pdfList.getSize() ; i++) {
++      Double_t nEvt=((RooAbsPdf*)_pdfList.at(i))->expectedEvents(_refCoefNorm.getSize()>0?&_refCoefNorm:&vars);
++      if (nEvt<0) {
++        useDefault=kFALSE;
++        break;
++      }
++    }
++  } else {
++    Double_t sum(0);
++    for (Int_t i=0 ; i<_coefList.getSize() ; i++) {
++      Double_t coeff = ((RooAbsPdf*)_coefList.at(i))->getVal(&vars) ;
++      if (coeff<0) {
++        useDefault=kFALSE;
++        break;
++      }
++      sum+=coeff;
++    }
++    if (!_haveLastCoef) {
++      Double_t lastcoeff=1-sum;
++      if (lastcoeff<0) useDefault=kFALSE;
++    }
++  }
++  
++  if (!useDefault) {
++    cout<<"RooAddPdf::genContext("<<GetName()
++        <<") WARNING: use RooGenContext (because coeff<0)"<<endl;
++    return new RooGenContext(*this,vars,prototype,auxProto,verbose);
++  }
++  
+   return new RooAddGenContext(*this,vars,prototype,auxProto,verbose) ;
+ }
+ 

@@ -1,0 +1,61 @@
+@c This file is meant to be included other texinfo file
+@c rarMLPdf configs
+@c $Id: rarMLPdfConfig.texinfo,v 1.6 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@cindex rarMLPdf Configs
+@cindex configuration, rarMLPdf
+@cindex pdf configuration, rarMLPdf
+@node rarMLPdfConfig
+@subsection rarMLPdf Configs
+
+@t{rarMLPdf} is an extended AddPdf,
+which serves as prototype pdf for final mlFitter
+if the final mlFitter is SimPdf,
+or it will be the final mlFit model if the final mlFitter is not SimPdf.
+
+@itemize @bullet
+@cindex configStr, rarMLPdf config
+@item @t{configStr = MLPdf ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{MLPdf}.
+This config is required to have this pdf configured as @t{rarMLPdf}.
+
+@cindex Comps, rarMLPdf config
+@item @t{Comps = <compPdfName1> [<compPdfName2> ... <compPdfNameN>]}@*
+This config specifies components for @t{rarMLPdf}.
+The components usually consist of one or more signal parts,
+one continuum background, any @i{BB} backgrounds, etc.
+This config is mandatory for any pdf inherited from @t{rarCompBase}.
+
+@cindex Coeffs, rarMLPdf config
+@item @t{Coeffs = [fullNamed] <coeff1> [<coeff2> ... <coeffN>]}@*
+This config specifies coefficients for all its components.
+Since this pdf is an extended AddPdf,
+the number of coefficients should match that of components.
+If the first arg is @t{fullNamed},
+all the following configs are supposed to be full names.
+@c
+This config is mandatory for any pdf inherited from @t{rarAddPdf}.
+
+
+@item @t{<coeff1> = AbsReal Def}
+@item @t{...}
+@item @t{<coeffN> = AbsReal Def}@*
+All the coeffs can be defined as @t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@end itemize
+
+@cindex example, rarMLPdf
+@cindex example, MLPdf
+An example is shown below:
+@example
+[yieldModel Config]
+configStr=MLPdf "ml model"
+Comps=SigPdf BkgPdf ChlsPdf
+Coeffs=nSig nBkg nChls
+nBkg =nBkg  6000 L(  0 - 10000)
+nSig =nSig   156 L(-10 -   500)
+nChls=nChls 1300 L(  0 -  3000)
+@end example

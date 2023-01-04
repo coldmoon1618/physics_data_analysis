@@ -1,0 +1,19 @@
+This dir studies the selection of a single B0 candidate out of event based B0_Rec
+
+PlotMatchingEff.C
+Using random single candidates vs the matched ones to estimate matching eff
+    PlotMatchingEff.C
+    matching_eff_same.pdf
+    matching_eff_sep.pdf
+
+Studies the differences of candidates from different cuts
+    MakePlots.C
+    Mbc_deltaE_diff.pdf
+    phiKs_3sigma_cuts.pdf
+    multiplicity.pdf
+
+Final preview of single candidate choice:
+    SingleCandidate.C
+    candi_Mbc_deltaE.pdf
+
+April 4, 2021

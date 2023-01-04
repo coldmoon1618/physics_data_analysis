@@ -1,0 +1,187 @@
+@c This file is meant to be included other texinfo file
+@c mlFit action
+@c $Id: mlFitAction.texinfo,v 1.18 2010/06/15 13:10:02 fwilson Exp $
+
+
+@anchor{sec_mlFit}
+@cindex mlFit Action
+@cindex action, mlFit
+@cindex RooRarFit mlFit action
+@node mlFitAction
+@subsection mlFit Action
+
+mlFit action is to fit full ml model to (on-peak) dataset to get
+yields, etc.
+
+The default param input is the intermediate param file from pdfFit action.
+Configs
+@t{preMLReadParams} and @t{preMLReadSecParams}
+can be used to change the initial values.
+The intermediate param output file have the final values from the ML fit,
+and will be used as input for all kind of plotting.
+There is no ROOT file output.
+All the results are shown in log file.
+
+@itemize @bullet
+@cindex mlFit, pdf action
+@cindex pdf action, mlFit
+@item @t{mlFit = <no|yes>}@*
+To enable this action, this config must be explicitly set to @t{yes}
+(default @t{no}).
+
+@cindex mlFitData, pdf action
+@cindex pdf action, mlFitData
+@item @t{mlFitData = <datasetName> ["<optional cut string>"]}@*
+This config specifies the dataset for mlFit action.
+You can give this config an optional string as the second token,
+which will be applied to the dataset for additional cuts.
+
+@cindex mlFitOption, pdf action
+@cindex pdf action, mlFitOption
+@item @t{mlFitOption = <fitOptions>}@*
+This config can be used to set ml-fitting options
+(default @t{"ehr"}).
+The full ml model is an extended pdf,
+so the fitting option should always have option @t{"e"},
+which means extended fit.
+Add option @t{"b"} to suppress RooFit informational messages
+for blind fit.
+
+@cindex preMLReadParams, pdf action
+@cindex pdf action, preMLReadParams
+@item @t{preMLReadParams = <yes|no|paramFileID>}@*
+NOT to read in initial values of parameters before mlFit,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+
+@cindex preMLReadSecParams, pdf action
+@cindex pdf action, preMLReadSecParams
+@item @t{preMLReadSecParams = <yes|no|secName>}@*
+If set to @t{yes} (default), just after read in params from param file,
+the fitter will try to override the params with values found
+in the action section.
+Instead of @t{yes} or @t{no}, you can also give it a section name,
+and then the fitter will try to read values from that section first.
+
+@cindex postMLWriteParams, pdf action
+@cindex pdf action, postMLWriteParams
+@item @t{postMLWriteParams = <yes|no|paramFileID>}@*
+NOT to output pdf paramters after mlFit,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+
+@cindex postMLSignf, pdf action
+@cindex pdf action, postMLSignf
+@item @t{postMLSignf = [no] <paramName1> <0|0signfValue> ...}@*
+If specified (and the first token is not @t{no}),
+significance of given params with respect to given values (default @t{0})
+will be calculated.
+
+@cindex postMLSysParams, pdf action
+@cindex pdf action, postMLSysParams
+@item @t{postMLSysParams = <no|[<defaultVariantUnit>] param1Specification...>}@*
+This config specifies how to vary fixed parameters
+to study the systematic uncertainties of floating parameters
+we are interested in, due to the uncertainties of those fixed parameters.
+@c
+Optional @t{<defaultVariantUnit>} specifies
+default variations in term of errors (default @t{1}).
+@t{paramXSpecification} includes parameter name,
+plus variation and minus variation in term of parameter errors.
+If the variations are in term of absolute value,
+append those numbers with @t{V}. If only one variation for the param
+is specified, it will be used for plus and minus variations.
+If no variation value specified for a param, the default value will be used.
+@c
+For split params, there are two choices.
+One is to list the unsplit params and vary the split params
+all together in the same direction.
+One is to list individual split params and vary them separately.
+@c
+If this config is not specified (or the first token is @t{no}),
+no such systematic error study will be performed.
+
+@cindex postMLSysVars, pdf action
+@cindex pdf action, postMLSysVars
+@item @t{postMLSysVars = <no|var1...>}@*
+This config specifies free parameters, usually those we are interested in,
+for example, yields, the fitting uncertainties of which,
+due to uncertainties of fixed parameters in @t{postMLSysParams},
+need to be studied.
+If not specified (or the first token is @t{no}), no such systematic error
+study will be performed.
+
+@cindex systematic error table
+When both @t{postMLSysParams} and @t{postMLSysVars} are set properly,
+systematic error studies for @t{postMLSysVars} due to the variations
+of fixed @t{postMLSysParams} will be performed.
+The systematic error table will be printed out at the end of @t{mlFit} job.
+The systematic error table looks like:
+@example
+Systematic Error Table:
+                            nSig  corr matrix:   var1  var2  var3
+  var1  +4  -2   +.2  -.2    +.2                  1     0     0
+  var2  +1  -1   -.3  +.3    -.3                  0     1     0
+  var3  +1  -1   +.4  -.4    +.4                  0     0     1
+(w/o) corr):                  .5
+(w/ corr):                    .5
+@end example
+The first column is the names of fixed vars to vary.
+The second column is the plus variation for the vars.
+The third column is the minus variation for the vars.
+The next three columns are for the first studied var:
+the plus variation, minus, and average effects.
+The remaining studied vars, if any, will follow it in the same fashion.
+At the far right side of the table is the correlation matrix
+of those fixed vars.
+The last two rows show the total effects without and with taking
+the correlation matrix into account.
+
+Please notice that if the number of fixed vars in the study is large,
+the table will be very very long and wide, please make sure the editor
+used to view the table does not wrap lines so that it is more readable.
+
+@cindex postMLGOFChisq, pdf action
+@cindex pdf action, postMLGOFChisq
+@item @t{postMLGOFChisq = <no|yes>}@*
+If specified (and the first token is not @t{no}),
+Goodness-of-fit defined as chisq will be calculated.
+
+This config can also be used in @t{toyStudy} action.
+
+@c @cindex postMLGOFObs, pdf action
+@c @cindex pdf action, postMLGOFObs
+@c @item @t{postMLGOFObs = <obs1> ...}@*
+@c Observables used to calculate GOF.
+@c 
+@c @cindex postMLGOFMinEvtPerBin, pdf action
+@c @cindex pdf action, postMLGOFMinEvtPerBin
+@c @item @t{postMLGOFMinEvtPerBin = <minEvtPerBin> ...}@*
+@c Minimum number of events per bin for GOF chisq calculation.
+@c (default @t{5}).
+
+@cindex mlFitNumCPU, pdf action
+@cindex pdf action, mlFitNumCPU
+@item @t{mlFitNumCPU = <1-8>}@*
+The number of CPUs (cores) to be used in the ml-fitting. The fitter will
+try to parallelise the fit over the available cores. (default @t{1}).
+
+@end itemize
+
+@cindex example, mlFit action
+An example is shown below:
+@example
+[ML Fit Action Config]
+// mlFit options
+mlFit=yes
+//mlFitOption=emhr
+postMLSignf = nSig
+postMLSysParams = deSig_scale .05V deSig_simga
+postMLSysVars = nSig fL
+@end example

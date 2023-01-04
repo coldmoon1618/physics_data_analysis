@@ -1,0 +1,190 @@
+@c This file is meant to be included other texinfo file
+@c Dataset input configurations
+@c $Id: dsi.texinfo,v 1.12 2007/06/29 08:37:49 zhanglei Exp $
+
+
+@anchor{sec_dsi}
+@cindex Dataset Input Section
+@cindex configuration section, dataset input config
+@cindex RooRarFit dataset input section
+@node dsIsec
+@subsection Dataset Input Section
+
+The container of all datasets, an object of class
+@uref{#item_rarDatasets, rarDatasets},
+is instantiated by @t{main} function of the program,
+and its config section, @t{[Dataset Input]},
+can be changed by command line option,
+@cindex -D, command line option
+@cindex command line option, -D
+@t{-D "<data input section name>"}.
+
+@itemize @bullet
+@cindex dsdSec, RooRarFit dataset input section
+@item @t{dsdSec = <dataset definition section>}@*
+This config specifies the name of the dataset definition section.
+If not specified, the default name is @t{Dataset Definition}.
+
+@cindex Datasets, RooRarFit dataset input section
+@item @t{Datasets = <data01> ... <dataN>}
+@item @t{<data01> = <dataset creation string>}
+@item @t{...}
+@item @t{<dataN> = <dataset creation string>}@*
+@t{Datasets} specifies all the datasets need to be configured.
+This config is required for this config section.
+You can also put this config, @t{Datasets}, into individual action sections,
+in which case it will override the one specified here.
+This is useful when you want to have different datasets for different actions.
+@c
+Configs named @t{<data01>}, @t{...}, @t{<dataN>},
+are the definitions of all the datasets declared with @t{Datasets}.
+In fact, each declared dataset should have its definition.
+There are
+five (for now)
+@c four @c later with root data file
+ways to create a dataset, all of which
+are implemented in @uref{#item_rarConfig, rarConfig::createDataSet}.
+
+@cindex dataset creation
+@cindex RooDataSet creation
+@cindex create RooDataSet
+@enumerate
+@cindex Create dataset from ascii data file
+@cindex dataset creation, from ascii data file
+@cindex ascii, create dataset
+@item Create dataset from ascii data file
+@itemize @bullet
+@item @t{<dsName> = ascii "<dataset Title>" 
+                        "<dataSetFileName>" [<options>]
+                        ["<Common Path>"] [<indexCatName>]}
+@end itemize
+The meaning of all the fields are pretty straightforward.
+The order of the columns in ascii file should match that
+of @t{Fields} in dataset definition section (@xref{dsDsec}).
+Optional @t{<options>} will be passed to
+@uref{@value{ROOFITURL}/RooDataSet.html#RooDataSet:read, RooDataSet::read}
+and value of `@t{Q}' will suppress warning messages.
+If @t{"<Common Path>"} is specified,
+@t{"<dataSetFileName>"} can be a string of several dataset file names
+separated by comma.
+@c
+I have not found how to use @t{<indexCatName>},
+but it is there just in case somebody knows howto and wants to use it.
+
+@cindex Create dataset from root data file
+@cindex dataset creation, from root data file
+@cindex root file, create dataset from
+@item Create dataset from root data file
+@itemize @bullet
+@item @t{<dsName> = root "<dataset Title>" 
+                        "<dataSetFileName>"
+                        "<ntupleID>"
+                        ["<optional Cuts>"]}
+@end itemize
+The meaning of all the fields are pretty straightforward.
+
+@cindex Create dataset by addition
+@cindex dataset creation, by addition
+@cindex add, create dataset
+@item Create dataset by addition
+@itemize @bullet
+@item @t{<dsName> = add "<dataset Title>" 
+                     <dsSrcName1> <#Evt1> [<dsSrcName2> <#Evt2> ...]}
+@end itemize
+This method will extract randomly specific number of events
+(@t{<#Evt1>}, @t{<#Evt2>}, ...) from datasets,
+@t{<dsSrcName1>}, @t{<dsSrcName2>}, ...,
+which have already been configured.
+@t{<#EvtX>} can be any number greater than or equal to 1,
+which means @t{<#EvtX>} events (no more than the number of entries
+in the dataset) will be selected randomly;
+or it can be a number between 0 and 1,
+which means @t{<#EvtX>@bullet{}<datasetEntries>} events will be selected;
+or it can be 0,
+which means the full dataset will be selected.
+
+@cindex Create dataset by reduction
+@cindex dataset creation, by reduction
+@cindex reduce, create dataset
+@item Create dataset by reduction
+@itemize @bullet
+@item @t{<dsName> = reduce "<dataset Title>" <dsSrcName>
+                     "<cuts>"}
+@end itemize
+The new dataset @t{<dsName>} will be created from dataset @t{<dsSrcName>}
+with @t{"<cuts>"} applied.
+
+@cindex Create RooDataHist
+@cindex RooDataHist
+@item Create @t{RooDataHist}
+@itemize @bullet
+@item @t{<dsName> = hist "<dataset Title>" <dsSrcName>}
+@end itemize
+The new dataset @t{<dsName>} will be created from dataset @t{<dsSrcName>}
+as @uref{@value{ROOFITURL}/RooDataHist.html, @t{RooDataHist}}
+
+@end enumerate
+
+@cindex setWeightVar, RooRarFit dataset input section
+@item @t{setWeightVar = <no|[varName] dsName11 ... varName1 dsName21 ... varName2>}@*
+This optional config specifies if to use weight in datasets.
+If not specified, the default is @t{no}, not to use weight.
+If the first optional token is a @t{RooRealVar} in datasets,
+it will be the default weight var unless further tokens
+give more specifications.
+You can use the remaining tokens to give more specific instructions.
+The format is dataset names followed by weight var name.
+If the first token (optional) is not weight var name,
+only those datasets specified explicitly are weighted.
+
+@cindex tabulateDatasets, RooRarFit dataset input section
+@item @t{tabulateDatasets = <no|yes>}@*
+This optional config specifies if to tabulate datasets.
+If it is set to @t{yes} (default @t{no}),
+a 1D table will be printed out against each category for each dataset.
+
+@cindex computeCorrelations, RooRarFit dataset input section
+@item @t{computeCorrelations = <yes|no|dataSetName1 dataSetName2 ...>}@*
+This optional config specifies if to compute correlation matrix for datasets.
+A correlation table will be printed out for each dataset
+unless it is set to @t{no} (default @t{yes}).
+Or you can explicitly give a list of dataset names.
+
+@cindex ub token, RooRarFit dataset input section
+@cindex unblind token, dsi
+@cindex dataset unblind token, dsi
+@cindex dsi, dataset unblind token
+@item @t{ub_<datasetName> = <ubToken1> <ubToken2>...}@*
+Any fitting action except @t{pdfFit} and @t{toyStudy} on a dataset
+requires that dataset to be ``unblinded'',
+which means this config is set to valid ``tokens''.
+The token  will be given when you try to do the fitting action.
+Please follow the instruction given by the fitter.
+Unblinding dataset does not necessarily unblind your results,
+as long as you use RooUnblindPrecision or RooUnblindOffset
+and the state is set to blind,
+those variables they try to blind still remain blind.
+
+@end itemize
+
+
+@cindex example, RooRarFit dataset input section
+@cindex example, dataset input section
+A sample config section for dataset input is shown below:
+@example
+[Dataset Input]
+// Specify dataset definition section
+dsdSec = Dataset Definition
+
+// Specify datasets to be defined
+Datasets = sigMC bkgMC onData gsbData desbData simData
+
+// Definition for each dataset
+sigMC    = ascii "sig MC Data" "omega/dat/omegaks_SIGMC.text" Q // quiet mode
+bkgMC    = ascii "tot bkg MC Data" "omega/dat/omegaks_BKGMC.text" Q
+onData   = ascii "onpeak Data" "omega/dat/omegaks_ONPEAK.text" Q
+gsbData  = reduce "gsd Data" onData "mes<5.27"
+desbData = reduce "de sb Data" onData "(de<-.1)||(de>.1)"
+simData  = add "simulated Data" sigMC 0.0113 bkgMC 6000
+@end example
+

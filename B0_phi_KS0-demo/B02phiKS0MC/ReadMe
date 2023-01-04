@@ -1,0 +1,29 @@
+Orignal settings that had been used throughout 2020
+100_2k_evts/
+    B02phiKS0_EventGeneration_original_settings.py
+    100_2k_evts/    Used so far only generated in May 2020
+    Bd_phiKS_K+K-pi+pi-.dec
+
+MC13a
+rel040003.dec
+MC14a
+rel050109.dec
+
+Starting Jan 2021
+Additional channels for decay chain tracing, noPhotos 
+Multi_ch_noPhotos/
+    Multi_ch_noPhotos.dec
+    genMulti_Ch.py
+    multi.err
+    multi.log
+    multi_ch_events_2000.mdst.root
+
+Pure signal channal, noPhotos
+Pure_signal_noPhotos/
+    Signal_noPhotos.dec
+    genSignal.py
+    signal.err
+    signal.log
+    signal_events_2000.mdst.root
+
+Sept 12, 2021

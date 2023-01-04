@@ -1,0 +1,7 @@
+
+				RooRarFit
+	A General ML Fitter Package Based on ROOT/RooFit
+
+* What is RooRarFit? And what does RAR stand for?
+    - RooRarFit is a general ML fitting package beased on ROOT/RooFit
+    - RooRarFit/rarFit Aren't RooFit.

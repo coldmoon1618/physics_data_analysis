@@ -1,0 +1,181 @@
+@c This file is meant to be included other texinfo file
+@c sPlot action
+@c $Id: sPlotAction.texinfo,v 1.14 2007/06/29 08:37:51 zhanglei Exp $
+
+
+@anchor{sec_sPlot}
+@cindex sPlot Action
+@cindex action, sPlot
+@cindex RooRarFit sPlot action
+@node sPlotAction
+@subsection sPlot Action
+
+sPlot action is to get sPlots.
+
+The default param input is the intermediate param file from mlFit action.
+@t{preSPlotReadParams} and @t{preSPlotReadSecParams}
+can be used to change the initial values.
+There is no intermediate param file output.
+ROOT file containing sPlots and sWeighted datasets produced by this action
+is for user to review.
+As always, log file also provides useful information.
+
+@itemize @bullet
+@cindex sPlot, pdf action
+@cindex pdf action, sPlot
+@item @t{sPlot = <no|yes>}@*
+To enable this action, this config must be explicitly set to @t{yes}
+(default @t{no}).
+
+@cindex preSPlotReadParams, pdf action
+@cindex pdf action, preSPlotReadParams
+@item @t{preSPlotReadParams = <yes|no|paramFileID>}@*
+NOT to read in initial values of parameters before sPlot,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+
+@cindex preSPlotReadSecParams, pdf action
+@cindex pdf action, preSPlotReadSecParams
+@item @t{preSPlotReadSecParams = <no|yes|secName>}@*
+If set to @t{yes} (default @t{no}), just after read in params from param file,
+the fitter will try to override the params with values found
+in the action section.
+Instead of @t{yes} or @t{no}, you can also give it a section name,
+and then the fitter will try to read values from that section first.
+
+@cindex sPlotFile, pdf action
+@cindex pdf action, sPlotFile
+@item @t{sPlotFile = <default|sPlotOutputFile.root>}@*
+The root file name will be
+@t{<configFile>.<fitterName>.sPlot.<actionName>.root}
+unless the token is actually a root file name.
+
+@cindex sPlotSaveSWeight, pdf action
+@cindex pdf action, sPlotSaveSWeight
+@item @t{sPlotSaveSWeight = <no|yes>}@*
+By default, only the sPlot itself will be saved into root file.
+If this config is set to @t{yes} (default @t{no}),
+the sWeighted dataset will be saved as well.
+
+@cindex sPlotComps, pdf action
+@cindex pdf action, sPlotComps
+@item @t{sPlotComps = <all|compName1 ...>}@*
+An sPlot will be plotted for each component specified.
+The default is @t{all}, which means sPlot will be plotted for all components.
+
+@cindex sPlotVars, pdf action
+@cindex pdf action, sPlotVars
+@item @t{sPlotVars = <varName> ...}@*
+To set the sPlot observables,
+this config must be explicitly set to the names of that observables
+(default @t{notSet}).
+
+@cindex sPlotData, pdf action
+@cindex pdf action, sPlotData
+@item @t{sPlotData_<obs> = <datasetName> ["<optional cut string>"]}
+@item @t{sPlotData = <datasetName> ["<optional cut string>"]}@*
+This config specifies the dataset for sPlot action.
+You can give this config an optional string as the second token,
+which will be applied to the dataset for additional cuts.
+The first form has higher priority for a given observable.
+
+@cindex sPlotIgnoredVars, pdf action
+@cindex pdf action, sPlotIgnoredVars
+@item @t{sPlotIgnoredVars_<obs> = <varName1> ...}
+@item @t{sPlotIgnoredVars = <varName1> ...}@*
+In addition to @t{sPlotVar}, observables listed here (if any)
+will be ignored for sPlot plotting.
+The reason is some observables are highly correlated,
+to remove one, you have to remove all, otherwise the PDF for sPlot will
+not be correct, for example, the two helicities in VV modes.
+The default is @t{notSet} for no additional removed observables.
+The first form has higher priority for a given observable.
+
+@c @cindex sPlotNoPdfOverlay, pdf action
+@c @cindex pdf action, sPlotNoPdfOverlay
+@c @item @t{sPlotNoPdfOverlay_<obs> = <compName1> ...}
+@c @item @t{sPlotNoPdfOverlay = <compName1> ...}@*
+@c If specified, sPlots for listed components will not have
+@c pdf overlaid.
+@c The reason for this is for some unusual fitter (like in k/pi fitting),
+@c pdf can not be overlaid for some components and obs.
+
+@cindex sPlotPdfOverlay, pdf action
+@cindex pdf action, sPlotPdfOverlay
+@cindex sPlotNoPdfOverlay, pdf action
+@cindex pdf action, sPlotNoPdfOverlay
+@item @t{sPlotPdfOverlay_<obs> = <direct|yes|no|[yield1 pdf1...]>}
+@item @t{sPlotPdfOverlay = <direct|yes|no|[yield1 pdf1...]>}@*
+@c @item @t{sPlotPdfOverlay_<obs> = <yes|no|direct|compName1 ...>}
+@c @item @t{sPlotPdfOverlay = <yes|no|direct|compName1 ...>}@*
+The default is to overlay pdf on sPlot.
+If set to @t{no}, no pdf overlaid;
+if set to @t{direct} (default),
+the pdf used will be the pdf built directly
+for that component and that obs,
+instead of the total pdf;
+if set to @t{yes}, the total component pdf will be used,
+where the time of pdf overlay will be long
+due to the projection of the total pdf in most cases.
+You can also give explicitly for each component which pdf to use,
+or if to plot at all. For example,
+@example
+sPlotPdfOverlay_mRho = direct nSig mRhoSigExtra nBkg no
+@end example
+specifies @t{mRho} sPlot pdf overlay settings:
+no overlay for yield @t{nBkg},
+use `direct' pdfs for all other components and use pdf
+@t{mRhoSigExtra} as the `direct' pdf for yield @t{nSig}.
+
+To overlay pdf onto sPlot of obs which is @emph{not} included in the fit model,
+you have to give explicitly the name of pdf to overlay for that yield and obs,
+because the fitter can not find overlay pdf using the fit model.
+
+@cindex sPlotNormIgnoredObs, pdf action
+@cindex pdf action, sPlotNormIgnoredObs
+@item @t{sPlotNormIgnoredObs = <obs1> ...}@*
+This config can be used to ignore some observables for pdf normalization.
+For example, when plot with dt, @t{dtErr} and @t{tagFlav}
+should not be in the normalization list so this config should be used.
+
+@cindex plotBins, pdf action
+@cindex plotBins, sPlot
+@cindex pdf action, plotBins
+@item @t{plotBins_<varName> = <nBin>}@*
+To specify number of plot bins for sPlot of observable @t{<varName>}.
+If not specified, the number of plot bins will be set to
+the default value for that observable
+(when the observable is created with argument @t{B(<nBins>)}).
+
+@cindex plotRange, sPlot
+@cindex plotRange, pdf action
+@cindex pdf action, plotRange
+@item @t{plotRange_<obsName> = <Min> <Max>}@*
+It sets plot ranges for observable @t{<obsName>}.
+If not specified, the range will be set to the full ranges
+when it is created.
+
+@cindex sPlotHist, pdf action
+@cindex pdf action, sPlotHist
+@item @t{sPlotHist = <default|no|yes>}@*
+By default (@t{default} or @t{no}), the sPlot is saved as RooPlot.
+If for some reason, it is desirable to save the sPlot as regular histogram,
+this config can be set to @t{yes}.
+
+@end itemize
+
+@cindex example, sPlot action
+An example is shown below:
+@example
+[de sPlot Action Config]
+// sPlot options
+sPlot=yes
+preSPlotReadParams=yes
+sPlotFile=default
+sPlotComps=all
+sPlotVar=de
+plotBins_de=15
+@end example

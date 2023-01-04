@@ -1,0 +1,49 @@
+@c This file is meant to be included other texinfo file
+@c rarSimPdf configs
+@c $Id: rarSimPdfConfig.texinfo,v 1.4 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@anchor{sec_SimPdf}
+@cindex rarSimPdf Configs
+@cindex configuration, rarSimPdf
+@cindex pdf configuration, rarSimPdf
+@node rarSimPdfConfig
+@subsection rarSimPdf Configs
+
+@t{rarSimPdf} uses @t{RooSimPdfBuilder} to build @t{RooSimultaneous} Pdf.
+@emph{This pdf can not be used to build ML fitter model!}
+
+@itemize @bullet
+@cindex configStr, rarSimPdf config
+@item @t{configStr = Simultaneous ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{Simultaneous}.
+This config is required to have this pdf configured as @t{rarSimPdf}.
+
+@cindex Comps, rarSimPdf config
+@item @t{Comps = <compPdfName1> [<compPdfName2> ... <compPdfNameN>]}@*
+This config specifies components for @t{rarSimPdf},
+and is mandatory for any pdf inherited from @t{rarCompBase}.
+
+@cindex physModels, rarSimPdf config
+@item @t{physModels = <RooSimPdfBuilder config string>}@*
+This config specifies physics models.
+
+@cindex splitCats, rarSimPdf config
+@item @t{splitCats = <cat1>...}@*
+This config specifies splitting cats.
+
+@cindex splitting rules, rarSimPdf config
+@item @t{the_<compPdfName1> = <splitting rules>}@*
+This config specifies splitting rules for each model.
+
+@end itemize
+
+@c @cindex example, rarSimPdf
+@c @cindex example, Simultaneous
+@c An example is shown below:
+@c @example
+@c [emcNN2Sig Config]
+@c configStr=Simultaneous
+@c Comps=emcNNSigSimEmc emcNNSigSimIfr emcNNSigSimBoth
+@c category=kltype
+@c @end example

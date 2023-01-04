@@ -1,0 +1,63 @@
+@c This file is meant to be included other texinfo file
+@c rarPoly configs
+@c $Id: rarPolyConfig.texinfo,v 1.2 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@cindex rarPoly Configs
+@cindex configuration, rarPoly
+@cindex pdf configuration, rarPoly
+@node rarPolyConfig
+@subsection rarPoly Configs
+
+@t{rarPoly} is a wrapper of @t{RooPolynomial/RooChebychev} to build
+Polynomial/Chebychev PDF.
+
+@itemize @bullet
+@cindex configStr, rarPoly config
+@cindex configStr, Polynomial
+@cindex configStr, Chebychev
+@item @t{configStr = Polynomial ["<pdf Title>"]}
+@item @t{configStr = Chebychev ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{Polynomial} or @t{Chebychev}.
+This config is required to have this pdf configured as @t{rarPoly}.
+
+@cindex x, rarPoly config
+@item @t{x = AbsReal Def}
+@cindex nOrder, rarPoly config
+@item @t{nOrder = <orderVal>}
+@item @t{P01 = AbsReal Def}
+@item @t{...}
+@item @t{P<orderVal> = AbsReal Def}@*
+@c
+@t{x} is the default observable of the pdf.
+@t{nOrder} is the order of the polynomial.
+@t{P01}, @t{...}, @t{P<orderVal>} define all the coeffs.
+@t{P00} is not needed.
+All the @t{AbsReal} variables can be defined as
+@t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+@end itemize
+
+@cindex example, rarPoly
+@cindex example, Polynomial
+@cindex example, Chebychev
+An example is shown below:
+@example
+[emcNNSigSimEmc Config]
+configStr=Polynomial
+x=emcNN2
+nOrder=4
+P01=1 +/- 10 L(-100 - 100)
+P02=1 +/- 10 L(-1000 - 1000)
+P03=0 +/- 10 L(-1000 - 1000)
+P04=0 +/- 10 L(-1000 - 1000)
+
+[mOmegaPolyBkg Config]
+configStr=Chebychev
+x=mOmega
+nOrder=3
+P01 = 0.2400 +/- 0.28626 L(-1000 - 1000)
+P02 = 0.1 +/- 0.005 L(-100 - 100)
+P03 = 0.1 +/- 0.005 L(-100 - 100)
+@end example

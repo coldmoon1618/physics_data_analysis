@@ -1,0 +1,82 @@
+@c This file is meant to be included other texinfo file
+@c rarBifurGauss configs
+@c $Id: rarRelBreitWigner.texinfo,v 1.1 2008/01/08 09:49:04 fwilson Exp $
+
+
+@cindex rarBifurGauss Configs
+@cindex configuration, rarBifurGauss
+@cindex pdf configuration, rarBifurGauss
+@node rarBifurGaussConfig
+@subsection rarBifurGauss Configs
+
+@t{rarBifurGauss} is a wrapper of @t{RooBifurGauss} to build
+Bifurcated Gaussian PDF.
+
+@itemize @bullet
+@cindex configStr, rarBifurGauss config
+@cindex configStr, BifurGauss
+@cindex configStr, BGGauss
+@cindex BifurGauss, configStr
+@cindex BGGauss, configStr
+@item @t{configStr = BifurGauss ["<pdf Title>"]}
+@item @t{configStr = BGGauss ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{BifurGauss} or @t{BGGauss}.
+This config is required to have this pdf configured as @t{rarBifurGauss}.
+
+@cindex parSymLevel, rarBifurGauss config
+@item @t{parSymLevel = <0|1|2|3>}
+@cindex x, rarBifurGauss config
+@item @t{x = AbsReal Def}
+@cindex peak, rarBifurGauss config
+@item @t{peak = AbsReal Def}
+@cindex sigL, rarBifurGauss config
+@item @t{sigL = AbsReal Def}
+@cindex sigR, rarBifurGauss config
+@item @t{sigR = AbsReal Def}
+@cindex mean, rarBifurGauss config
+@item @t{mean = AbsReal Def}
+@cindex rms, rarBifurGauss config
+@item @t{rms = AbsReal Def}
+@cindex asym, rarBifurGauss config
+@item @t{asym = AbsReal Def}@*
+If @t{parSymLevel} = 0, use the default BifurGauss;
+@t{mean}, @t{rms}, and @t{asym} are not required.
+If @t{parSymLevel} = 1, use lowest-order mapping;
+if = 2, keep O(A^2, A^3) terms also;
+if = 3, take @t{asym} to mean 3rd moment.
+With @t{parSymLevel} > 0, @t{mean}, @t{rms}, and @t{asym} are used;
+@t{peak}, @t{sigL}, and @t{sigR} are hard-coded to
+the corresponding @t{RooFormulaVar}.
+@t{x} is the default observable of the pdf.
+Pdf type @t{BifurGauss} and @t{BGGauss} are interchangeable,
+with the only difference being that
+if @t{parSymLevel} not specified,
+the default value of it for @t{BifurGauss} is 0,
+while that for @t{BGGauss} is 1.
+@c
+All the @t{AbsReal} variables can be defined as
+@t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@end itemize
+
+@cindex example, rarBifurGauss
+@cindex example, BifurGauss
+An example is shown below:
+@example
+[fisherSig Config]
+configStr=BifurGauss
+x=fisher
+peak=-.5 L(-2 - 2)
+sigL=.4 L(0 - 1)
+sigR=.6 L(0 - 1)
+
+[fisherSig Config]
+configStr=BGGauss
+x=fisher
+mean=-.5 L(-2 - 2)
+rms=.1 L(-0.5 - 0.5)
+asym=.6 L(0 - 1)
+@end example
+

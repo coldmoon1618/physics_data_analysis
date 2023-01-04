@@ -1,0 +1,131 @@
+\input texinfo @c -*-texinfo-*-
+@c $Id: RooRarFit.texinfo,v 1.50 2010/06/15 13:10:02 fwilson Exp $
+@c %**start of header
+
+@c All text is ignored before the setfilename.
+@setfilename RooRarFit.info
+
+@c Define a new index for options
+@defcodeindex op
+
+@c Put everything except function (command, in this case) names in one
+@c index (arbitrarily chosen to be the concept index).
+@syncodeindex op cp
+@syncodeindex vr cp
+@syncodeindex pg cp
+
+@footnotestyle separate
+@setchapternewpage odd
+@finalout
+
+@c increasing the allowable interword spacing
+@tex
+\global\emergencystretch = .9\hsize
+@end tex
+
+@c %**end of header
+
+@settitle RooRarFit
+@c variables
+@set TITLE The RooRarFit Document
+@set PAGETITLE  The RooRarFit Document
+@set SUMMARY A general ML fitting package based on ROOT/RooFit.
+@c for rare @emph{B} decay study
+@set AUTHOR Lei Zhang
+
+@c other variables here
+@c common url
+@ifhtml
+@set COMMONURL .
+@end ifhtml
+@ifnothtml
+@set COMMONURL http://rarfit.sourceforge.net
+@end ifnothtml
+@c RooFit url
+@set ROOFITURL http://roofit.sourceforge.net/docs/classref
+
+@c Summary Description and Copyright, for info system
+@ifinfo
+@value{SUMMARY}
+@end ifinfo
+@c end of Summary Description and Copyright
+
+@c Titlepage and Copyright, for printed manual
+@iftex
+@shorttitlepage @value{PAGETITLE}
+@titlepage
+@title @value{TITLE}
+@author @value{AUTHOR}
+@end titlepage
+@end iftex
+@c end of Titlepage and Copyright
+
+@summarycontents
+@contents
+
+@ifnottex
+@node Top
+@top @value{TITLE}
+@value{SUMMARY}
+@end ifnottex
+
+@ifhtml
+To download @t{rarFit} and find more information,
+please go to @uref{http://sourceforge.net/projects/rarfit, SF.net}.
+
+You can also get a @uref{RooRarFit.pdf, pdf} version of this doc,
+and a tutorial (@uref{tutorial/RooRarFit.pdf, pdf},
+@uref{tutorial/RooRarFit.ppt, ppt}).
+@uref{MyFirstRooRarFit/myFirstRooRarFit-README.txt, MyFirstRooRarFit}
+written by Karsten
+@html
+K&ouml;neke
+@end html
+is also very helpful to beginners.
+
+Current stable @t{RooRarFit} version:
+@t{V00-01-73}
+
+Please check @uref{@value{COMMONURL},
+online doc} for the latest stable version
+
+Supported @t{Root} versions: @t{5.26} and later.
+
+Supported @t{BaBar} releases: @t{24.5.6/analysis-52} and up.
+
+This version of RooRarFit has been compiled, linked and run on RH5/SL5
+with Root @t{5.26-00} and BaBar release code
+@t{24.5.6/analysis-52}. The code should also work with RH4/SL4 and
+some earlier versions of Root but this hass not been tested.
+
+@end ifhtml
+
+@menu
+* Why::
+* Implementation::
+* ConfigFile::
+* QA::
+* Index::
+@end menu
+
+@c the body of the document
+
+@c why?
+@include why.texinfo
+
+@c implementation
+@include implement.texinfo
+
+@c configFile
+@include config.texinfo
+
+@c Q and A
+@include QA.texinfo
+
+@node Index
+@unnumbered Index
+
+@printindex cp
+
+@bye
+you get nothing after @@bye

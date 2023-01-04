@@ -1,0 +1,16 @@
+Index: RooMCStudy.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooMCStudy.cc,v
+retrieving revision 1.31
+diff -u -r1.31 RooMCStudy.cc
+--- RooMCStudy.cc	6 Mar 2006 21:29:18 -0000	1.31
++++ RooMCStudy.cc	15 Jun 2007 06:55:27 -0000
+@@ -96,7 +96,7 @@
+   RooCmdConfig pc(Form("RooMCStudy::RooMCStudy(%s)",model.GetName())) ;
+   
+   pc.defineObject("fitModel","FitModel",0,0) ;
+-  pc.defineObject("condObs","ProjectedDependents",0,0) ;
++  pc.defineObject("condObs","ProjectedObservables",0,0) ;
+   pc.defineObject("protoData","PrototypeData",0,0) ;
+   pc.defineInt("randProtoData","PrototypeData",0,0) ;
+   pc.defineInt("verboseGen","Verbose",0,0) ;

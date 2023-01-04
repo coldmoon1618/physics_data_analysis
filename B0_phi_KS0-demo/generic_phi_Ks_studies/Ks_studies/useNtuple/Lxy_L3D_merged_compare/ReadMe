@@ -1,0 +1,6 @@
+ROC curve for Lxy and L3D using K_S0:merged
+
+Make 10 cuts each on Lxy and L3D significance
+    cutAndFit.c
+    Combo_sigL_cut.root
+

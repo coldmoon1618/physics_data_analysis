@@ -1,0 +1,78 @@
+@c This file is meant to be included other texinfo file
+@c rarProd configs
+@c $Id: rarProdConfig.texinfo,v 1.5 2007/10/23 20:08:21 zhanglei Exp $
+
+
+@anchor{sec_Prod}
+@cindex rarProd Configs
+@cindex configuration, rarProd
+@cindex pdf configuration, rarProd
+@node rarProdConfig
+@subsection rarProd Configs
+
+@t{rarProd} is a wrapper of @t{RooProdPdf} to build composite pdf
+as a product of PDFs.
+
+@itemize @bullet
+@cindex configStr, rarProd config
+@item @t{configStr = ProdPdf ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{ProdPdf}.
+This config is required to have this pdf configured as @t{rarProd}.
+
+@cindex Comps, rarProd config
+@item @t{Comps = <compPdfName1> [<compPdfName2> ... <compPdfNameN>]}@*
+This config specifies components for @t{rarProd},
+and is mandatory for any pdf inherited from @t{rarCompBase}.
+
+@cindex CondPdfs, rarProd config
+@item @t{CondPdfs = [condPdf1] ...}@*
+This optional config specifies conditional PDFs for @t{rarProd}.
+The normalization of PDFs sepcified here is on
+observables in config @t{CondObss} only.
+
+@cindex CondObss, rarProd config
+@item @t{CondObss= [condObs1] ...}
+@item @t{CondObss_<condPdf> = [condObs1] ...}@*
+This optional config specifies conditional observables
+of conditional PDFs in @t{CondPdfs}.
+Only observables listed here are included in the normalization
+calculation for conditional PDFs. Each conditional PDF should have
+its own @t{CondObss_<condPdf>} config. If config @t{CondObss} exits,
+the observables specified will be added to all condtional PDFs in
+current product PDF.
+
+@cindex ndFit, rarProd config
+@item @t{ndFit = <no|yes>}@*
+Do @t{ndFit} in @t{pdfFit} action if set to @t{yes} (default @t{no}).
+@t{ndFit} (n-dimensional fit) will fit product pdf all together
+instead of fit individual components.
+
+For @t{rarProd} with conditional PDFs, @t{ndFit} is set to @t{yes}.
+
+@end itemize
+
+@cindex example, rarProd
+@cindex example, ProdPdf
+An example is shown below:
+@example
+[SigPdf Config]
+configStr = ProdPdf "Signal Pdf"
+Comps = deSig mesSig fisherSig mOmegaSig heliSig
+fitData = sigMC
+@end example
+
+@cindex example, conditional PDF
+@cindex example, multivariate PDF
+@cindex multivariate PDF
+@cindex conditional PDF
+An example of multivariate PDF is shown below:
+@example
+// The 2D PDF is defined in terms of P(h) and conditional PDF P(m|h)
+// P(m,h)=P(m|h)*P(h)
+[hm2D Config]
+configStr = ProdPdf "P(m,h)"
+Comps = hPdf mPdf
+CondPdfs = mPdf
+CondObss = m
+fitData = sigMC
+@end example

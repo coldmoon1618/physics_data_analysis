@@ -1,0 +1,158 @@
+@c This file is meant to be included other texinfo file
+@c rarTriGauss configs
+@c $Id: rarTriGaussConfig.texinfo,v 1.3 2007/06/29 08:37:51 zhanglei Exp $
+
+
+@anchor{sec_TriGauss}
+@cindex rarTriGauss Configs
+@cindex configuration, rarTriGauss
+@cindex pdf configuration, rarTriGauss
+@cindex TripleGaussian
+@cindex TripleGaussian Model
+@cindex Gexp Shape
+@node rarTriGaussConfig
+@subsection rarTriGauss Configs
+
+@t{rarTriGauss} is a wrapper to build
+Triple Gaussian / Triple Gaussian Model / Gexp Shape.
+It is for convenience of those commonly used
+composite pdfs related to triple-Gaussian.
+
+For TripleGaussian:
+@itemize @bullet
+@cindex configStr, TriGauss
+@cindex TriGauss, configStr
+@item @t{configStr = TriGauss ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{TriGauss}.
+@cindex x, TriGauss
+@item @t{x = AbsReal/RealVar Def}
+@cindex meanC, TriGauss
+@item @t{meanC = AbsReal Def}
+@cindex sigmaC, TriGauss
+@item @t{sigmaC = AbsReal Def}
+@cindex meanT, TriGauss
+@item @t{meanT = AbsReal Def}
+@cindex sigmaT, TriGauss
+@item @t{sigmaT = AbsReal Def}
+@cindex meanO, TriGauss
+@item @t{meanO = AbsReal Def}
+@cindex sigmaO, TriGauss
+@item @t{sigmaO = AbsReal Def}
+@cindex fracC, TriGauss
+@item @t{fracC = AbsReal Def}
+@cindex fracO, TriGauss
+@item @t{fracO = AbsReal Def}
+@cindex msSF, TriGauss
+@item @t{msSF = AbsReal Def}@*
+@t{x} is the default observable of the PDF.
+No derived dependent is allowed if you specify @t{msSF},
+in which case, please make sure @t{x} is observable defined in datasets.
+If specified, @t{msSF} is the scale for
+@t{meanC}, @t{sigmaC}, @t{meanT} and @t{sigmaT}.
+All the @t{AbsReal} parameters can be defined as
+@t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+@cindex FlatScaleFactorIntegral, TriGauss
+@item @t{FlatScaleFactorIntegral = <yes|no>}@*
+This optional config specifies to use FlatScaleFactorIntegral or not
+when @t{msSF} is specified.
+The default is @t{yes}. To disable FlatScaleFactorIntegral,
+this config must be set to @t{no}.
+@end itemize
+
+For TripleGaussian Model:
+@itemize @bullet
+@cindex configStr, TriGaussModel
+@cindex TriGaussModel, configStr
+@item @t{configStr = TriGaussModel ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{TriGaussModel}.
+@cindex x, TriGaussModel
+@item @t{x = RooRealVar Def}
+@cindex meanC, TriGaussModel
+@item @t{meanC = AbsReal Def}
+@cindex sigmaC, TriGaussModel
+@item @t{sigmaC = AbsReal Def}
+@cindex meanT, TriGaussModel
+@item @t{meanT = AbsReal Def}
+@cindex sigmaT, TriGaussModel
+@item @t{sigmaT = AbsReal Def}
+@cindex meanO, TriGaussModel
+@item @t{meanO = AbsReal Def}
+@cindex sigmaO, TriGaussModel
+@item @t{sigmaO = AbsReal Def}
+@cindex fracC, TriGaussModel
+@item @t{fracC = AbsReal Def}
+@cindex fracO, TriGaussModel
+@item @t{fracO = AbsReal Def}
+@cindex msSF, TriGaussModel
+@item @t{msSF = AbsReal Def}@*
+@t{x} is the default observable of the PDF.
+No derived dependent is allowed for this PDF
+so please make sure @t{x} is observable defined in datasets.
+@t{msSF} is the scale for @t{meanC}, @t{sigmaC}, @t{meanT} and @t{sigmaT};
+All the @t{AbsReal} parameters can be defined as
+@t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+@cindex FlatScaleFactorIntegral, TriGaussModel
+@item @t{FlatScaleFactorIntegral = <yes|no>}@*
+This optional config specifies to use FlatScaleFactorIntegral or not.
+The default is @t{yes}. To disable FlatScaleFactorIntegral,
+this config must be set to @t{no}.
+@end itemize
+
+@cindex example, rarTriGauss
+@cindex example, TriGaussModel
+An example is shown below:
+
+For GexpShape:
+@itemize @bullet
+@cindex configStr, GexpShape
+@cindex GexpShape, configStr
+@item @t{configStr = GexpShape ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{GexpShape}.
+@cindex x, GexpShape
+@item @t{x = RooRealVar Def}
+@cindex tau, GexpShape
+@item @t{tau = AbsReal Def}
+@cindex decayType, GexpShape
+@item @t{decayType = <typeName>}
+@cindex meanC, GexpShape
+@item @t{meanC = AbsReal Def}
+@cindex sigmaC, GexpShape
+@item @t{sigmaC = AbsReal Def}
+@cindex meanT, GexpShape
+@item @t{meanT = AbsReal Def}
+@cindex sigmaT, GexpShape
+@item @t{sigmaT = AbsReal Def}
+@cindex meanO, GexpShape
+@item @t{meanO = AbsReal Def}
+@cindex sigmaO, GexpShape
+@item @t{sigmaO = AbsReal Def}
+@cindex fracC, GexpShape
+@item @t{fracC = AbsReal Def}
+@cindex fracO, GexpShape
+@item @t{fracO = AbsReal Def}
+@cindex msSF, GexpShape
+@item @t{msSF = AbsReal Def}@*
+@t{x} is the default observable of the PDF.
+No derived dependent is allowed for this PDF
+so please make sure @t{x} is observable defined in datasets.
+@t{tau} is the average @emph{B0} lifetime.
+@t{decayType} can be @t{SingleSided}, @t{DoubleSided} (default), @t{Flipped}.
+@t{msSF} is the scale for @t{meanC}, @t{sigmaC}, @t{meanT} and @t{sigmaT};
+All the @t{AbsReal} parameters can be defined as
+@t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+@cindex FlatScaleFactorIntegral, TriGaussModel
+@item @t{FlatScaleFactorIntegral = <yes|no>}@*
+This optional config specifies to use FlatScaleFactorIntegral or not.
+The default is @t{yes}. To disable FlatScaleFactorIntegral,
+this config must be set to @t{no}.
+@end itemize
+
+@cindex example, rarTriGauss
+@cindex example, GexpShape
+An example is shown below:

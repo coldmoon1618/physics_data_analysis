@@ -1,0 +1,24 @@
+B02phiKS0MC/
+    200 * 2k SigMC mdst
+    Version not unified, need to run the files seperately 
+    Dir 0-99, 0/*=200/*:     May 3, 2020
+    Dir 100-199, all unique: Dec 5, 2020 
+
+toolkit/
+
+Combo_MC13a_files@
+    Link to input files for Combo studies
+
+generic_phi_Ks_studies/
+    Earliest studies of reconstructions and phi Ks selections
+
+SigMC_phiKs_cutflow/
+    Based on phi and Ks selections, cutflow of SigMC events
+
+Full_reco/
+    Including phi, Ks, Mbc and deE cuts
+
+side_studies/
+    Relevant studies along the way but not the main topic
+
+Sept 30, 2021

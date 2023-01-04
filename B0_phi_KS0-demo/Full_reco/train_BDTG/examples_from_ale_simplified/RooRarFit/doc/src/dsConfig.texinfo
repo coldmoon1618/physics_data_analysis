@@ -1,0 +1,25 @@
+@c This file is meant to be included other texinfo file
+@c Dataset configurations
+@c $Id: dsConfig.texinfo,v 1.2 2007/06/29 08:37:49 zhanglei Exp $
+
+
+@cindex Dataset Configuration
+@cindex configuration, dataset
+@cindex RooRarFit dataset configuration
+@node dsConfig
+@section Dataset Configuration
+
+The dataset configs have two parts:
+one is to define the structure of dataset entry,
+the other one is to read in and store the datasets.
+
+@menu
+* dsDsec::
+* dsIsec::
+@end menu
+
+@c dataset definition section
+@include dsd.texinfo
+
+@c dataset input section
+@include dsi.texinfo

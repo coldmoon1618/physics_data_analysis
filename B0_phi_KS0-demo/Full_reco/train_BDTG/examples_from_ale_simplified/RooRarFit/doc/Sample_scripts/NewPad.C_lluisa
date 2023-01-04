@@ -1,0 +1,17 @@
+TPad*
+NewPad (TCanvas *c, char *name, Double_t x1, Double_t y1,
+	Double_t x2, Double_t y2)
+{
+  c->cd();
+  TPad *pad = new TPad(name, "", x1, y1, x2, y2);
+  pad->SetFrameFillStyle(0);
+  pad->SetTicks();
+  pad->SetTopMargin(0);
+  pad->SetFillStyle(0);
+  pad->Draw();
+  pad->cd();
+
+  return pad;
+  
+}
+

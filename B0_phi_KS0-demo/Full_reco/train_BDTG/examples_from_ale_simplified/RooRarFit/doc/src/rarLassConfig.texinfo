@@ -1,0 +1,61 @@
+@c This file is meant to be included other texinfo file
+@c rarLass configs
+@c $Id: rarLassConfig.texinfo,v 1.1 2010/06/15 13:10:03 fwilson Exp $
+
+
+@anchor{sec_Lass}
+@cindex rarLass Configs
+@cindex configuration, rarLass
+@cindex pdf configuration, rarLass
+@node rarLassConfig
+@subsection rarLass Configs
+
+@t{rarLass} is a wrapper to build the LASS parameterisation of the
+high mass K*(1430). The default values are taken from
+ Nucl Phys B296, 493 (1988).
+
+@itemize @bullet
+@cindex configStr, rarLass config
+@cindex configStr, Lass
+@item @t{configStr = Lass ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{Lass}.
+This config is required to have this pdf configured as @t{rarLass}.
+
+@cindex x, rarLass config
+@item @t{x = AbsReal Def}
+@cindex mean, rarLass config
+@cindex width, rarLass config
+@cindex effRange, rarLass config
+@cindex scatlen, rarLass config
+@cindex turnOffVal, rarLass config
+@item @t{mean = AbsReal Def}
+@item @t{width = AbsReal Def}
+@item @t{effRange = AbsReal Def}
+@item @t{scatlen = AbsReal Def}
+@item @t{turnOffVal = AbsReal Def}
+@t{x} is the default observable of the pdf.
+@t{mean} is the mass of the K*(1430) resonance; @t{width} is its
+width; @t{effRange} is the effective range parameter (default=3.32
+GeV/c^2); @t{scatlen} is the scattering length (default=2.07 GeV/c^2); and
+@t{turnOffVal} is the upper mass limit used by LAss in their fit (default=1.65 GeV/c^2);
+
+@c
+All the variables can be defined as @t{RooRealVar}
+or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+@end itemize
+
+@cindex example, rarLass
+@cindex example, Lass
+An example is shown below:
+@example
+[massSig Config]
+configStr=Lass 
+x           = mass
+mean        = 1.4      L (1.3 - 1.5)
+turnOffVal  = 1.53   C L (0.2 - 2.0)
+width       = 0.2579 C L (0.2 - 0.5)
+effRange    = 0.1119 C L (0.1 - 4.0)
+scatlen     = 0.05   C L (0.0 - 4.0)
+@end example

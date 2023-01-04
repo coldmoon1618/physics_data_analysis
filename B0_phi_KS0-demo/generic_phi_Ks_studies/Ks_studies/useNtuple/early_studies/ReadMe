@@ -1,0 +1,52 @@
+Outputs MC13a mixed
+    MC13a_KS_compareDistance.root           [Compare_3D_2D_distance.py]
+    MC13a_KSpipi_MCTrue.root                [MCTrue_KS.py]
+Outputs MC13a combo (mixed,charged,udsb produced and hadd together)
+    MC13a_reco_200k.root                    [Compare_3D_2D_distance.py]
+    MC13a_MC_200k.root                      [MCTrue_KS.py]
+Outputs from custom made signal MC files    [adding 100 eles of 2k events]
+    MCBphiK_reco.root                       [BphiK_KS_reco.py]
+    MCBphiK_MC.root                         [BphiK_KS_MC.py]
+ |
+ |  (input files for below)
+ v
+
+KinematicCuts.C                             Plot p(KS), p(pi), theta(pi), phi(p) in both lab and CoM frames
+                                            Can choose to apply p(pi) and theta(pi) cuts
+
+Make trees of different sigL cuts, fit them and optmize the cut between 2D and 3D cut 
+    MC13a_sigL_cut.root                     [cutAndFit.C]
+    sigL_Rej_Eff.root & fitResults.txt      [IterateFit.C]
+    ROC plot to compare the cuts            [RejVsEff.C]
+
+Simple double Gaussian on linear background fitting
+                                            [SimplyFit.C]
+
+Studies cuts to apply on combo file
+    MC13a_generic_cut.root                  [cutOnGeneric.C]
+
+    Event_level_info/
+        nKS_evtBased.C                      Count num candidates in reco and mcTrue 
+                                            Input files: MC13a_Candidate_KS_EvtBased.root MCTrue_EvtBased.root [no created]
+        nKS_evtBased_2.C                    Count num candidates in reco and mcTrue 
+                                            Input files: MC13a_Candidate_KS_EvtBased.root MC13aCh_Candidate_KS_EvtBased.root
+                                            skimTrees/ MC13a_mixed_MCParticles_skim.root MC13a_charged_MCParticles_skim.root
+        EvtBased_to_flat.C                  Convert EvtBased file to flat
+
+        B+/- B0 admixture   0.64 K_S0
+        K_S0                0.69 pi+pi-
+        calculated  MC gen      matched     num events & MC type            MC gen/evt  %evt w/KS0
+        88320       104535      55862       200k mixed                      .52         41.7%
+        94172       98708       50428       213251 charged                  .46         37.9%
+        182491      203243      106290      200k mixed + 213251 charged     .49         39.7%
+                    (pr+sec)
+
+skimTrees/
+    DecayTable.c                            Prints decay table, with pT and secPhysProc
+    MCParticles_evtBased.C                  Looks at pT and seenIn info
+    event_152572.txt                        Single event output of DecayTable.C
+
+    MC13a_mixed_MCParticles_skim.root       [Event_level_info/skimTree/SkimTree.C]
+    MC13a_charged_MCParticles_skim.root     [Event_level_info/skimTree/SkimTree.C]
+
+May 20, 2020

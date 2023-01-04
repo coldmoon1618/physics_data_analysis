@@ -1,0 +1,231 @@
+@c This file is meant to be included other texinfo file
+@c projPlot action
+@c $Id: projPlotAction.texinfo,v 1.19 2007/06/29 08:37:49 zhanglei Exp $
+
+
+@anchor{sec_projPlot}
+@cindex projPlot Action
+@cindex action, projPlot
+@cindex RooRarFit projPlot action
+@node projPlotAction
+@subsection projPlot Action
+
+projPlot action is to get projection plots.
+
+The default param input is the intermediate param file from mlFit action.
+@t{preProjPlotReadParams} and @t{preProjPlotReadSecParams}
+can be used to change the initial values.
+There is no intermediate param file output.
+ROOT file containing projPlots and LLR plots produced by this action
+is for user to review.
+As always, log file also provides useful information.
+
+@itemize @bullet
+@cindex projPlot, pdf action
+@cindex pdf action, projPlot
+@item @t{projPlot = <no|yes>}@*
+To enable this action, this config must be explicitly set to @t{yes}
+(default @t{no}).
+
+@cindex preProjPlotReadParams, pdf action
+@cindex pdf action, preProjPlotReadParams
+@item @t{preProjPlotReadParams = <yes|no|paramFileID>}@*
+NOT to read in initial values of parameters before projPlot,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+
+@cindex preProjPlotReadSecParams, pdf action
+@cindex pdf action, preProjPlotReadSecParams
+@item @t{preProjPlotReadSecParams = <no|yes|secName>}@*
+If set to @t{yes} (default @t{no}), just after read in params from param file,
+the fitter will try to override the params with values found
+in the action section.
+Instead of @t{yes} or @t{no}, you can also give it a section name,
+and then the fitter will try to read values from that section first.
+
+@cindex projPlotFile, pdf action
+@cindex pdf action, projPlotFile
+@item @t{projPlotFile = <default|projPlotOutputFile.root>}@*
+The root file name will be
+@t{<configFile>.<fitterName>.projPlot.<actionName>.root}
+unless the token is actually a root file name.
+
+@cindex projComps, pdf action
+@cindex pdf action, projComps
+@item @t{projComps = <compName1> ...}@*
+To specify components to be projected,
+this config must be explicitly set to the names of those components.
+You can have more than one component to be projected, just list them here.
+
+@cindex projLLRPlots, pdf action
+@cindex pdf action, projLLRPlots
+@item @t{projLLRPlots = <yes|no|compName1 ...>}@*
+If set to @t{yes} (by default),
+likelihood ratio plots will be done for default dataset,
+total model, and each component.
+If you do not want LLR plots of all components,
+you can specify the components you want here.
+
+@cindex projLLRScale, pdf action
+@cindex pdf action, projLLRScale
+@item @t{projLLRScale_<compName> = <scale>}
+@item @t{projLLRScale = <scale>}@*
+It specifies scale factor for @t{<compName>}
+in the LLR plot to its expected number of events
+(default @t{10}, ie, the normalization factor is 10 times the expected events).
+The first form has higher priority for a given component.
+
+@cindex plotBins_LLR, pdf action,
+@cindex plotBins, Likelihood ratio plot
+@cindex pdf action, plotBins_LLR
+@item @t{plotBins_LLR = <nBin>}@*
+It specifies number of plot bins for likelihood ratio plots (default @t{100}).
+
+@cindex projVars, pdf action
+@cindex pdf action, projVars
+@item @t{projVars = <varName1> ...}@*
+To set the projection observables,
+this config must be explicitly set to the names of that observables
+(default @t{notSet}).
+
+@cindex projPlotData, pdf action
+@cindex pdf action, projPlotData
+@item @t{projPlotData_<obs> = <datasetName> ["<optional cut string>"]}
+@item @t{projPlotData = <datasetName> ["<optional cut string>"]}@*
+This config specifies the dataset for projection plot action.
+You can give this config an optional string as the second token,
+which will be applied to the dataset for additional cuts.
+This optional cut (if any) will be appended to @t{projOptimRange}.
+The first form has higher priority for a given observable.
+
+@cindex projPlotSaveLLR, pdf action
+@cindex pdf action, projPlotSaveLLR
+@item @t{projPlotSaveLLR = <no|yes>}@*
+If this config is set to @t{yes} (default @t{no}),
+the dataset for projection (specified with @t{projPlotData}
+or @t{projPlotData_<obs>}) will be saved into the output root file
+with LLR values appended.
+The LLR column will be named as @t{lRatioFunc_<var>}.
+
+@cindex projPlotCat, pdf action
+@item @t{projPlotCat_<obs> = <no|CatName1...>}
+@item @t{projPlotCat = <no|CatName1...>}@*
+Projection plot will also be done for each type of the cats
+specified here (default @t{no}).
+
+@cindex projAsymPlot, pdf action
+@cindex pdf action, projAsymPlot
+@item @t{projAsymPlot_<obs> = <no|CatName>}
+@item @t{projAsymPlot = <no|CatName>}@*
+To have asym plot with projection, this config must be set
+to the cat name (default @t{no}, no asym plot).
+The category must have, and can only have, two types,
+in which case you get one projection plot for each cat type,
+and one asym plot.
+The first form has higher priority for a given observable.
+
+@cindex projLRatioCut, pdf action
+@cindex pdf action, projLRatioCut
+@item @t{projLRatioCut_<obs> = <cutVal>}
+@item @t{projLRatioCut = <cutVal>}@*
+To specify likelihood ratio cut.
+The value should be between 0 and 1
+(default @t{0.9}).
+The first form has higher priority for a given observable.
+
+@cindex projection plotBins, pdf action
+@cindex plotBins, projection plot
+@cindex pdf action, projection plotBins
+@item @t{plotBins_<varName> = <nBin>}@*
+To specify number of plot bins for projection plot of observable @t{<varName>}.
+If not specified, the number of plot bins will be set to
+the default value for that observable
+(when the observable is created with argument @t{B(<nBins>)}).
+
+@cindex plotRange, pdf action
+@cindex pdf action, plotRange
+@cindex Non-uniform binning, pdf action
+@item @t{plotRange_<obsName> = <Min> [bBoundary1] ... <Max>}@*
+It sets plot ranges for observable @t{<obsName>}.
+If not specified, the range will be set to the full ranges
+when it is created.
+You can specify optional boundaries for asym plot.
+
+@cindex projFindOptimCut, projection plot
+@item @t{projFindOptimCut_<obs> = <no|yes>}
+@item @t{projFindOptimCut = <no|yes>}@*
+If set to @t{yes} (default @t{no}),
+the fitter will try to find the optimal @t{projLRatioCut}
+for projection.
+The first form has higher priority for a given observable.
+
+@cindex projOptimStep, projection plot
+@item @t{projOptimStep_<obs> = <stepVal>}
+@item @t{projOptimStep = <stepVal>}@*
+This config specifies the searching step for optimal cut
+(default 0.005, ie, 200 steps from ratio 0 to 1).
+The first form has higher priority for a given observable.
+
+@cindex projOptimFormula, projection plot
+@item @t{projOptimFormula_<obs> = [<optimal_formula>]}
+@item @t{projOptimFormula = [<optimal_formula>]}@*
+The default optimization formula is @t{N^2/N_total}.
+You can specify a different formula to optimize, for example,
+@t{"pow(@@0,3)/@@1"},
+where @t{@@0} is for
+@t{N} and 
+@t{@@1} is for
+@t{N_total}, and the optimization is done with
+@t{N^3/N_total}.
+The first form has higher priority for a given observable.
+
+@cindex projOptimRange, projection plot
+@item @t{projOptimRange_<obs> = [<range_cut>]}@*
+@item @t{projOptimRange = [<range_cut>]}@*
+This config specifies ranges on which the optimization is performed.
+The default is `1' which means the full range (of projection variable, etc.).
+The first form has higher priority for a given observable.
+
+@cindex projOptimData, projection plot
+@item @t{projOptimData = [<comp1Data> ...]}@*
+This config specifies the dataset for each component to be projected
+from where the projLRatioCut efficiency for that component is got.
+If not specified, the datasets used are the default datasets.
+
+@cindex projOptimDataLimit, projection plot
+@item @t{projOptimDataLimit = [40000|<NumOfEvts>]}@*
+This config specifies the max number of events (default @t{40000})
+for datasets used for LLR cut optimization.
+
+@end itemize
+
+@cindex example, projPlot action
+An example is shown below:
+@example
+[ProjAct]
+// projectionPlot options
+projPlot = yes
+preProjPlotReadParams = yes
+projPlotFile = default
+projComps = SigPdf
+projVars = de mes
+// for de
+projLRatioCut_de = .45
+plotBins_de = 20
+projFindOptimCut_de = yes
+projOptimStep_de = .001
+projOptimRange_de = "abs(de)<0.07"
+// for mes
+projLRatioCut_mes = .55
+plotBins_mes = 16
+projFindOptimCut_mes = yes
+projOptimStep_mes = .001
+projOptimRange_mes = "mes>5.274&&mes<5.286"
+// for all other implicitly
+projLRatioCut = .85
+projFindOptimCut = no
+projOptimStep = .005
+@end example

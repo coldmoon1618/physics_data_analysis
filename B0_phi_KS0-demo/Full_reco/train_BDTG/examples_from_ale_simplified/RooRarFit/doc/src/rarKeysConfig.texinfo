@@ -1,0 +1,49 @@
+@c This file is meant to be included other texinfo file
+@c rarKeys configs
+@c $Id: rarKeysConfig.texinfo,v 1.3 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@cindex rarKeys Configs
+@cindex configuration, rarKeys
+@cindex pdf configuration, rarKeys
+@node rarKeysConfig
+@subsection rarKeys Configs
+
+@t{rarKeys} is a wrapper of @t{RooKeysPdf/Roo2DKeysPdf} to build
+1/2D Keys PDF.
+
+@itemize @bullet
+@cindex configStr, rarKeys config
+@cindex configStr, Keys
+@cindex configStr, 2DKeys
+@item @t{configStr = Keys ["<pdf Title>"]}
+@item @t{configStr = 2DKeys ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{Keys} or @t{2DKeys}.
+This config is required to have this pdf configured as @t{rarKeys}.
+
+@cindex x, rarKeys config
+@item @t{x = AbsReal Def}
+@cindex y, rarKeys config
+@item @t{y = AbsReal Def}
+@cindex rho, rarKeys config
+@item @t{rho = Double_t}
+@cindex keysOption, rarKeys config
+@item @t{keysOption = Options}@*
+@c
+@t{x} and @t{y} (for 2D only) are the default observables of the pdf.
+@t{rho} is width scale factor.
+@t{keysOption} is 1/2D Keys options.
+For 1D, the options can be any enum value of @t{RooKeysPdf::Mirror},
+for 2D, the options can be any valid characters of
+@t{Roo2DKeysPdf::setOptions}.
+
+@end itemize
+
+@cindex example, rarKeys
+@cindex example, Keys
+An example is shown below:
+@example
+[emcNNSigSimBoth Config]
+configStr=Keys
+x=emcNN2
+@end example

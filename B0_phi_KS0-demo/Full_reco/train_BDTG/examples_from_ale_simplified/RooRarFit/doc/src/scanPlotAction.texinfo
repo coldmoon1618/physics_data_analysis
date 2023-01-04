@@ -1,0 +1,159 @@
+@c This file is meant to be included other texinfo file
+@c scan plot action
+@c $Id: scanPlotAction.texinfo,v 1.11 2007/06/29 08:37:51 zhanglei Exp $
+
+
+@anchor{sec_scanPlot}
+@cindex scanPlot Action
+@cindex action, scanPlot
+@cindex RooRarFit scanPlot action
+@node scanPlotAction
+@subsection scanPlot Action
+
+scanPlot action is to scan NLL within interested param space.
+The recorded values in dataset or plot for scanPlot are
+actually 2NLL so they are chisquares.
+
+The default param input is the intermediate param file from mlFit action.
+@t{preScanPlotReadParams} and @t{preScanPlotReadSecParams}
+can be used to change the initial values.
+There is no intermediate param file output.
+ROOT file containing scanPlots produced by this action
+is for user to review.
+As always, log file also provides useful information.
+
+@cindex NLL, combine
+@cindex combine NLL
+@cindex combine.cc
+RooRarFit provides a set of static functions to manipulate
+(combine/shift/add errors) the NLL curves (for 1D scanPlot).
+@uref{Sample_scripts/combine.cc, combine.cc} and
+@uref{Sample_scripts/combine.C, combine.C} show the usage.
+(Copy @t{combine.C} to workdir and edit it to use.)
+
+@itemize @bullet
+@cindex scanPlot, pdf action
+@cindex pdf action, scanPlot
+@item @t{scanPlot = <no|yes>}@*
+To enable this action, this config must be explicitly set to @t{yes}
+(default @t{no}).
+
+@cindex preScanPlotReadParams, pdf action
+@cindex pdf action, preScanPlotReadParams
+@item @t{preScanPlotReadParams = <yes|no|paramFileID>}@*
+NOT to read in initial values of parameters before scanPlot,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+
+@cindex preScanPlotReadSecParams, pdf action
+@cindex pdf action, preScanPlotReadSecParams
+@item @t{preScanPlotReadSecParams = <no|yes|secName>}@*
+If set to @t{yes} (default @t{no}), just after read in params from param file,
+the fitter will try to override the params with values found
+in the action section.
+Instead of @t{yes} or @t{no}, you can also give it a section name,
+and then the fitter will try to read values from that section first.
+
+@cindex scanPlotFile, pdf action
+@cindex pdf action, scanPlotFile
+@item @t{scanPlotFile = <default|scanPlotOutputFile.root>}@*
+The root file name will be
+@t{<configFile>.<fitterName>.scanPlot.<actionName>.root}
+unless the token is actually a root file name.
+
+@cindex scanPlotData, pdf action
+@cindex pdf action, scanPlotData
+@item @t{scanPlotData = <datasetName>}@*
+This config specifies the dataset for scanPlot action.
+
+@cindex scanPlotFitOption, pdf action
+@cindex pdf action, scanPlotFitOption
+@item @t{scanPlotFitOption = <fitOptions>}@*
+This config can be used to set scanPlot fit options (default @t{"emhr"}).
+The full ml model is an extended pdf,
+so the fitting option should always have option @t{"e"},
+which means extended fit.
+
+@cindex scanVarShiftToNorm, pdf action
+@cindex pdf action, scanVarShiftToNorm
+@item @t{scanVarShiftToNorm = <no|yes>}@*
+The scanPlot min shifts a little bit from the normal mlFit values,
+to correct the shifts, this config must be set to @t{yes} (default @t{no}).
+
+@cindex scanVars, pdf action
+@cindex pdf action, scanVars
+@item @t{scanVars = <varName1> [xmin] [xmax] ...}@*
+To specify scanPlot variables,
+this config must be explicitly set to the variable names
+(default @t{notSet}).
+The variable name should be full name,
+and for each variable, two optional limits can be specified
+to get plot ranges rather than the default ones.
+
+@cindex nScanPoints, pdf action
+@cindex pdf action, nScanPoints
+@item @t{nScanPoints = <100|#Points>}@*
+To specify number of scan points (default @t{100}).
+If there are more than one var specified in @t{scanVars} to scan,
+the scan points will be drawn randomly in the n-dimensional space.
+If there is only one var to scan, the points are equally distributed
+in the allowed range.
+
+@cindex nScanSegments, pdf action
+@cindex pdf action, nScanSegments
+@item @t{nScanSegments = <1|#times>}@*
+This config is to specify number of scan segments
+(for 1D only and default is @t{1}).
+It is useful if the scanPlot action takes too much time if it is done
+in one job. One can then divide the whole region with this config into
+smaller pieces and use @t{submitToy} to run the jobs with batch queues.
+
+@t{nScanPoints} is the number of scan points per segment
+so the total scanned points will be
+@t{nScanPoints}*@t{nScanSegments}.
+
+@c @cindex scanCL, pdf action
+@c @cindex pdf action, scanCL
+@c @item @t{scanCL = <no|yes|CL_value>}@*
+@c If specified (and the first token is not @t{no}),
+@c upper limit of scan var wrt the confidence level (CL) (default .90)
+@c will be calculated.
+@c Instead of @t{yes}, you can give a number (<1) as alternative
+@c for UL calculation.
+
+@c @cindex scanSignf, pdf action
+@c @cindex pdf action, scanSignf
+@c @item @t{scanSignf = <no|yes|0|0signfValue>}@*
+@c If specified (and the first token is not @t{no}),
+@c significance of the scan var wrt a given value
+@c (default 0) will be calculated.
+
+@c @cindex scanUnCorrErr, pdf action
+@c @cindex pdf action, scanUnCorrErr
+@c @item @t{scanUnCorrErr = <no|err_value>}@*
+@c If specified (and the first token is not @t{no}),
+@c a scan plot with uncorrelated systematic error included
+@c will be created.
+
+@c @cindex scanCorrErr, pdf action
+@c @cindex pdf action, scanCorrErr
+@c @item @t{scanCorrErr = <no|err_value>}@*
+@c If specified (and the first token is not @t{no}),
+@c a scan plot with correlated systematic error included
+@c (and uncorrelated error if any)
+@c will be created.
+
+@end itemize
+
+@cindex example, contourPlot action
+An example is shown below:
+@example
+[BrScan]
+// scanPlot options
+scanPlot = yes
+scanVars = BR 0 10
+nScanPoints = 50
+@end example

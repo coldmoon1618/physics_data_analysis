@@ -1,0 +1,22 @@
+Studies generator information of generic phi and Ks
+and the signal phi(KK) Ks(pipi)
+
+Plot generated Lxy and p info, print acceptance info
+    PhiKs_genInfo.C
+    Ks_Lxy.pdf
+    phi_Lxy.pdf
+    phiKs_sigEvt_all_genP.pdf
+
+Generator multiplicity and p distr of phi and Ks
+    PhiKs_nGenCand.C
+    phi_Ks_nCand_allEvt.pdf
+    phi_Ks_nCand_sigEvt.pdf
+    phi_Ks_multiCand_p_distr.pdf
+    phi_Ks_singleCand_p_distr.pdf
+
+Generator signal phi and Ks p and pstar distr
+    PlotGenPhiKsP.C
+    Generated_phi_Ks_p.pdf
+    Generated_phi_Ks_pstar.pdf
+
+April 4, 2021

@@ -1,0 +1,128 @@
+@c This file is meant to be included other texinfo file
+@c PDF Configurations
+@c $Id: pdfDef.texinfo,v 1.6 2010/06/15 13:10:02 fwilson Exp $
+
+@cindex PDF definition configuration, RooRarFit
+@cindex Configuration, PDF definition
+@cindex RooRarFit PDF definition configuration
+@node pdfDef
+@section PDF Definition Configuration
+
+All PDFs are created from top to bottom
+with the @t{rarMLFitter} object as starting point,
+and each PDF has its own config section.
+The name of PDF is global which means you can not
+create a PDF with the same name twice,
+and the actual PDF creator,
+@uref{#item_rarConfig, rarConfig::createPdf},
+will return the pointer to the already created PDF instead.
+@c
+If the name of a RooRarFit PDF is @t{myPdfName},
+the config section for that PDF is
+@cindex name, RooRarFit PDF config section name
+@t{[myPdfName Config]},
+@c (or a short version, @t{[myPdfName]}, for your convenience,
+@c will be used if present),
+and the name of the actual RooFit PDF is
+@cindex name, RooFit PDF
+@t{the_myPdfName}.
+
+In the following sub-sections, we will list configs for each RooRarFit PDF.
+Unless explicitly stated, most of these configs are NOT mandatory.
+If the configs are to define default observables of RooRarFit PDF,
+those configs are usually mandatory.
+
+@menu
+* commonPdfConfig::
+* rarMLFitterConfig::
+* rarMLPdfConfig::
+* rarMultPdfConfig::
+* rarProdConfig::
+* rarAddConfig::
+* rarSimPdfConfig::
+* rarArgusBGConfig::
+* rarDecayConfig::
+* rarBifurGaussConfig::
+* rarCBShapeConfig::
+* rarExpConfig::
+* rarGaussianConfig::
+* rarGaussModelConfig::
+* rarGenericConfig::
+* rarHistPdfConfig::
+* rarKeysConfig::
+* rarPolyConfig::
+* rarStepConfig::
+* rarTriGaussConfig::
+* rarTwoGaussConfig::
+* rarLassConfig::
+* rarUsrPdfConfig::
+@end menu
+
+@c Common PDF configs
+@include commonPdfConfig.texinfo
+
+@c rarMLFitter configs
+@include rarMLFitterConfig.texinfo
+
+@c rarMLPdf configs
+@include rarMLPdfConfig.texinfo
+
+@c rarMultPdf configs
+@include rarMultPdfConfig.texinfo
+
+@c rarProd configs
+@include rarProdConfig.texinfo
+
+@c rarAdd configs
+@include rarAddConfig.texinfo
+
+@c rarSimPdf configs
+@include rarSimPdfConfig.texinfo
+
+@c rarArgusBG configs
+@include rarArgusBGConfig.texinfo
+
+@c rarDecay configs
+@include rarDecayConfig.texinfo
+
+@c rarBifurGauss configs
+@include rarBifurGaussConfig.texinfo
+
+@c rarCBShape configs
+@include rarCBShapeConfig.texinfo
+
+@c rarExp configs
+@include rarExpConfig.texinfo
+
+@c rarGaussian configs
+@include rarGaussianConfig.texinfo
+
+@c rarGaussModel configs
+@include rarGaussModelConfig.texinfo
+
+@c rarGeneric configs
+@include rarGenericConfig.texinfo
+
+@c rarHistPdf configs
+@include rarHistPdfConfig.texinfo
+
+@c rarKeys configs
+@include rarKeysConfig.texinfo
+
+@c rarPoly configs
+@include rarPolyConfig.texinfo
+
+@c rarStep configs
+@include rarStepConfig.texinfo
+
+@c rarTriGauss configs
+@include rarTriGaussConfig.texinfo
+
+@c rarTwoGauss configs
+@include rarTwoGaussConfig.texinfo
+
+@c rarLass configs
+@include rarLassConfig.texinfo
+
+@c rarUsrPdf configs
+@include rarUsrPdfConfig.texinfo

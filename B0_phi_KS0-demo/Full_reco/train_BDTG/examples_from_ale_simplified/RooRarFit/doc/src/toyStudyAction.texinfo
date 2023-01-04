@@ -1,0 +1,347 @@
+@c This file is meant to be included other texinfo file
+@c toyStudy action
+@c $Id: toyStudyAction.texinfo,v 1.30 2010/06/15 13:10:04 fwilson Exp $
+
+
+@anchor{sec_toyStudy}
+@cindex toyStudy Action
+@cindex action, toyStudy
+@cindex RooRarFit toyStudy action
+@node toyStudyAction
+@subsection toyStudy Action
+
+toyStudy action is used to validate the fitting procedure.
+@cindex command line option, -t
+@cindex -t, command line option
+To split a large toy job into several smaller ones,
+different command line option @t{-t <toyID>} must be given for different jobs
+to enable different random seeds, output root file names, etc.
+
+The default param input is the intermediate param file from pdfFit action.
+Configs
+@t{preToyReadParams} and @t{preToyReadSecParams}
+can be used to change the initial values.
+(After unblind, you may want to change the input
+to the intermediate param file from mlFit action.
+See config @t{preToyReadParams} below for howto.)
+There is no param file output.
+ROOT file containing toy study results produced by this action
+is for user to review.
+As always, log file also provides useful information.
+
+If all or part of the events of a component are embedded from
+datasets other than generated from PDF, the pulls of yields
+are calculated based on wrong true value by @t{RooFit},
+in this case, please use pull calculated by @t{RooRarFit},
+with suffix @t{_embd} after the pull name. For example,
+yield @t{nSig}'s pull will be @t{nSigpull_embd}.
+
+@itemize @bullet
+@cindex toyStudy, pdf action
+@cindex pdf action, toyStudy
+@item @t{toyStudy = <no|yes>}@*
+To enable this action, this config must be explicitly set to @t{yes}
+(default @t{no}).
+
+@cindex preToyReadParams, pdf action
+@cindex pdf action, preToyReadParams
+@item @t{preToyReadParams = <yes|no|paramFileID>}@*
+NOT to read in initial values of parameters before toyStudy,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+The default input param file for toy study is
+the output param file from pdfFit.
+To read, for example, from output param file of mlFit, set this config like
+@example
+preToyReadParams = A mlFit
+@end example
+
+@cindex preToyReadSecParams, pdf action
+@cindex pdf action, preToyReadSecParams
+@item @t{preToyReadSecParams = <yes|no|secName>}@*
+If set to @t{yes} (default), just after read in params from param file,
+the fitter will try to override the params with values found
+in the action section.
+Instead of @t{yes} or @t{no}, you can also give it a section name,
+and then the fitter will try to read values from that section first.
+This config is useful when you want to override any values
+(for example, yields) just for toy studies.
+
+@cindex preToyRandParams, pdf action
+@cindex pdf action, preToyRandParams
+@item @t{preToyRandParams = no|<param1> <formula1> ...}@*
+It is helpful if we can choose randomly (ie, scan) values for some params
+before each toy experiment.
+For example, we want to study the fit behavior for all possible C and S
+for CP analysis. Or we want to study all possible polarization fractions
+for B to VV modes.
+You can list all those params here and give them formulae to specify values.
+If the first token is @t{no}, the procedure is disabled.
+
+@cindex preToyRandGenerators, pdf action
+@cindex pdf action, preToyRandGenerators
+@item @t{preToyRandGenerators = <pdf1> ...}@*
+This config specify Pdfs to generate random params.
+
+@cindex postToyWriteParams, pdf action
+@cindex pdf action, postToyWriteParams
+@item @t{postToyWriteParams = <yes|no|rootFileBaseName>}@*
+NOT to write out pdf parameter pulls after toyStudy,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+The root file name will be
+@t{<configFile>.<fitterName>.toyPlot.<actionName>.%02d.root}
+unless the token is actually a root file name.
+
+@cindex protToyData, pdf action
+@cindex pdf action, protToyData
+@cindex protDatasets, pdf action
+@cindex pdf action, protDatasets
+@item @t{protDatasets = <datasetName> <comp1ProtData> <comp2ProtData> ...}@*
+This config can be set to names of prototype datasets for toy study.
+(default datasets will be used if necessary but not specified here).
+You can specify for each component its own protDataset.
+Prototype datasets are used to get observable distribution information
+not in ml model.
+If the ml model is complete, ie, all distribution information is specified
+within the model, protDataset will not be used.
+
+@cindex protDataGenLevel, pdf action
+@cindex pdf action, protDataGenLevel
+@item @t{protDataGenLevel = <1|0|2|3>}@*
+This config specifies how the protDataset for each experiment is generated
+(default level @t{1}).
+@itemize @bullet
+@item @t{0} No protDataset. If needed, generated from protData generator.
+@item @t{1} Use default master protDataset as protDataset if needed.
+@item @t{2} Generate protDataset from individual protDatasets if needed.
+@item @t{3} Generate protDataset from protData generator if needed.
+@end itemize
+
+@cindex protDataVars, pdf action
+@cindex pdf action, protDataVars
+@item @t{protDataVars = [<obs1> ...]}@*
+Please specify this config in the section where corresponding Pdf is
+created. (@xref{commonPdfConfig}).
+@cindex protDataEVars, pdf action
+@cindex pdf action, protDataEVars
+@item @t{protDataEVars = [<obs1> ...]}@*
+Please specify this config in the section where corresponding Pdf is
+created. (@xref{commonPdfConfig}).
+
+@c @item @t{protToyData = <datasetName> [<obs1> ...]}@*
+@c This config specifies prototype dataset for toyStudy.
+@c Prototype dataset is used to get observable distribution information
+@c not in ml model.
+@c The first token is the name of the dataset;
+@c all the remaining tokens (if any) are names of observables
+@c which usually have no distribution information in pdf models,
+@c so their distributions are given by prototype dataset.
+@c The default value for this config is blank string ("")
+@c which means no prototype dataset.
+
+@cindex toyNexp, pdf action
+@cindex pdf action, toyNexp
+@item @t{toyNexp = <numberOfToy>}@*
+To specify number of toy experiments for toyStudy
+(default @t{1}).
+@cindex command line option, -n
+@cindex -n, command line option
+If you specify command line option, @t{-n <toyNexp>},
+the value specified at command line will override this config.
+
+@cindex toyNevt, pdf action
+@cindex pdf action, toyNevt
+@item @t{toyNevt = <numberOfEvt> <fixed|floated|extended|notfixed>}@*
+To specify the number of events per toy experiment and Poisson fluctuation
+(default @t{0 fixed}).
+@t{0} means the number of events is that of the prototype dataset.
+If the total yields (expected number of events for extended model) is
+different from the prototype dataset,
+the largest yield (usually continuum background) will be adjusted.
+To enable Poisson fluctuation,
+the second argument should be set to
+any of @t{floated}, @t{extended}, and @t{notfixed}.
+
+@cindex toySrc, pdf action
+@cindex pdf action, toySrc
+@item @t{toySrc_<srcCoeff> = <srcData1> <val1> ...}@*
+This config specifies generation sources for component
+of @t{<srcCoeff>}.
+If not specified, the default is always
+@example
+pdf <srcCoeff_value>
+@end example
+which will generate the component using pdf.
+
+@t{<srcCoeff>} is the final variable of component coeff.
+Component coeff is usually the number of events for that component,
+and if that number is actually the final variable
+(not dependent on other variables), its name should replace @t{<srcCoeff>}.
+If the number of events is actually a function of branching fraction, etc.,
+the name of branching fraction, etc., should be used.
+
+@t{<srcData1>} is the data source to generate toy sample from.
+The default value is @t{pdf} which means generating from PDF.
+Or it could be the name of any dataset defined,
+and the toy events for this component will be selected from that dataset.
+@t{<val1>} is the value of @t{<srcCoeff>} for that data source.
+It could be any number valid for @t{toySrc_<srcCoeff>}.
+For example, if @t{<srcCoeff>} is the component coeff itself,
+@t{<val1>} is number of events;
+if it is branching fraction,
+@t{<val1>} is the value of branching fraction you want to generate.
+You can have more than one such source and value pair
+if you want to generate that component from multi sources.
+
+@c @t{<valX>} can be @t{0}, which means it will be set
+@c to a value to make up the total number of events to
+@c that of events specified for toy experiment.
+
+@t{<valX>} can also be a string used to calculate the value as for
+@t{RooFormulaVar}. For example, it can be
+``@t{@@0*@@1 nSig fracL}'',
+which means the value for that data source will be @t{nSig*fracL}.
+
+@cindex toyEmbdUnCorrelate, pdf action
+@cindex pdf action, toyEmbdUnCorrelate
+@item @t{toyEmbdUnCorrelate = <obsGroup1>...}@*
+This config, if specified, uncorrelate observables among groups
+for embedded events. For example
+config
+@example
+toyEmbdUnCorrelate = de mes "fisher mOm"
+@end example
+uncorrelate de, mes, "fisher mOm" among each other, but keep
+the correlation of fisher and mOm.
+If there are any observables left, the correlation among those observables
+are also kept.
+
+@cindex postEmbdRandObs, pdf action
+@cindex pdf action, postEmbdRandObs
+@item @t{postEmbdRandObs = <srcData1> <obs1> <obs2>...<pdfForSrcData1> ...}@*
+This config specifies for each srcData (@t{<srcData1>}, etc., non-pdf source)
+observables (@t{<obs1>}, @t{<obs2>}, etc.)
+need to be randomized according to pdf (@t{<pdfForSrcData1>}).
+This feature is useful to create embedded events for different @t{C} and @t{S}
+from non CP violating MC samples.
+
+@cindex toyDataFilePrefix, pdf action
+@cindex pdf action, toyDataFilePrefix
+@item @t{toyDataFilePrefix = <default|no|yes|toySampleNameID>}@*
+The toy sample file name will be automatically generated based on this config
+(See @uref{#item_paramFileID, @t{toySampleNameID}}).
+Since the toy data files are seldom used elsewhere and consume very
+large disk space, the default (not specified or set to @t{default})
+will be no toy data file output.
+
+@cindex command line option, -d
+@cindex -d, command line option
+Use command line option @t{-d <toySampleDir>} to specify a dir
+with large disk space for toy samples (default dir @t{.toyData}).
+@c To specify toy sample output file prefix.
+@c It is advisable to have it in a disk large enough
+@c to hold lots of toy sample ascii files.
+@c This prefix usually consists of a pathname to the directory where
+@c your generated toy samples go and a prefix of the toy sample name.
+@c The actually sample name will be like @t{myDir/mySampleName.00.0000.txt}
+@c if you specify @t{myDir/mySampleName} for this config.
+@c The first two digits for the full name are toyID
+@c (specified at command line),
+@c and the last four digits are toy sample ID (given by RooFit).
+@c Please do not include special characters like @t{%02d} in the prefix
+@c because it will confuse the fitter for generating correct names.
+
+@cindex toyGenerate, pdf action
+@cindex pdf action, toyGenerate
+@item @t{toyGenerate = <yes|no>}@*
+NOT to generate toy sample in toyStudy,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+
+@cindex toySample
+@cindex Sample from toyStudy
+The first toy sample generated will be saved as ``@t{toySample}'',
+so in the same action section, other actions following @t{toyStudy}
+can use the sample, for example, to do sPlot.
+Just give @t{toySample} as config for input data, for example
+@example
+sPlotData = toySample
+@end example
+
+@cindex toyFit, pdf action
+@cindex pdf action, toyFit
+@item @t{toyFit = <yes|no>}@*
+NOT to do fit in toyStudy,
+this config must be explicitly set to @t{no}
+(default @t{yes}).
+
+@cindex toyFitOption, pdf action
+@cindex pdf action, toyFitOption
+@item @t{toyFitOption = <fitOptions>}@*
+This config can be used to set ml-fitting options for toy study
+(default @t{"emhqr"}).
+The full ml model is an extended pdf,
+so the fitting option should always have option @t{"e"},
+which means extended fit.
+
+@cindex toyFitMinos, pdf action
+@cindex pdf action, toyFitMinos
+@item @t{toyFitMinos = <notSet|minosArgs>}@*
+This config can be used to set MINOS on for only certain parameters
+for toy study, (default @t{"notSet"}).
+
+@cindex toyChkNegativePdf, pdf action
+@cindex pdf action, toyChkNegativePdf
+@item @t{toyChkNegativePdf = <no|yes>}@*
+If set to @t{yes}, the fitter will check if the PDFs have negative values
+over the allowed observable ranges.
+The default value is @t{no}, not to do the check.
+If the PDFs have negative value, toy studies will usually show
+biases in purely PDF generated samples, so this check is not
+necessary to demonstrate the problem. But it can be used as auxiliary
+method to confirm the bias (from pure toys) is from negative PDF values.
+However, it is still possible that it fails to report such
+problems if subtle PDFs are used.
+
+@cindex toyFitNumCPU, pdf action
+@cindex pdf action, toyFitNumCPU
+@item @t{toyFitNumCPU = <1-8>}@*
+The number of CPUs (cores) to be used in the toy ml-fitting. The fitter will
+try to parallelise the fit over the available cores. (default @t{1}).
+
+@end itemize
+
+@cindex example, toyStudy action
+An example is shown below:
+@example
+[toyStudy Action Config]
+// toy options
+toyStudy = yes
+// init values for yields
+nSig = 160 L(0 - 300)
+nChmls = 1703 L(0 - 30000)
+nBkg = 5000 L(0 - 30000) // largest number will be adjusted
+preToyRandParams = dtSig_C "@@0*cos(@@1) R theta" dtSig_S "@@0*sin(@@1) R theta"
+preToyRandGenerators = Rpdf thetaPdf
+protDatasets = onData //names of protDatasets
+toyNexp = 400 // # experiments
+toyNevt = 0 fixed // default: 0      set to protData #evt
+                  //          fixed  no fluctuation
+// if it is pure toy, you do not need to specify how to generate
+// for embedded toy, for example you can do
+toySrc_nSig = sigMC "@@0 nSig" // from sigMC
+toySrc_nChmls = bbMC 10 pdf "@@0-10 nChmls" // 10 from bbMC, the rest from pdf
+
+[Rpdf Config]
+configStr = Generic
+formula = "@@0*@@0" R
+R = R 0 L(0 - 1)
+[thetaPdf Config]
+configStr = Generic
+formula = "1" theta
+theta = theta 0 L(-3.14159265358979323846 - 3.14159265358979323846)
+@end example

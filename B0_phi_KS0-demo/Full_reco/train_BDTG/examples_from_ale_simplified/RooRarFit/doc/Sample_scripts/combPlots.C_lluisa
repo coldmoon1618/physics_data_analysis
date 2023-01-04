@@ -1,0 +1,102 @@
+//
+// Combine two RooPlots with data, signal PDF, bkg PDF, with first plot
+//  drawn along with the combined.
+//
+void
+combPlots(const RooPlot* plot1, const RooPlot* plot2, const char* xAxisLabel=0,
+	  const char* yAxisLabel=0, TLatex* tag=0, const char* newName=0)
+{
+  Int_t Nbins = plot1->GetNbinsX();
+  Double_t xmin = plot1->GetXaxis()->GetXmin();
+  Double_t xmax = plot1->GetXaxis()->GetXmax();
+
+  // Make TH1Fs of the data
+  //
+  TH1F* hplot1 = new TH1F("hplot1", "hplot1", Nbins,
+			  plot1->GetXaxis()->GetXmin(),
+			  plot1->GetXaxis()->GetXmax());
+
+      RooHist *plot1Hist = plot1->getHist("onData_wLLR_plot__mES");
+      RooHist *plot2Hist = plot2->getHist("onData_wLLR_plot__mES");
+
+  //  RooHist *plot1Hist = plot1->getHist("onData_wLLR_plot__deltaE");
+  //  RooHist *plot2Hist = plot2->getHist("onData_wLLR_plot__deltaE");
+
+  RooRealVar xvar("xvar", "the plot variable", xmin, xmax);
+  RooPlot* frame = xvar.frame(Nbins);
+  RooDataSet* dsNew = new RooDataSet("dsNew", "Combined data set", xvar);
+  Double_t xbin, ybin;
+
+  // Fill the TH1's
+  for (Int_t i=0; i<Nbins; ++i) {
+    plot1Hist->GetPoint(i, xbin, ybin);
+    hplot1->Fill(xbin, ybin);
+    xvar.setVal(xbin);
+    for (Int_t j=0; j<Int_t(ybin+1.e-6); ++j) {
+      dsNew->add(RooArgSet(xvar));
+    }
+    plot2Hist->GetPoint(i, xbin, ybin);
+    xvar.setVal(xbin);
+    for (Int_t j=0; j<Int_t(ybin+1.e-6); ++j) {
+      dsNew->add(RooArgSet(xvar));
+    }
+  }
+  dsNew->plotOn(frame);
+  if (0 != xAxisLabel) frame->SetXTitle(xAxisLabel);
+  if (0 != yAxisLabel) frame->SetYTitle(yAxisLabel);
+  hplot1->Sumw2();
+  hplot1->SetLineWidth(2);
+  gStyle->SetFillColor(1);
+  hplot1->SetFillColor(50);
+  hplot1->SetFillStyle(1001);
+
+
+  //
+  // Get the combined curves ...
+
+
+    //  ... Total PDF
+  RooCurve *plot1TCurve = plot1->getCurve("simPdfProjected");
+  plot1TCurve->SetName("plot1TCurve");
+  RooCurve *plot2TCurve = plot2->getCurve("simPdfProjected");
+  plot2TCurve->SetName("plot2TCurve");
+  RooCurve* NewTCurve = combCurves(plot1TCurve, plot2TCurve, "@0+@1","1", "NewTCurve");
+
+  
+  //  ... for signal
+  RooCurve *plot1SCurve = plot1->getCurve("the_SigPdf");
+  plot1SCurve->SetName("plot1SCurve");
+  RooCurve *plot2SCurve = plot2->getCurve("the_SigPdf");
+  plot2SCurve->SetName("plot2SCurve");
+  RooCurve* NewSCurve = combCurves(plot1SCurve, plot2SCurve, "@0+@1","1", "NewSCurve");
+  NewSCurve->SetLineStyle(kDashed);
+  
+  
+  /*
+  //  ... for f0K*
+  RooCurve *plot1SCurve = plot1->getCurve("the_f0Pdf");
+  plot1SCurve->SetName("plot1SCurve");
+  RooCurve *plot2SCurve = plot2->getCurve("the_f0Pdf");
+  plot2SCurve->SetName("plot2SCurve");
+  RooCurve* NewSCurve = combCurves(plot1SCurve, plot2SCurve, "@0+@1","1", "NewSCurve");
+  NewSCurve->SetLineStyle(kDashed);
+  */
+      
+
+  frame->addObject(NewTCurve);
+  frame->addObject(NewSCurve);
+  frame->SetMinimum(-1e-6);
+  frame->Draw();
+  frame->Draw("same");
+  
+  if (0 != tag) 
+  {
+    tag->SetTextSize(0.1);
+    tag->SetNDC(kTRUE);
+    tag->Draw();
+
+  }
+ 
+
+  return;
+}

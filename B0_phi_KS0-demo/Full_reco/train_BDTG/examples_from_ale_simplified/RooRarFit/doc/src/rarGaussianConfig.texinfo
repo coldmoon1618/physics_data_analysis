@@ -1,0 +1,75 @@
+@c This file is meant to be included other texinfo file
+@c rarGaussian configs
+@c $Id: rarGaussianConfig.texinfo,v 1.4 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@cindex rarGaussian Configs
+@cindex configuration, rarGaussian
+@cindex pdf configuration, rarGaussian
+@node rarGaussianConfig
+@subsection rarGaussian Configs
+
+@t{rarGaussian} is a wrapper of @t{RooGaussian/RooBreitWigner/RooLandau}
+to build
+Gaussian / Breit-Wigner / Landau PDF.
+
+@itemize @bullet
+@cindex configStr, rarGaussian config
+@cindex configStr, Gaussian
+@cindex configStr, BreitWigner
+@cindex configStr, Landau
+@cindex Gaussian, configStr
+@cindex BreitWigner, configStr
+@cindex Landau, configStr
+@item @t{configStr = Gaussian ["<pdf Title>"]}
+@item @t{configStr = BreitWigner ["<pdf Title>"]}
+@item @t{configStr = Landau ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{Gaussian}, @t{BreitWigner},
+or @t{Landau}
+This config is required to have this pdf configured as @t{rarGaussian}.
+
+@cindex x, rarGaussian config
+@item @t{x = AbsReal Def}
+@cindex mean, rarGaussian config
+@item @t{mean = AbsReal Def}
+@cindex sigma, rarGaussian config
+@item @t{sigma = AbsReal Def}
+@cindex scale, rarGaussian config
+@cindex shift, rarGaussian config
+@item @t{scale = AbsReal Def}
+@item @t{shift = AbsReal Def}@*
+@t{x} is the default observable of the pdf.
+@c@t{mean} is the mean of the pdf.
+@c@t{sigma} is the sigma of the pdf.
+@t{sigma} will be scaled by the value of @t{scale} if specified;
+@t{mean} will be shifted by the value of @t{shift} if specified.
+@c
+All the variables can be defined as @t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@end itemize
+
+@cindex example, rarGaussian
+@cindex example, Gaussian
+@cindex example, BreitWigner
+An example is shown below:
+@example
+[deSig Config]
+configStr = BreitWigner
+x = de
+mean = 0 L(-.01 - 0.08)
+sigma = 0.003 L(0 - .1)
+
+[deSig Config]
+configStr = Gaussian
+x = de
+mean = 0 L(-.01 - 0.08)
+sigma = 0.003 L(0 - .1)
+
+[dtErrSig Config]
+configStr = Landau
+x = dtErr
+mean = .75 L(0 - 2.5)
+sigma = .17 L(0 - .5)
+@end example

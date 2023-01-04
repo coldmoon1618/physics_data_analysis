@@ -1,0 +1,26 @@
+$Id: TODO.txt,v 1.6 2007/06/29 08:37:34 zhanglei Exp $
+
+This is the todo list for RooRarFit
+
+ * Working with new RooFit and ROOT5
+
+ * 2D scanplot
+
+ * RRV definition changes
+
+ * Auto unblind for toy
+
+ * inPlot (email exchange w Fred 060926)
+
+ * Sequentialize multi-D scanPlot points
+
+ * prePdfFix shift/scale (email exchange with Jim 060206)
+
+ * Partly include for _paramSec (email exchange with Daniel 060523)
+
+ * min and max vars, nevt vars
+
+ * Improve projWData (for projection)
+
+ * Check NLL scanPlot fit quality, only save those with
+   good quality

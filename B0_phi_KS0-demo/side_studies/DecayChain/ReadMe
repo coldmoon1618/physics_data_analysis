@@ -1,0 +1,17 @@
+SkimTree.C
+    Reads in mDST and save to flat ntuple
+    output:SigMC_decayChain.root
+
+DecayTable.C
+LongDecayTableVtxInfo.C
+    Print Decay table of selected event
+
+PrintDecayChain.py
+    Directly reads in mDST and print some info
+
+SaveDecayChain.py
+    Framework friendly verion to save decay chain
+    Used for reco efficiency study for only selected events
+    In this dir, save all events
+
+Jan 25, 2021

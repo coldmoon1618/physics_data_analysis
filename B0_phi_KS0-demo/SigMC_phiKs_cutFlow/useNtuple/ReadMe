@@ -1,0 +1,19 @@
+/phi_Ks_studies
+    /generator_info
+        Generator level info of generic vs signal phi and Ks
+    /rec_mat_M_distr
+        Makes M ditr of phi and Ks candidates from SigMC output
+        compare all, matched, unmatched
+    /phiKs_trk_eff_study
+        Characteristics of tracks from phi and Ks
+    /cutflow
+        Also based on P and Lxy dependency
+
+/evt_cutflow
+    Save cuts as above, print all the information
+
+/B0_single_cand_study
+    Studies the selection of a single B0 candidate out of event based B0_Rec
+
+April 4, 2021
+

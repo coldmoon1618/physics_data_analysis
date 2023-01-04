@@ -1,0 +1,18 @@
+DrawStacked.C
+    all_comp.pdf
+    BB_comp.pdf
+
+DrawCont.C
+    Cont_comp.pdf
+    Cont_comp_preCut.pdf
+
+Initial_cut_study/
+    Impact of Mbc and deltaE cuts, deE very powerful
+
+SaveSingleCand.C
+    train   deE_width = 0.2
+        -> /home/belle2/zhai/extraSpace/Mar2221/train/
+    ana     deE_width = 0.02
+        -> /home/belle2/zhai/extraSpace/Mar2221/ana/
+
+April 23, 2021

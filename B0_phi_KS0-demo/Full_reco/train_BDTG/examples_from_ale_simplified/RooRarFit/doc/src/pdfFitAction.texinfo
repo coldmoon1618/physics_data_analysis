@@ -1,0 +1,150 @@
+@c This file is meant to be included other texinfo file
+@c pdfFit action
+@c $Id: pdfFitAction.texinfo,v 1.11 2010/06/15 13:10:03 fwilson Exp $
+
+
+@anchor{sec_pdfFit}
+@cindex pdfFit Action
+@cindex action, pdfFit
+@cindex RooRarFit pdfFit action
+@node pdfFitAction
+@subsection pdfFit Action
+
+pdfFit action is to fit pdfs to particular datasets to get their
+parameters. Pdfs, datasets, etc., can be plotted after fitting.
+
+The default param input is the initial values after all PDFs are created.
+Configs
+@t{prePdfReadParams} and @t{prePdfReadSecParams}
+can be used to change the initial values.
+The output param file is the default input for toy study and ML fit.
+One can override any fitted values from this action by some configs
+listed below.
+ROOT file containing plots produced by this action
+is for user to review the fitting.
+As always, log file also provides useful information.
+
+@itemize @bullet
+@cindex pdfFit, pdf action
+@cindex pdf action, pdfFit
+@item @t{pdfFit = <no|yes>}@*
+To enable this action, this config must be explicitly set to @t{yes}
+(default @t{no}).
+
+@cindex pdfToFit, pdf action
+@cindex pdf action, pdfToFit
+@item @t{pdfToFit = <pdfName1> [<pdfName2> ...]}@*
+To fit given pdfs only,
+list them in this config,
+and all other pdfs will be ignored.
+(default list is null, fit all PDFs).
+This config is useful when you are fine-tuning parameters of
+one or two pdfs and do not want to run fitting on every pdf.
+
+@cindex prePdfReadParams, pdf action
+@cindex pdf action, prePdfReadParams
+@item @t{prePdfReadParams = <no|yes|paramFileID>}@*
+To override initial param values after PDFs are created for pdfFit action,
+this config must be explicitly set to @t{yes}
+(default @t{no}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+
+@cindex prePdfReadSecParams, pdf action
+@cindex pdf action, prePdfReadSecParams
+@item @t{prePdfReadSecParams = <no|yes|secName>}@*
+If set to @t{yes} (default @t{no}),
+just before pdfFit action,
+the fitter will try to override the params with values
+found in the action section.
+Instead of @t{yes} or @t{no}, you can also give it a section name,
+and then the fitter will try to read values from that section first.
+This config is useful when you want to override any initial values
+before pdfFit.
+
+@cindex postPdfMakePlot, pdf action
+@cindex pdf action, postPdfMakePlot
+@item @t{postPdfMakePlot = <no|yes|rootFileBaseName>}@*
+To get pdf plots after pdfFit,
+this config must be explicitly set to @t{yes}
+(default @t{no}).
+The root file name will be
+@t{<configFile>.<fitterName>.pdfPlot.<actionName>.root}
+unless the token is actually a root file name.
+
+@cindex postPdfReadSecParams, pdf action
+@cindex pdf action, postPdfReadSecParams
+@item @t{postPdfReadSecParams = <no|yes|secName>}@*
+If set to @t{yes} (default @t{no}),
+just after pdfFit is done,
+the fitter will try to override the params with values
+found in the action section.
+Instead of @t{yes} or @t{no}, you can also give it a section name,
+and then the fitter will try to read values from that section first.
+This config is useful when you want to override any values got
+by the fit with those you think are more appropriate,
+for example, those got from control samples.
+
+@cindex postPdfWriteParams, pdf action
+@cindex pdf action, postPdfWriteParams
+@item @t{postPdfWriteParams = <no|yes|paramFileID>}@*
+To output pdf parameters after pdfFit,
+this config must be explicitly set to @t{yes}
+(default @t{no}).
+The param file name will be automatically generated based on this config.
+You can specify @uref{#item_paramFileID, @t{paramFileID}}
+to change its default name.
+
+@cindex fitRange, pdf action
+@cindex pdf action, fitRange
+@item @t{fitRange_<obsName> = <Min> <Max>}@*
+It sets @b{pdfFit} ranges for observable @t{<obsName>}.
+If not specified, the range will be set to the full ranges
+when it is created.
+This config will affect all @t{pdfFit}, if it is needed for just one
+or two PDFs, please move this config to individual PDF config sections.
+
+@cindex plotRange, pdf action
+@cindex pdf action, plotRange
+@item @t{plotRange_<obsName> = <Min> <Max>}@*
+It sets plot ranges for observable @t{<obsName>}.
+If not specified, the range will be set to the full ranges
+when it is created.
+This config will affect all @t{pdfFit}, if it is needed for just one
+or two PDFs, please move this config to individual PDF config sections.
+
+@cindex pdfFitNumCPU, pdf action
+@cindex pdf action, pdfFitNumCPU
+@item @t{pdfFitNumCPU = <1-8>}@*
+The number of CPUs (cores) to be used in the pdf ml-fitting. The fitter will
+try to parallelise the fit over the available cores. (default @t{1}).
+
+@end itemize
+
+@cindex prePdfReadParams, pdf action
+@cindex pdf action, prePdfReadParams
+@t{prePdfReadParams}
+has been dropped.
+The reason for this is that pdfFit is really the very
+first step in the fitting procedure and you really
+want to make sure everything you put here is what you mean.
+So place the initial values into the config file and make sure
+they are reasonable.
+With another file overriding the config file,
+I can only see more trouble and subtlety.
+@c
+A corollary is that never change the intermediate param files,
+and if you want to change the param values in those files,
+change them in the config file.
+
+@cindex example, pdfFit action
+An example is shown below:
+@example
+[Pdf Fit Action Config]
+// pdfFit options
+pdfFit = yes
+//pdfToFit = deSig deBkg
+postPdfMakePlot = yes
+postPdfWriteParams = yes
+@end example

@@ -1,0 +1,15 @@
+toolkit/
+    Import_py/
+        Declare python class objects
+    include_Cpp/
+        C++ header files for structs of Rec and cand
+    GRID_tools/
+        Common grid scripts
+    save_draw_fit/
+        cutAndSave, draw and/or fit
+    git/
+
+    SaveSingleCand/
+        Event to candidate
+
+Mar 16, 2021

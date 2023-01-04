@@ -1,0 +1,315 @@
+@c This file is meant to be included other texinfo file
+@c Dataset definition configurations
+@c $Id: dsd.texinfo,v 1.10 2007/06/29 08:37:49 zhanglei Exp $
+
+
+@cindex Dataset Definition Section
+@cindex configuration section, dataset definition
+@cindex RooRarFit dataset definition section
+@node dsDsec
+@subsection Dataset Definition Section
+
+The container of dataset column definitions, an object of class
+@uref{#item_rarDatasetDef, rarDatasetDef},
+is instantiated by datasets object,
+@uref{#item_rarDatasets, rarDatasets},
+and its config section is specified
+in dataset input section with config @t{dsdSec} (@xref{dsIsec}).
+If @t{dsdSec} is not specified, the default dataset
+definition section is @t{[Dataset Definition]}.
+
+@itemize @bullet
+@cindex Fields, RooRarFit dataset definition section
+@item @t{Fields = <field01> <field02> ... <fieldN>}
+@item @t{<field01> = <varType> ...}
+@item @t{<field02> = <varType> ...}
+@item @t{...}
+@item @t{<fieldN> = <varType> ...}@*
+@t{Fields} is a string containing all the names of the variables in data files.
+The order of the variables should be the same as in the ascii data file.
+@t{<varType>} can be
+@t{RooRealVar},
+@t{RooCategory},
+or @t{RooStringVar}.
+
+@cindex AddOns, RooRarFit dataset definition section
+@item @t{AddOns = <addon01> ... <addonM>}
+@item @t{<addon01> = <derivedVarType> ...}
+@item @t{...}
+@item @t{<addonM> = <derivedVarType> ...}@*
+Optional @t{AddOns} specifies derived columns for a dataset
+after it is read in from data file. @t{<addon01>}, @t{...}, @t{<addonM>}
+must be derived from other variables declared in @t{Fields}.
+@t{<derivedVarType>} can be
+@t{RooFormulaVar},
+@t{RooMappedCategory},
+@t{RooThresholdCategory},
+@t{RooSuperCategory}.
+
+@end itemize
+Because all these variables declared in this section are globally accessible,
+they should have unique and meaningful names.
+@c and it is advisable to have their full names explicitly specified
+@c in the config items.
+(With the naming @uref{#item_FullNameSchema, schema}
+for dataset definition section, the config name @emph{is} its final,
+unique variable name if the optional full name is not given.)
+
+@cindex example, RooRarFit dataset definition section
+@cindex example, dataset definition section
+A sample config section for dataset definition is shown below:
+@example
+@c @verbatim
+[Dataset Definition]
+// Fields defined for datasets
+Fields = onOffRes cosT de mes hiEvtID loEvtID
+
+// Definition for each field
+onOffRes= RooCategory "on/off Ups(4S) resonance" 3 Unknown 0 OnRes 1 OffRes 2
+cosT    = RooRealVar "cosT" 0 1. B(100)
+de      = RooRealVar "#Delta E" -0.01 0.08 B(45) "GeV"
+mes     = RooRealVar "M_{es}" 5.20 5.29 B(45) "GeV"
+kltype  = RooCategory "kltype" 3 emc 0 ifr 1 both 2
+hiEvtID = RooStringVar "TS upperID"
+loEvtID = RooStringVar "TS lowerID"
+@c @end verbatim
+@end example
+
+Since many config files (for the same analysis or similar analyses) may share
+the same dataset definition section, it is advisable to put the contents
+of this section into a separate config file and include that file
+into this section. For example,
+@example
+[Dataset Definition]
+// The actual config items (shown in the previous example) are in dsd.config
+include dsd.config
+@end example
+This setting also makes the main config file more concise.
+
+@anchor{item_createVar}
+@c The following section is on how to create variables.
+All these @t{RooAbsArg} variables are created using
+@uref{#item_rarConfig, rarConfig::createAbsVar}.
+
+@itemize @bullet
+@cindex createAbsVar, general rules
+@cindex General rules, createAbsVar
+@cindex General rules to create variable
+@item General rules to create variable@*
+
+A variable (can be any sub-class of @t{RooAbsArg}) can be used as
+observable (as in dataset), or parameter (as pdf parameter).
+In RooRarFit, all those variables are defined with the same syntax.
+It is also supposed that any created variable belongs to some
+RooRarFit object, which is instantiated from any sub-classes of rarConfig.
+@cindex name, RooAbsArg created
+@cindex name, pdf parameter
+So by default the name of variable is the concatenation of its config item
+name and the name of its owning RooRarFit object.
+For example, if the config is
+@c @t{myVar = RooRealVar myTitle ...},
+@t{myVar = <RooRealVar output>},
+and the object creates this variable is @t{myPdf},
+then the name of the created @t{RooRealVar} will be
+@c @t{myVar_myPdf} or
+@t{myPdf_myVar}.
+@c depending on @uref{#item_FullNameSchema, the full name generation schema}.
+This default behavior can be changed by explicitly giving
+a name as the first argument of the variable config item.
+For example, if the config is @t{myVar = myVarName ...},
+the name of the @t{RooRealVar} will be @t{myVarName}.
+The next argument is the type of the variable,
+@t{RooRealVar} (optional),
+@t{RooConstVar},
+@t{RooUnblindOffset},
+@t{RooUnblindPrecision},
+@t{RooCategory},
+@t{RooMappedCategory},
+@t{RooThresholdCategory},
+@t{RooSuperCategory},
+@t{RooStringVar},
+or @t{RooFormulaVar}.
+The next argument is the title of the variable.
+If the definition has its own name as the first argument,
+the final title is the one in the config string,
+if the variable does not have name as the first argument,
+the final title will be the concatenation of title defined here
+and the title of its owning RooRarFit object.
+Please make sure the title is meaningful and concise,
+because it will be printed as label if the variable (as pdf parameter)
+is in a plot.
+So special character in ROOT for LaTex output will be preferred
+to get better output.
+The number and format of the remaining arguments depend on
+the type of the variable and how it will be created.
+
+@cindex refer to existing variable
+@cindex existing variable
+To refer a variable to an existing variable,
+just give the existing variable's name as the only argument
+in the config entry:
+@example
+myVar = the_Existing_Var
+@end example
+Unless @t{the_Existing_Var} is defined within the same section of @t{myVar},
+@t{the_Existing_Var} should be a full name.
+
+@cindex create RooRealVar
+@cindex Syntax to create RooRealVar, preferred
+@cindex RooRealVar, creation in RooRarFit
+@item Syntax to create @t{RooRealVar} (preferred)
+@c@enumerate
+@itemize @bullet
+@item @t{<varConfigName> = [[N] <finalName>] [[T] "<varTitle>"]
+  [[U] "<unit>"] <RooRealVar Output Format>}@*
+You can specify optional @t{<finalName>}, @t{"<varTitle>"},
+or @t{"<unit>"},
+or you can have the @t{RooRealVar} output stream as the only part.
+This way of defining @t{RooRealVar} is preferable for PDF parameters.
+If the order of name, title and unit is not the same as default,
+you need to precede them with @t{N}, @t{T}, or @t{U} to specify which is which.
+@end itemize
+
+@cindex create RooRealVar
+@cindex Syntax to create RooRealVar
+@cindex RooRealVar, creation in RooRarFit
+@item Syntax to create @t{RooRealVar}
+@c@enumerate
+@itemize @bullet
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <val> <min> <max> B(<nBin>) "<unit>"}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <val> <min> <max> B(<nBin>)}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <val> <min> <max> "<unit>"}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <min> <max> B(<nBin>) "<unit>"}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <min> <max> B(<nBin>)}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <min> <max> "<unit>"}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <val> <min> <max>}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <min> <max>}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <val> "<unit>"}
+@item @t{<varConfigName> = [<finalName>] RooRealVar <varTitle> [C] <val>}@*
+The meaning of all the fields are pretty straightforward.
+If the optional @t{C} is specified, the var will be set to constant
+after it is created.
+@t{B(<nBin>)} defines the binning of this variable when it is plotted.
+Once @t{<finalName>} is given, the variable name will be set to it.
+Make sure that this @t{<finalName>} is unique globally,
+because @t{createAbsVar} will not create a variable twice with the same name,
+instead it returns a pointer to the already created variable.
+@c Since variables in datasets are meant to be referred anywhere in the fitter,
+@c the variables defined in the example at the beginning of this section
+@c have their final name specified.
+
+@end itemize
+
+@cindex create RooConstVar
+@cindex Syntax to create RooConstVar
+@cindex RooConstVar, creation in RooRarFit
+@item Syntax to create @t{RooConstVar}
+@itemize @bullet
+@item @t{<varConfigName> = [<finalName>] RooConstVar <varTitle> <val>}
+@end itemize
+
+@cindex create RooUnblindOffset
+@cindex Syntax to create RooUnblindOffset
+@cindex RooUnblindOffset, creation in RooRarFit
+@item Syntax to create @t{RooUnblindOffset}
+@itemize @bullet
+@item @t{<varConfigName> = [<finalName>] RooUnblindOffset "<varTitle>"
+        "<blindString>" <scale> <blindValue>}
+@item @t{<varConfigName> = [<finalName>] RooUnblindOffset "<varTitle>"
+        "<blindString>" <scale> <blindValue> <blindState>}
+@end itemize
+@t{<blindValue>} is the @t{RooAbsReal} variable to blind,
+@t{<blindState>} is a @t{RooAbsCategory} to specify the blind state.
+
+@cindex create RooUnblindPrecision
+@cindex Syntax to create RooUnblindPrecision
+@cindex RooUnblindPrecision, creation in RooRarFit
+@item Syntax to create @t{RooUnblindPrecision}
+@itemize @bullet
+@item @t{<varConfigName> = [<finalName>] RooUnblindPrecision "<varTitle>"
+        "<blindString>" <centralValue> <scale> <blindValue> <sin2betaMode>}
+@item @t{<varConfigName> = [<finalName>] RooUnblindPrecision "<varTitle>"
+        "<blindString>" <centralValue> <scale> <blindValue> <blindState>
+        <sin2betaMode>}
+@end itemize
+@t{<blindValue>} is the @t{RooAbsReal} variable to blind,
+@t{<blindState>} is a @t{RooAbsCategory} to specify the blind state,
+@t{<sin2betaMode>} is a boolean (@t{kTRUE} or @t{kFALSE}).
+
+@cindex create RooCategory
+@cindex Syntax to create RooCategory
+@cindex RooCategory, creation in RooRarFit
+@item Syntax to create @t{RooCategory}
+@itemize @bullet
+@item @t{<catConfigName> = [<finalName>] RooCategory <catTitle> useIdx <Name1> <Idx1> <Name2> <Idx2> ...}
+@item @t{<catConfigName> = [<finalName>] RooCategory <catTitle> noIdx <Name1> <Name2> ...}
+@end itemize
+In the first form, @t{useIdx} is set,
+tokens following it are category type and index pairs.
+In the second form, @t{noIdx} is set,
+all tokens following it are category types and
+the indices are set to default values.
+
+@cindex create RooMappedCategory
+@cindex Syntax to create RooMappedCategory
+@cindex RooMappedCategory, creation in RooRarFit
+@item Syntax to create @t{RooMappedCategory}
+@itemize @bullet
+@item @t{<catConfigName> = [<finalName>] RooMappedCategory <catTitle> useIdx <inputCat> <defaultCatName> <defaultCatIdx> <inKeyRegExp1> <outKeyName1> <outKeyNum1> ...}
+@item @t{<catConfigName> = [<finalName>] RooMappedCategory <catTitle> noIdx <inputCat> <defaultCatName> <inKeyRegExp1> <outKeyName1> ...}
+@end itemize
+In the first form, @t{useIdx} is set,
+all the indices for mapped category types should be given explicitly.
+In the second form, @t{noIdx} is set,
+all the indices are set to default values.
+
+@cindex create RooThresholdCategory
+@cindex Syntax to create RooThresholdCategory
+@cindex RooThresholdCategory, creation in RooRarFit
+@item Syntax to create @t{RooThresholdCategory}
+@itemize @bullet
+@item @t{<catConfigName> = [<finalName>] RooThresholdCategory <catTitle> useIdx <inputVar> <defaultCatName> <defaultCatIdx> <upperLimit1> <catName1> <catIdx1> ...}
+@item @t{<catConfigName> = [<finalName>] RooThresholdCategory <catTitle> noIdx <inputVar> <defaultCatName> <upperLimit1> <catName1> ...}
+@end itemize
+In the first form, @t{useIdx} is set,
+all the indices for threshold category types should be given explicitly.
+In the second form, @t{noIdx} is set,
+all the indices are set to default values.
+
+@cindex create RooSuperCategory
+@cindex Syntax to create RooSuperCategory
+@cindex RooSuperCategory, creation in RooRarFit
+@item Syntax to create @t{RooSuperCategory}
+@itemize @bullet
+@item @t{<catConfigName> = [<finalName>] RooSuperCategory <catTitle> <inputCat1> <inputCat2> ...}
+@end itemize
+It creates @t{RooSuperCategory} based on input cats.
+All the indices are set to default values.
+
+@cindex create RooStringVar
+@cindex Syntax to create RooStringVar
+@cindex RooStringVar, creation in RooRarFit
+@item Syntax to create @t{RooStringVar}
+@itemize @bullet
+@item @t{<varConfigName> = [<finalName>] RooStringVar <varTitle> ["<val>"]}
+@end itemize
+@t{"<val>"} is the optional initial string for the variable.
+If not specified, string ``'' (empty string) will be used.
+
+@cindex create RooFormulaVar
+@cindex Syntax to create RooFormulaVar
+@cindex RooFormulaVar, creation in RooRarFit
+@item Syntax to create @t{RooFormulaVar}
+@itemize @bullet
+@item @t{<varConfigName> = [<finalName>] RooFormulaVar <formulaString> [<depVar0> <depVar1> ...] [<min>] [<max>]}
+@end itemize
+The title field here is actually the formula string.
+Depending on the actual form of the formula,
+there could be some variables following @t{<formulaString>}.
+Those @t{<depVarX>}s can be any @t{RooAbsReal} variables
+defined within the same config section or elsewhere.
+If the @t{RooFormulaVar} can have `fundamental' @t{RooRealVar}, for example,
+as in dataset definition section,
+optional var range limits can be specified.
+
+@end itemize

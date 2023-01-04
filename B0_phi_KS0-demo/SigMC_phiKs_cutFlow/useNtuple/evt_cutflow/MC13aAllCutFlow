@@ -1,0 +1,58 @@
+Sender: LSF System <lsfadmin@ccb561>
+Subject: Job 21079502: <root -l -b -q MC13aCutFlow.C> in cluster <centralcluster> Done
+
+Job <root -l -b -q MC13aCutFlow.C> was submitted from host <ccw04> by user <zhai> in cluster <centralcluster> at Mon Apr 12 01:55:00 2021
+Job was executed on host(s) <ccb561>, in queue <s>, as user <zhai> in cluster <centralcluster> at Mon Apr 12 01:55:01 2021
+</home/belle2/zhai> was used as the home directory.
+</home/belle2/zhai/B0_phi_KS0/SigMC_phiKs_cutFlow/useNtuple/evt_cutflow> was used as the working directory.
+Started at Mon Apr 12 01:55:01 2021
+Terminated at Mon Apr 12 02:53:08 2021
+Results reported at Mon Apr 12 02:53:08 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+root -l -b -q MC13aCutFlow.C
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   3380.72 sec.
+    Max Memory :                                 216 MB
+    Average Memory :                             164.57 MB
+    Total Requested Memory :                     4000.00 MB
+    Delta Memory :                               3784.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   3487 sec.
+    Turnaround time :                            3488 sec.
+
+The output (if any) follows:
+
+
+Processing MC13aCutFlow.C...
+61516287  events
+Total exact BphiKs chain : 61516287
+
+phi mKK cuts	ind:25012354	acc:25012354
+	Rel Acc Eff=0.406597	Abs Acc Eff=0.406597	Abs Ind Eff=0.406597
+
+Ks0 mKs cuts	ind:56015853	acc:22903532
+	Rel Acc Eff=0.915689	Abs Acc Eff=0.372317	Abs Ind Eff=0.910586
+
+B0 delE cuts	ind:61542	acc:26065
+	Rel Acc Eff=0.00113803	Abs Acc Eff=0.000423709	Abs Ind Eff=0.00100042
+
+B0  Mbc cuts	ind:26478219	acc:6520
+	Rel Acc Eff=0.250144	Abs Acc Eff=0.000105988	Abs Ind Eff=0.430426
+
+
+
+PS:
+
+Read file <err> for stderr output of this job.
+

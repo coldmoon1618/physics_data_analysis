@@ -1,0 +1,16 @@
+Save event-based outputs to single candidates.
+
+Frozen to version ichep2002
+    Rec_outs@ -> /home/belle2/zhai/B0_phi_KS0/SigMC_phiKs_cutFlow/getNtuple/Rec_outs/
+    ichep_cand_outs/
+
+Frozen to release 05-02-17
+    output@ -> /home/belle2/zhai/B0_phi_KS0/Full_reco/getNtuple/SigMC_poseidon/output/
+    reco_cand_outs/
+    signal55.root
+
+save.sh*
+SaveSingleCand.C@
+rootlogon.C@
+
+Sept 5, 2021

@@ -1,0 +1,105 @@
+@c This file is meant to be included other texinfo file
+@c rarDecay configs
+@c $Id: rarDecayConfig.texinfo,v 1.4 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@anchor{sec_Decay}
+@cindex rarDecay Configs
+@cindex configuration, rarDecay
+@cindex pdf configuration, rarDecay
+@node rarDecayConfig
+@subsection rarDecay Configs
+
+@t{rarDecay} is a wrapper of @t{RooBCPGenDecay/RooBDecay/RooDecay} to build
+BCPGenDecay / BDecay / Decay Model.
+
+@itemize @bullet
+@cindex configStr, rarDecay config
+@cindex configStr, BCPGenDecay
+@cindex configStr, BDecay
+@cindex configStr, Decay
+@cindex BCPGenDecay, configStr
+@cindex BDecay, configStr
+@cindex Decay, configStr
+@item @t{configStr = BCPGenDecay ["<pdf Title>"]}
+@item @t{configStr = BDecay ["<pdf Title>"]}
+@item @t{configStr = Decay ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{BCPGenDecay}, @t{BDecay} or @t{Decay}.
+This config is required to have this pdf configured as @t{rarDecay}.
+
+@cindex x, rarDecay config
+@item @t{x = RealVar Def}
+@cindex tau, rarDecay config
+@item @t{tau = AbsReal Def}
+@cindex model, rarDecay config
+@item @t{model = <resolutionModelName>}
+@cindex decayType, rarDecay config
+@item @t{decayType = <typeName>}
+@cindex dm, rarDecay config
+@item @t{dm = AbsReal Def}@*
+@cindex dgamma, rarDecay config
+@item @t{dgamma = AbsReal Def}
+@cindex tag, rarDecay config
+@item @t{tag = AbsCat Def}
+@cindex w, rarDecay config
+@item @t{w = AbsReal Def}
+@cindex dw, rarDecay config
+@item @t{dw = AbsReal Def}
+@cindex mu, rarDecay config
+@item @t{mu = AbsReal Def}
+@cindex S, rarDecay config
+@item @t{S = AbsReal Def}
+@cindex C, rarDecay config
+@item @t{C = AbsReal Def}
+@cindex blindStatus, rarDecay config
+@item @t{blindStatus = <blind|unblind>}
+@cindex blindString, rarDecay config
+@item @t{blindString = <unique blind string>}
+@cindex blindValues, rarDecay config
+@item @t{blindValues = <Cvalue> <Cscale> <Svalue> <Sscale>}@*
+@t{x} is the default observable of the pdf.
+No derived dependent is allowed in rarDecay
+so please make sure @t{x} is observable defined in datasets.
+@t{tau} is the average @emph{B0} lifetime.
+@t{model} is the resolution model.
+@t{decayType} can be @t{SingleSided}, @t{DoubleSided} (default), @t{Flipped}.
+
+For @t{BCPGenDecay} and @t{BDecay},
+@t{dm} is the mixing frequency;
+@t{dgamma} is the difference in @emph{B0}/@emph{B0}bar width;
+@t{tag} is the flavor tag;
+@t{w} is the mistag rate;
+@t{dw} is the mistag rate difference between @emph{B0}/@emph{B0}bar;
+@t{mu} is the difference in tagging efficiency between @emph{B0}/@emph{B0}bar;
+@t{S} is @emph{CP} sine parameter,
+and @t{C} @emph{CP} cosine parameter.
+@c
+The default @t{blindStatus} is @t{blind}, to unblind,
+@t{blindStatus} must be set to @t{unblind}.
+@t{blindString} must be set to a unique string for blinding.
+@t{blindValues} specifies blinding values and scales for @t{C} and @t{S},
+(default .2 .2 .2 .2).
+
+All the `AbsReal' parameters can be defined as
+@t{RooRealVar} or @t{RooFormulaVar},
+the `AbsCat' parameter can be defined as any @t{RooAbsCategory}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@end itemize
+
+@cindex example, rarDecay
+@cindex example, BDecay
+An example is shown below:
+@example
+@end example
+
+@c @cindex f0, rarDecay config
+@c @item @t{f0 = AbsReal Def}
+@c @cindex f1, rarDecay config
+@c @item @t{f1 = AbsReal Def}
+@c @cindex f2, rarDecay config
+@c @item @t{f2 = AbsReal Def}
+@c @cindex f3, rarDecay config
+@c @item @t{f3 = AbsReal Def}@*
+@c @t{f0}, @t{f1}, @t{f2}, @t{f3} is ....,

@@ -1,0 +1,43 @@
+@c This file is meant to be included other texinfo file
+@c rarHistPdf configs
+@c $Id: rarHistPdfConfig.texinfo,v 1.2 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@anchor{sec_HistPdf}
+@cindex rarHistPdf Configs
+@cindex configuration, rarHistPdf
+@cindex pdf configuration, rarHistPdf
+@node rarHistPdfConfig
+@subsection rarHistPdf Configs
+
+@t{rarHistPdf} is a wrapper of @t{RooHistPdf} to build
+PDF using multidimensional histogram.
+
+@itemize @bullet
+@cindex configStr, rarHistPdf config
+@cindex configStr, RooHistPdf
+@cindex configStr, HistPdf
+@item @t{configStr = HistPdf ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{HistPdf}.
+This config is required to have this pdf configured as @t{rarHistPdf}.
+
+@cindex obs, rarHistPdf config
+@item @t{obs = <obs1> <obs2> ...}@*
+@c
+Config @t{obs} lists all observables for this PDF,
+@t{<obs1>}, @t{<obs2>}, @t{...}.
+All the observables can be defined as @t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@end itemize
+
+@cindex example, rarHistPdf
+@cindex example, RooHistPdf
+An example is shown below:
+@example
+[Sig Config]
+configStr = HistPdf
+obs = mes de
+fitData = sigMC
+@end example

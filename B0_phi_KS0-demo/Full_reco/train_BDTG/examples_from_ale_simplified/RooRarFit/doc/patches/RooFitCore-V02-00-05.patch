@@ -1,0 +1,104 @@
+Index: RooMCStudy.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooMCStudy.cc,v
+retrieving revision 1.30
+diff -u -r1.30 RooMCStudy.cc
+--- RooMCStudy.cc	20 Jun 2005 15:44:54 -0000	1.30
++++ RooMCStudy.cc	15 Jun 2007 06:51:51 -0000
+@@ -96,7 +96,7 @@
+   RooCmdConfig pc(Form("RooMCStudy::RooMCStudy(%s)",model.GetName())) ;
+   
+   pc.defineObject("fitModel","FitModel",0,0) ;
+-  pc.defineObject("condObs","ProjectedDependents",0,0) ;
++  pc.defineObject("condObs","ProjectedObservables",0,0) ;
+   pc.defineObject("protoData","PrototypeData",0,0) ;
+   pc.defineInt("randProtoData","PrototypeData",0,0) ;
+   pc.defineInt("verboseGen","Verbose",0,0) ;
+@@ -339,6 +339,7 @@
+     
+     // Add to list or delete
+     if (keepGenData) {
++      if (!_genDataList.FindObject(genSample))
+       _genDataList.Add(genSample) ;
+     } else {
+       delete genSample ;
+Index: RooSimPdfBuilder.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooSimPdfBuilder.cc,v
+retrieving revision 1.32
+diff -u -r1.32 RooSimPdfBuilder.cc
+--- RooSimPdfBuilder.cc	20 Jun 2005 15:45:14 -0000	1.32
++++ RooSimPdfBuilder.cc	27 Oct 2005 18:20:30 -0000
+@@ -483,7 +483,7 @@
+   TIterator* iter = _protoPdfSet.createIterator() ;
+   RooAbsPdf* proto ;
+   while ((proto=(RooAbsPdf*)iter->Next())) {
+-    buildConfig->addOwned(* new RooStringVar(proto->GetName(),proto->GetName(),"",4096)) ;
++    buildConfig->addOwned(* new RooStringVar(proto->GetName(),proto->GetName(),"",40960)) ;
+   }
+   delete iter ;
+ 
+@@ -506,7 +506,7 @@
+   const char* spaceChars = " \t" ;
+ 
+   // Retrieve physics index category
+-  char buf[2048] ;
++  char buf[20480] ;
+   strcpy(buf,((RooStringVar*)buildConfig.find("physModels"))->getVal()) ;
+   RooAbsCategoryLValue* physCat(0) ;
+   if (strstr(buf," : ")) {
+Index: RooAddPdf.cc
+===================================================================
+RCS file: /afs/slac.stanford.edu/g/babar/repo/RooFitCore/RooAddPdf.cc,v
+retrieving revision 1.70
+diff -u -r1.70 RooAddPdf.cc
+--- RooAddPdf.cc	23 Jun 2005 11:44:37 -0000	1.70
++++ RooAddPdf.cc	30 Aug 2006 21:40:07 -0000
+@@ -50,6 +50,7 @@
+ #include "RooFitCore/RooPlot.hh"
+ #include "RooFitCore/RooRealVar.hh"
+ #include "RooFitCore/RooAddGenContext.hh"
++#include "RooFitCore/RooGenContext.hh"
+ #include "RooFitCore/RooRealConstant.hh"
+ #include "RooFitCore/RooNameReg.hh"
+ 
+@@ -851,6 +852,39 @@
+ RooAbsGenContext* RooAddPdf::genContext(const RooArgSet &vars, const RooDataSet *prototype, 
+ 					const RooArgSet* auxProto, Bool_t verbose) const 
+ {
++  // check which gen to return
++  // if negative coeff exist, use RooGenContext
++  Bool_t useDefault(kTRUE);
++  if (_allExtendable) {
++    for (Int_t i=0 ; i<_pdfList.getSize() ; i++) {
++      Double_t nEvt=((RooAbsPdf*)_pdfList.at(i))->expectedEvents(_refCoefNorm.getSize()>0?&_refCoefNorm:&vars);
++      if (nEvt<0) {
++	useDefault=kFALSE;
++	break;
++      }
++    }
++  } else {
++    Double_t sum(0);
++    for (Int_t i=0 ; i<_coefList.getSize() ; i++) {
++      Double_t coeff = ((RooAbsPdf*)_coefList.at(i))->getVal(&vars) ;
++      if (coeff<0) {
++	useDefault=kFALSE;
++	break;
++      }
++      sum+=coeff;
++    }
++    if (!_haveLastCoef) {
++      Double_t lastcoeff=1-sum;
++      if (lastcoeff<0) useDefault=kFALSE;
++    }
++  }
++  
++  if (!useDefault) {
++    cout<<"RooAddPdf::genContext("<<GetName()
++	<<") WARNING: use RooGenContext (because coeff<0)"<<endl;
++    return new RooGenContext(*this,vars,prototype,auxProto,verbose);
++  }
++  
+   return new RooAddGenContext(*this,vars,prototype,auxProto,verbose) ;
+ }
+ 

@@ -1,0 +1,5 @@
+Show newly git added files:
+    git status | grep "new file:" | cut -c 14-
+
+List all deleted directories:
+    git log --diff-filter=D --summary | grep delete

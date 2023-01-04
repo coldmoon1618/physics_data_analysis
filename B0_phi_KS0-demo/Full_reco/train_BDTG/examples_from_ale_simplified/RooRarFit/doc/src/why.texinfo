@@ -1,0 +1,142 @@
+@c This file is meant to be included other texinfo file
+@c Why to have yet another Fitter
+@c $Id: why.texinfo,v 1.5 2007/06/29 08:37:51 zhanglei Exp $
+
+
+@cindex Preface, RooRarFit
+@node Why
+@unnumbered Preface
+
+@menu
+* WhatIs::
+* Reason::
+* Idea::
+@end menu
+
+@cindex What is RooRarFit
+@node WhatIs
+@unnumberedsec What is RooRarFit?
+
+RooRarFit is a general ML fitting package based on
+@cindex ROOT
+@cindex RooFit
+@uref{http://root.cern.ch/, ROOT} /
+@uref{http://roofit.sourceforge.net/, RooFit}.
+@c for @emph{B} decay studies at Babar.
+@c
+RAR stands for ``@emph{R}ooRarFit/rarFit @emph{A}ren't @emph{R}ooFit'',
+which sounds strange,
+but indeed, it is not RooFit, or anything which can be integrated into
+RooFit.
+It is an application package making use of ROOT/RooFit
+so physicists can be virtually free from direct ROOT/RooFit coding.
+
+The history of the fitter's name is quite interesting.
+For rare (@emph{B}) decay studies,
+ML fitting is generally a better analysis method than
+Cut and Count based one.
+The first such tool I used was @t{rarfit} developed by Jim Smith
+using FORTRAN at CLEO, with @t{rar} for `rare'.
+Colorado Group continued to use it for a while at Babar,
+and then `Q2BFit' based on ROOT/RooFit was developed in the group,
+with Mirna being the original author.
+The goal is to have a fitting package for `Quasi-Two-Body'
+Charmless @emph{B} decays.
+It has been used in many such analyses, including my previous analyses,
+however, it has some fatal design problems
+that prevents it from being more generally
+useful to many more analyses, and in some cases even within its domain,
+improvement and expansion are hard to achieve.
+
+When I moved on to new analysis in new group,
+I realized that I could hardly use it without making some modifications.
+I then decided to make some radical changes,
+which was on my wish list for a long time.
+If I had any chance to use it again,
+the first thing I was going to do was to change it.
+@c
+I called the new fitter yaQ2BFit, (yet another Q2BFit),
+with `ya' as prefix so all the old fitter was unchanged.
+@c
+The new fitter was a more general fitting package and
+`Q2B' seemed misleading.
+When the fitter was ready by its own,
+we decided to give it its own package.
+We had to give it a name.
+After several email exchanges with Babar package wizards,
+we agreed to call it `@t{RooRarFit}'.
+I'd rather call it other name without @t{Roo},
+since it is @emph{not} RooFit!
+
+@cindex Why not Use RooFit Directly?
+@node Reason
+@unnumberedsec Why not Use RooFit Directly?
+
+A ill-designed tool sometimes can really limit analysis capacity,
+so for best flexibility and availability, we could be better off to use
+ROOT/RooFit directly.
+But there is one important feature for such tools,
+like Q2Fit, or this fitter,
+no direct C++ coding, which is highly preferable
+for the purpose of productivity.
+
+By using plain text config files,
+it is virtually free of coding for final users,
+so people do not have to have much programming experience to use it.
+Debugging within analysis is quite frustrating and
+if people have to build codes for individual analyses,
+he has to make sure codes for every mode are correct and
+has to debug if something is wrong.
+Instead, one package for all the analyses could put
+the package itself on intensive and extensive examination and
+any improvement is beneficial to all, and with so many tests,
+fatal problem from the package can be easily figured out and removed.
+
+
+@cindex General Idea of RooRarFit
+@cindex Idea of RooRarFit, General
+@node Idea
+@unnumberedsec General Idea of RooRarFit
+
+The idea of the fitter is that it acts as a
+@cindex wrapper of RooFit
+@cindex RooFit, wrapper of
+wrapper of RooFit so that the
+fitter is driven by readable text config files.
+It should be easy to implement, easy to improve, and easy to expand.
+Actually if the goal as a wrapper is clear,
+all of the features are easy to realize.
+
+The config file
+@c (and the fitter)
+has three main parts, each having one or more sections.
+@enumerate
+@cindex Dataset Definition
+@cindex config, Dataset Definition
+@item Dataset Definition@*
+It defines the dataset and reads in all the datasets.
+@c It does not require a particular dataset format as the old fitter
+@c does, rather, it lets the user defines dataset in the config file.
+
+@cindex Pdf Configuration
+@cindex configuration, Pdf
+@item Pdf Configuration@*
+All the pdfs are defined here.
+It can have any number of components in the ML function with any
+number of variables.
+Each pdf have its own config section.
+Fitter classes are wrappers of those in RooFit, and pdfs like Gaussian,
+TwoGauss, BurfiGauss, Polynomial, etc, are implemented, as well as
+combination operations like, Add, Prod, etc.
+So it is very easy to build new pdf, through config file only!
+
+@cindex Fitter Action Section
+@cindex Action Section, Fitter
+@item Fitter Action Section@*
+After every pdf is created,
+this part of config file is used to direct
+the fitter to finish its job.
+Possible actions include pdfFit, mlFit, toyStudy, projection plotting, etc.
+For each fitting job, one can decide which action,
+or what action combinations, to perform.
+@end enumerate

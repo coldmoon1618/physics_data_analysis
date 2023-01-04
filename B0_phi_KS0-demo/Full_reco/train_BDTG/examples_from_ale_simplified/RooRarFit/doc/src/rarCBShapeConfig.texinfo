@@ -1,0 +1,54 @@
+@c This file is meant to be included other texinfo file
+@c rarCBShape configs
+@c $Id: rarCBShapeConfig.texinfo,v 1.2 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@cindex rarCBShape Configs
+@cindex configuration, rarCBShape
+@cindex pdf configuration, rarCBShape
+@node rarCBShapeConfig
+@subsection rarCBShape Configs
+
+@t{rarCBShape} is a wrapper of @t{RooCBShape} to build
+Crystal Ball lineshape PDF.
+
+@itemize @bullet
+@cindex configStr, rarCBShape config
+@item @t{configStr = CBShape ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{CBShape}.
+This config is required to have this pdf configured as @t{rarCBShape}.
+
+@cindex x, rarCBShape config
+@item @t{x = AbsReal Def}
+@cindex mean, rarCBShape config
+@item @t{mean = AbsReal Def}
+@cindex sigma, rarCBShape config
+@item @t{sigma = AbsReal Def}
+@cindex alpha, rarCBShape config
+@item @t{alpha = AbsReal Def}
+@cindex n, rarCBShape config
+@item @t{n = AbsReal Def}@*
+@t{x} is the default observable of the pdf.
+@c@t{mean} is the mean of the pdf.
+@c@t{sigma} is the sigma of the pdf.
+@c@t{alpha} is the alpha of the pdf.
+@c@t{n} is the n of the pdf.
+@c
+All the variables can be defined as @t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@end itemize
+
+@cindex example, rarCBShape
+@cindex example, CBShape
+An example is shown below:
+@example
+[deSig Config]
+configStr=CBShape
+x=de
+mean=0 L(-.01 - .02)
+sigma=0.003 L(0 - .01)
+alpha=-2 L(-5 - 0)
+n=1 L(0 - 10)
+@end example

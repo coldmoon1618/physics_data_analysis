@@ -1,0 +1,32 @@
+tPre_LoLxy_ind
+	nsig=	5003.83	+/-	66.6235
+	nbkg=	407.936	+/-	26.5015
+
+tVtx_LoLxy_ind
+	nsig=	5022.54	+/-	72.8373
+	nbkg=	279.543	+/-	26.0674
+
+tGbk_LoLxy_ind
+	nsig=	4061.39	+/-	64.3823
+	nbkg=	111.429	+/-	18.6511
+
+tGbk_LoLxy_acc
+	nsig=	4058.75	+/-	65.5867
+	nbkg=	105.255	+/-	18.6578
+
+tPre_HiLxy_ind
+	nsig=	9134.91	+/-	97.0768
+	nbkg=	480.233	+/-	27.7344
+
+tVtx_HiLxy_ind
+	nsig=	9113.01	+/-	96.8581
+	nbkg=	440.988	+/-	26.6378
+
+tGbk_HiLxy_ind
+	nsig=	8895.18	+/-	95.4269
+	nbkg=	332.742	+/-	23.3235
+
+tGbk_HiLxy_acc
+	nsig=	8887.21	+/-	95.3709
+	nbkg=	326.599	+/-	23.1324
+

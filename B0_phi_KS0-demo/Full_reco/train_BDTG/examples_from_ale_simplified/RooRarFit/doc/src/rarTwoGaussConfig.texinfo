@@ -1,0 +1,59 @@
+@c This file is meant to be included other texinfo file
+@c rarTwoGauss configs
+@c $Id: rarTwoGaussConfig.texinfo,v 1.3 2007/06/29 08:37:51 zhanglei Exp $
+
+
+@anchor{sec_TwoGauss}
+@cindex rarTwoGauss Configs
+@cindex configuration, rarTwoGauss
+@cindex pdf configuration, rarTwoGauss
+@node rarTwoGaussConfig
+@subsection rarTwoGauss Configs
+
+@t{rarTwoGauss} is a wrapper to build
+Double Gaussian PDF.
+
+@itemize @bullet
+@cindex configStr, rarTwoGauss config
+@cindex configStr, TwoGauss
+@item @t{configStr = TwoGauss ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{TwoGauss}.
+This config is required to have this pdf configured as @t{rarTwoGauss}.
+
+@cindex x, rarTwoGauss config
+@item @t{x = AbsReal Def}
+@cindex mean, rarTwoGauss config
+@cindex sigma, rarTwoGauss config
+@cindex frac, rarTwoGauss config
+@item @t{meanC = AbsReal Def}
+@item @t{sigmaC = AbsReal Def}
+@item @t{meanT = AbsReal Def}
+@item @t{sigmaT = AbsReal Def}
+@item @t{fracC = AbsReal Def}
+@cindex scale, rarTwoGauss config
+@cindex shift, rarTwoGauss config
+@item @t{scale = AbsReal Def}
+@item @t{shift = AbsReal Def}@*
+@t{x} is the default observable of the pdf.
+@t{sigmaC} will be scaled by the value of @t{scale} if specified;
+@t{meanC} and @t{meanT} will be shifted by the value of @t{shift} if specified.
+@c
+All the variables can be defined as @t{RooRealVar}
+or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+@end itemize
+
+@cindex example, rarTwoGauss
+@cindex example, TwoGauss
+An example is shown below:
+@example
+[deSig Config]
+configStr=TwoGauss
+x=de
+meanC=0 L(-.1 - .1)
+meanT=0 L(-.1 - .1)
+sigmaC=0.02 L(0 - .15)
+sigmaT=0.1 L(0 - .3)
+fracC=.8 L(0 - 1)
+@end example

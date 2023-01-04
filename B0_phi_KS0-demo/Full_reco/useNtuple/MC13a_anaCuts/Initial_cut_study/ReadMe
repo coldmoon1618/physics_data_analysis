@@ -1,0 +1,19 @@
+No other cuts other than !isnan()
+SaveSingleCand.C
+    bsub_save.sh*
+    outs/
+
+Draw BB or BB+qq bkg, and manually made changes on cuts
+    DrawCuts.C
+    DrawStacked.C
+    pdfs/
+
+Big Range:
+
+Ana cuts:
+
+To-do: 
+    get the info in
+    write into script
+
+April 4, 2021

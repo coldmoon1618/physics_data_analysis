@@ -1,0 +1,84 @@
+Sender: LSF System <lsfadmin@ccb505>
+Subject: Job 22904370: <root -l -b -q SaveCand.C\(0,1,-1,1\)> in cluster <centralcluster> Done
+
+Job <root -l -b -q SaveCand.C\(0,1,-1,1\)> was submitted from host <ccw03> by user <zhai> in cluster <centralcluster> at Wed Apr 14 14:19:39 2021
+Job was executed on host(s) <ccb505>, in queue <s>, as user <zhai> in cluster <centralcluster> at Wed Apr 14 14:19:40 2021
+</home/belle2/zhai> was used as the home directory.
+</home/belle2/zhai/B0_phi_KS0/SigMC_phiKs_cutFlow/useNtuple/Evt_vs_cand_cutflow> was used as the working directory.
+Started at Wed Apr 14 14:19:40 2021
+Terminated at Wed Apr 14 14:19:52 2021
+Results reported at Wed Apr 14 14:19:52 2021
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+root -l -b -q SaveCand.C\(0,1,-1,1\)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   5.23 sec.
+    Max Memory :                                 271 MB
+    Average Memory :                             176.75 MB
+    Total Requested Memory :                     4000.00 MB
+    Delta Memory :                               3729.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   11 sec.
+    Turnaround time :                            13 sec.
+
+The output (if any) follows:
+
+
+Processing SaveCand.C(0,1,-1,1)...
+Input: /home/belle2/zhai/B0_phi_KS0/SigMC_phiKs_cutFlow/getNtuple/SigMC_B0_noUpdate.root
+Outout: /home/belle2/zhai/B0_phi_KS0/SigMC_phiKs_cutFlow/useNtuple/Evt_vs_cand_cutflow/test_cand.root
+deltaE: 0.02
+Error in <TTree::SetBranchStatus>: unknown branch -> foxWolframR1
+Error in <TTree::SetBranchStatus>: unknown branch -> foxWolframR2
+Error in <TTree::SetBranchStatus>: unknown branch -> foxWolframR3
+Error in <TTree::SetBranchStatus>: unknown branch -> foxWolframR4
+Error in <TTree::SetBranchStatus>: unknown branch -> harmonicMomentThrust0
+Error in <TTree::SetBranchStatus>: unknown branch -> harmonicMomentThrust1
+Error in <TTree::SetBranchStatus>: unknown branch -> harmonicMomentThrust2
+Error in <TTree::SetBranchStatus>: unknown branch -> harmonicMomentThrust3
+Error in <TTree::SetBranchStatus>: unknown branch -> harmonicMomentThrust4
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust0
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust1
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust2
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust3
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust4
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust5
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust6
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust7
+Error in <TTree::SetBranchStatus>: unknown branch -> cleoConeThrust8
+Error in <TTree::SetBranchStatus>: unknown branch -> sphericity
+Error in <TTree::SetBranchStatus>: unknown branch -> aplanarity
+Error in <TTree::SetBranchStatus>: unknown branch -> thrust
+Error in <TTree::SetBranchStatus>: unknown branch -> thrustAxisCosTheta
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso00
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso02
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso04
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso10
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso12
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso14
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso20
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso22
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hso24
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hoo1
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hoo2
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hoo3
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_hoo4
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_et
+Error in <TTree::SetBranchStatus>: unknown branch -> CS_mm2
+20000  events
+sig: 19743
+phi: 10833
+Ks0: 8866
+deE: 7093
+Mbc: 7093
+csv: 7093

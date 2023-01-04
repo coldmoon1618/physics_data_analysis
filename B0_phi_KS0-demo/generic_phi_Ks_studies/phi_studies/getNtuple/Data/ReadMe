@@ -1,0 +1,17 @@
+Class objects:
+    buildVars.py@
+    rootlogon.C@
+
+Get Data output:
+    runOnData_proc_hlt_hadron.py
+    Data_phi_selection.py
+    Data_phi_134ipb.root
+   
+Get some quick plots: 
+    phi_save.C
+    phi_tree.root
+    phi_draw.C
+    phiBoth.pdf
+    phiCuts.pdf
+
+April 4, 2021

@@ -1,0 +1,62 @@
+@c This file is meant to be included other texinfo file
+@c rarAdd configs
+@c $Id: rarAddConfig.texinfo,v 1.4 2007/06/29 08:37:50 zhanglei Exp $
+
+
+@anchor{sec_Add}
+@cindex rarAdd Configs
+@cindex configuration, rarAdd
+@cindex pdf configuration, rarAdd
+@node rarAddConfig
+@subsection rarAdd Configs
+
+@t{rarAdd} is a wrapper of @t{RooAddPdf/RooAddModel}
+to build composite pdf as a sum of PDFs.
+There are @t{N-1} free coefficients with @t{N} components,
+or @t{N} coefficients if the composite pdf is extended.
+@t{RooAddModel} can only be non-extended pdf.
+
+@itemize @bullet
+@cindex configStr, rarAdd config
+@cindex configStr, AddPdf
+@cindex configStr, AddModel
+@item @t{configStr = AddPdf ["<pdf Title>"]}
+@item @t{configStr = AddModel ["<pdf Title>"]}@*
+This config specifies the pdf type is @t{AddPdf/AddModel}.
+This config is required to have this pdf configured as @t{rarAdd}.
+
+@cindex Comps, rarAdd config
+@item @t{Comps = <compPdfName1> [<compPdfName2> ... <compPdfNameN>]}@*
+This config specifies components for @t{rarAdd},
+and is mandatory for any pdf inherited from @t{rarCompBase}.
+
+@cindex Coeffs, rarAdd config
+@item @t{Coeffs = [fullNamed] <coeff1> [<coeff2> ... <coeffM>]}@*
+This config specifies coefficients for all its components.
+If @t{M} is equal to @t{N}, it is extended,
+or @t{M} should be @t{N-1}, which means the pdf created is not extended.
+If the first arg is @t{fullNamed},
+all the following configs are supposed to be full names.
+@c
+This config is mandatory.
+
+@item @t{<coeff1> = AbsReal Def}
+@item @t{...}
+@item @t{<coeffM> = AbsReal Def}@*
+All the coeffs can be defined as @t{RooRealVar} or @t{RooFormulaVar}.
+See @uref{#item_createVar, createVar} for more info on
+how to create those variables.
+
+@end itemize
+
+@cindex example, rarAdd
+@cindex example, AddPdf
+@cindex example, AddModel
+An example is shown below:
+@example
+[fisBkg Config]
+configStr=AddPdf
+Comps=fisBkgC fisBkgT
+Coeffs=fracC
+fracC= T "f_{C}" 0.9 L(0 - 1.)
+@end example

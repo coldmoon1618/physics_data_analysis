@@ -1,0 +1,49 @@
+/*****************************************************************************
+ * Project: BaBar                                                            *
+ * Package: RooRarFit (adapted from Q2BFit)                                  *
+ *    File: $Id: rarMinuit.rdl,v 1.6 2010/06/14 15:46:43 fwilson Exp $
+ * Author:                                                                   *
+ *   WTF, Bill Ford, U. of Colorado, wtford@pizero.colorado.edu              *
+ *                                                                           *
+ *****************************************************************************/
+
+// -- CLASS DESCRIPTION [PDF] --
+// This class derived from RooMinuit overloads the contour() method to
+// produce a RooPlot.
+
+#ifndef RAR_MINUIT
+#define RAR_MINUIT
+
+#include "TObject.h"
+class TGraph;
+class TH2F ;  // Needed because missing from RooMinuit.rdl
+#include "RooMinuit.h"
+
+class RooAbsReal ;
+class RooRealVar ;
+class RooPlot ;
+
+class rarMinuit : public RooMinuit {
+public:
+
+  rarMinuit(RooAbsReal& function) ;
+  RooPlot* contour(RooRealVar& var1, RooRealVar& var2,
+		     Double_t n1=1, Double_t n2=2, Double_t n3=0,
+		     Double_t n4=0, Double_t n5=0, Double_t n6=0);
+  void fixGraph(TGraph *graph, Int_t lineStyle=1);
+  
+protected:
+
+
+private:
+
+  RooArgList* _floatParamList ;
+  RooAbsReal* _func ;
+
+protected:
+
+  ClassDef(rarMinuit,0)   // RooMinuit derivative with contour RooPlot
+} ;
+
+#endif
+
