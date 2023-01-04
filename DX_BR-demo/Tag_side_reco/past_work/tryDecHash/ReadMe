@@ -1,0 +1,25 @@
+Starting point of using decayHash, more continued ../hashtagMC14
+
+Might eventually do a central dir that all deal with decayHash
+But right now let's start building things little by little 
+
+Reco_MC.py
+    The basf2 script that saves 4 types of outputs:
+
+    charged_0_mainOut.root
+        Regular single candidate per event output, ignore this for now for the purpose of truth tracing
+    charged_0_feiHash.root
+        The decay chain FEI thinks it is reconstructing
+    charged_0_mc1Hash.root
+        The MC truth decay chain of B+ 
+    charged_0_mc2Hash.root
+        The MC truth decay chain of B- 
+
+readHash.py
+    Reads in the .root files from the above, and prints out info to out.txt
+
+printTree.py 
+    Shows example usage of Belle2.DecayTree() object of printing the a decay chain into tree
+        
+
+Dec 2, 2021

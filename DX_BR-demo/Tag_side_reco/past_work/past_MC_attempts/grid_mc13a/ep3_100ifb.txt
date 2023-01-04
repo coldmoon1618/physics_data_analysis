@@ -1,0 +1,6 @@
+/belle/MC/release-04-00-03/DB00000757/MC13a/prod00009706/s00/e1003/4S/r00000/mixed/mdst/sub00
+/belle/MC/release-04-00-03/DB00000757/MC13a/prod00009716/s00/e1003/4S/r00000/charged/mdst/sub00
+/belle/MC/release-04-00-03/DB00000757/MC13a/prod00009726/s00/e1003/4S/r00000/uubar/mdst/sub00
+/belle/MC/release-04-00-03/DB00000757/MC13a/prod00009736/s00/e1003/4S/r00000/ddbar/mdst/sub00
+/belle/MC/release-04-00-03/DB00000757/MC13a/prod00009746/s00/e1003/4S/r00000/ssbar/mdst/sub00
+/belle/MC/release-04-00-03/DB00000757/MC13a/prod00009756/s00/e1003/4S/r00000/ccbar/mdst/sub00

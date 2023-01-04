@@ -1,0 +1,40 @@
+gbasf2 cheat sheet
+
+$gb2_ds_search dataset --data_type mc --campaign MC13a --beam_energy 4S --mc_event mixed --bkg_level BGx1 -o listOfLFNs.txt
+
+#This lists your own area
+$gb2_ds_list
+
+$gb2_ds_list (LFN)
+
+$gb2_ds_query_dataset dataset /belle/````/ccbar/ (LFN)
+
+#Append to the list generated earlier
+$sed i 's/mdst/mdst\/sub00/g' listOfLFNs.txt
+
+#submitting jobs
+$gbasf <steering.py> -p <project_name> -s light-2002-ichep --input_dslist listOfLFNs.txt
+(-n NumberOfFilesPerJob)
+#^ but won't work most of the time because the size of each job is too big
+
+$gb2_project_summary (-p <project_name>)
+
+$gb2_job_stats -p <project_name>
+
+#Erase past projects in the background and dump output
+$gb2_ds_rm -f myStuff &> /dev/null &
+
+#Kill the job but maybe it takes time for it to work???
+$gb2_job_kill -p <project_name> --force
+
+$gb2_job_reschedule -p <project_name>
+
+Get log files before their disappear
+$gb2_job_output -j jobID or -p ProjectName
+
+Online textbook:
+software.belle2.org/development/sphinx/online_book/computing/gbasf2.html
+
+
+
+

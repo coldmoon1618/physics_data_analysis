@@ -1,0 +1,316 @@
+*Br    0 :ECLClusters : Int_t ECLClusters_                                   *
+*Br    1 :ECLClusters.fUniqueID : UInt_t fUniqueID[ECLClusters_]             *
+*Br    2 :ECLClusters.fBits : UInt_t fBits[ECLClusters_]                     *
+*Br    3 :ECLClusters.m_isTrack : Bool_t m_isTrack[ECLClusters_]             *
+*Br    4 :ECLClusters.m_status : UShort_t m_status[ECLClusters_]             *
+*Br    5 :ECLClusters.m_hypotheses : UShort_t m_hypotheses[ECLClusters_]     *
+*Br    6 :ECLClusters.m_maxECellId : UShort_t m_maxECellId[ECLClusters_]     *
+*Br    7 :ECLClusters.m_connectedRegionId :                                  *
+*         | Int_t m_connectedRegionId[ECLClusters_]                          *
+*Br    8 :ECLClusters.m_clusterId : Int_t m_clusterId[ECLClusters_]          *
+*Br    9 :ECLClusters.m_sqrtcovmat_00 :                                      *
+*         | Double32_t m_sqrtcovmat_00[ECLClusters_]                         *
+*Br   10 :ECLClusters.m_covmat_10 : Double32_t m_covmat_10[ECLClusters_]     *
+*Br   11 :ECLClusters.m_sqrtcovmat_11 :                                      *
+*         | Double32_t m_sqrtcovmat_11[ECLClusters_]                         *
+*Br   12 :ECLClusters.m_covmat_20 : Double32_t m_covmat_20[ECLClusters_]     *
+*Br   13 :ECLClusters.m_covmat_21 : Double32_t m_covmat_21[ECLClusters_]     *
+*Br   14 :ECLClusters.m_sqrtcovmat_22 :                                      *
+*         | Double32_t m_sqrtcovmat_22[ECLClusters_]                         *
+*Br   15 :ECLClusters.m_deltaL : Double32_t m_deltaL[ECLClusters_]           *
+*Br   16 :ECLClusters.m_minTrkDistance :                                     *
+*         | Double32_t m_minTrkDistance[ECLClusters_]                        *
+*Br   17 :ECLClusters.m_absZernike40 :                                       *
+*         | Double32_t m_absZernike40[ECLClusters_]                          *
+*Br   18 :ECLClusters.m_absZernike51 :                                       *
+*         | Double32_t m_absZernike51[ECLClusters_]                          *
+*Br   19 :ECLClusters.m_zernikeMVA : Double32_t m_zernikeMVA[ECLClusters_]   *
+*Br   20 :ECLClusters.m_E1oE9 : Double32_t m_E1oE9[ECLClusters_]             *
+*Br   21 :ECLClusters.m_E9oE21 : Double32_t m_E9oE21[ECLClusters_]           *
+*Br   22 :ECLClusters.m_secondMoment :                                       *
+*         | Double32_t m_secondMoment[ECLClusters_]                          *
+*Br   23 :ECLClusters.m_LAT : Double32_t m_LAT[ECLClusters_]                 *
+*Br   24 :ECLClusters.m_numberOfCrystals :                                   *
+*         | Double32_t m_numberOfCrystals[ECLClusters_]                      *
+*Br   25 :ECLClusters.m_time : Double32_t m_time[ECLClusters_]               *
+*Br   26 :ECLClusters.m_deltaTime99 : Double32_t m_deltaTime99[ECLClusters_] *
+*Br   27 :ECLClusters.m_theta : Double32_t m_theta[ECLClusters_]             *
+*Br   28 :ECLClusters.m_phi : Double32_t m_phi[ECLClusters_]                 *
+*Br   29 :ECLClusters.m_r : Double32_t m_r[ECLClusters_]                     *
+*Br   30 :ECLClusters.m_logEnergy : Double32_t m_logEnergy[ECLClusters_]     *
+*Br   31 :ECLClusters.m_logEnergyRaw :                                       *
+*         | Double32_t m_logEnergyRaw[ECLClusters_]                          *
+*Br   32 :ECLClusters.m_logEnergyHighestCrystal :                            *
+*         | Double32_t m_logEnergyHighestCrystal[ECLClusters_]               *
+*Br   33 :ECLClusters.m_PulseShapeDiscriminationMVA :                        *
+*         | Double32_t m_PulseShapeDiscriminationMVA[ECLClusters_]           *
+*Br   34 :ECLClusters.m_ClusterHadronIntensity :                             *
+*         | Double32_t m_ClusterHadronIntensity[ECLClusters_]                *
+*Br   35 :ECLClusters.m_NumberOfHadronDigits :                               *
+*         | Double32_t m_NumberOfHadronDigits[ECLClusters_]                  *
+
+*Branch  :ECLClustersToECLClusters                                           *
+*Br   36 :fUniqueID : UInt_t                                                 *
+*Br   37 :fBits     : UInt_t                                                 *
+*Br   38 :m_elements : Int_t m_elements_                                     *
+*Br   39 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br   40 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br   41 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br   42 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br   43 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br   44 :m_fromName : string                                                *
+*Br   45 :m_fromDurability : Int_t                                           *
+*Br   46 :m_toName  : string                                                 *
+*Br   47 :m_toDurability : Int_t                                             *
+
+*Branch  :ECLClustersToKLMClusters                                           *
+*Br   48 :fUniqueID : UInt_t                                                 *
+*Br   49 :fBits     : UInt_t                                                 *
+*Br   50 :m_elements : Int_t m_elements_                                     *
+*Br   51 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br   52 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br   53 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br   54 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br   55 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br   56 :m_fromName : string                                                *
+*Br   57 :m_fromDurability : Int_t                                           *
+*Br   58 :m_toName  : string                                                 *
+*Br   59 :m_toDurability : Int_t                                             *
+
+*Branch  :ECLClustersToMCParticles                                           *
+*Br   60 :fUniqueID : UInt_t                                                 *
+*Br   61 :fBits     : UInt_t                                                 *
+*Br   62 :m_elements : Int_t m_elements_                                     *
+*Br   63 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br   64 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br   65 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br   66 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br   67 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br   68 :m_fromName : string                                                *
+*Br   69 :m_fromDurability : Int_t                                           *
+*Br   70 :m_toName  : string                                                 *
+*Br   71 :m_toDurability : Int_t                                             *
+
+*Branch  :ECLClustersToTracksNamedBremsstrahlung                             *
+*Br   72 :fUniqueID : UInt_t                                                 *
+*Br   73 :fBits     : UInt_t                                                 *
+*Br   74 :m_elements : Int_t m_elements_                                     *
+*Br   75 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br   76 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br   77 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br   78 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br   79 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br   80 :m_fromName : string                                                *
+*Br   81 :m_fromDurability : Int_t                                           *
+*Br   82 :m_toName  : string                                                 *
+*Br   83 :m_toDurability : Int_t                                             *
+
+*Branch  :EventLevelClusteringInfo                                           *
+*Br   84 :fUniqueID : UInt_t                                                 *
+*Br   85 :fBits     : UInt_t                                                 *
+*Br   86 :m_nECLCalDigitsOutOfTimeFWD : UShort_t                             *
+*Br   87 :m_nECLCalDigitsOutOfTimeBarrel : UShort_t                          *
+*Br   88 :m_nECLCalDigitsOutOfTimeBWD : UShort_t                             *
+*Br   89 :m_nECLShowersRejectedFWD : UChar_t                                 *
+*Br   90 :m_nECLShowersRejectedBarrel : UChar_t                              *
+*Br   91 :m_nECLShowersRejectedBWD : UChar_t                                 *
+
+*Branch  :EventLevelTrackingInfo                                             *
+*Br   92 :fUniqueID : UInt_t                                                 *
+*Br   93 :fBits     : UInt_t                                                 *
+*Br   94 :m_nCDCHitsNotAssigned : UShort_t                                   *
+*Br   95 :m_nCDCHitsNotAssignedPostCleaning : UShort_t                       *
+*Br   96 :m_hitPatternCDCInitializer : ULong_t                               *
+*Br   97 :m_nPXDClusters[2] : UShort_t                                       *
+*Br   98 :m_nSVDClusters[8] : UChar_t                                        *
+*Br   99 :m_sampleTime : Char_t                                              *
+*Br  100 :m_flagBlock : bitset<16>                                           *
+
+*Branch  :EventMetaData                                                      *
+*Br  101 :fUniqueID : UInt_t                                                 *
+*Br  102 :fBits     : UInt_t                                                 *
+*Br  103 :m_event   : UInt_t                                                 *
+*Br  104 :m_run     : Int_t                                                  *
+*Br  105 :m_subrun  : Int_t                                                  *
+*Br  106 :m_experiment : Int_t                                               *
+*Br  107 :m_production : Int_t                                               *
+*Br  108 :m_time    : ULong64_t                                              *
+*Br  109 :m_parentLfn : string                                               *
+*Br  110 :m_generatedWeight : Double_t                                       *
+*Br  111 :m_errorFlag : UInt_t                                               *
+
+*Br  112 :KLMClusters : Int_t KLMClusters_                                   *
+*Br  113 :KLMClusters.fUniqueID : UInt_t fUniqueID[KLMClusters_]             *
+*Br  114 :KLMClusters.fBits : UInt_t fBits[KLMClusters_]                     *
+*Br  115 :KLMClusters.m_time : Float_t m_time[KLMClusters_]                  *
+*Br  116 :KLMClusters.m_layers : Int_t m_layers[KLMClusters_]                *
+*Br  117 :KLMClusters.m_innermostLayer : Int_t m_innermostLayer[KLMClusters_]*
+*Br  118 :KLMClusters.m_globalX : Float_t m_globalX[KLMClusters_]            *
+*Br  119 :KLMClusters.m_globalY : Float_t m_globalY[KLMClusters_]            *
+*Br  120 :KLMClusters.m_globalZ : Float_t m_globalZ[KLMClusters_]            *
+*Br  121 :KLMClusters.m_p : Float_t m_p[KLMClusters_]                        *
+*Br  122 :KLMClusters.m_errorX : Float_t m_errorX[KLMClusters_]              *
+*Br  123 :KLMClusters.m_errorY : Float_t m_errorY[KLMClusters_]              *
+*Br  124 :KLMClusters.m_errorZ : Float_t m_errorZ[KLMClusters_]              *
+*Br  125 :KLMClusters.m_errorP : Float_t m_errorP[KLMClusters_]              *
+
+*Branch  :KLMClustersToKlIds                                                 *
+*Br  126 :fUniqueID : UInt_t                                                 *
+*Br  127 :fBits     : UInt_t                                                 *
+*Br  128 :m_elements : Int_t m_elements_                                     *
+*Br  129 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br  130 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br  131 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br  132 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br  133 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br  134 :m_fromName : string                                                *
+*Br  135 :m_fromDurability : Int_t                                           *
+*Br  136 :m_toName  : string                                                 *
+*Br  137 :m_toDurability : Int_t                                             *
+
+*Branch  :KLMClustersToMCParticles                                           *
+*Br  138 :fUniqueID : UInt_t                                                 *
+*Br  139 :fBits     : UInt_t                                                 *
+*Br  140 :m_elements : Int_t m_elements_                                     *
+*Br  141 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br  142 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br  143 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br  144 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br  145 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br  146 :m_fromName : string                                                *
+*Br  147 :m_fromDurability : Int_t                                           *
+*Br  148 :m_toName  : string                                                 *
+*Br  149 :m_toDurability : Int_t                                             *
+
+*Br  150 :KlIds     : Int_t KlIds_                                           *
+*Br  151 :KlIds.fUniqueID : UInt_t fUniqueID[KlIds_]                         *
+*Br  152 :KlIds.fBits : UInt_t fBits[KlIds_]                                 *
+
+*Br  153 :MCParticles : Int_t MCParticles_                                   *
+*Br  154 :MCParticles.fUniqueID : UInt_t fUniqueID[MCParticles_]             *
+*Br  155 :MCParticles.fBits : UInt_t fBits[MCParticles_]                     *
+*Br  156 :MCParticles.m_status : UShort_t m_status[MCParticles_]             *
+*Br  157 :MCParticles.m_pdg : Int_t m_pdg[MCParticles_]                      *
+*Br  158 :MCParticles.m_mass : Float_t m_mass[MCParticles_]                  *
+*Br  159 :MCParticles.m_energy : Float_t m_energy[MCParticles_]              *
+*Br  160 :MCParticles.m_momentum_x : Float_t m_momentum_x[MCParticles_]      *
+*Br  161 :MCParticles.m_momentum_y : Float_t m_momentum_y[MCParticles_]      *
+*Br  162 :MCParticles.m_momentum_z : Float_t m_momentum_z[MCParticles_]      *
+*Br  163 :MCParticles.m_validVertex : Bool_t m_validVertex[MCParticles_]     *
+*Br  164 :MCParticles.m_productionTime :                                     *
+*         | Float_t m_productionTime[MCParticles_]                           *
+*Br  165 :MCParticles.m_productionVertex_x :                                 *
+*         | Float_t m_productionVertex_x[MCParticles_]                       *
+*Br  166 :MCParticles.m_productionVertex_y :                                 *
+*         | Float_t m_productionVertex_y[MCParticles_]                       *
+*Br  167 :MCParticles.m_productionVertex_z :                                 *
+*         | Float_t m_productionVertex_z[MCParticles_]                       *
+*Br  168 :MCParticles.m_decayTime : Float_t m_decayTime[MCParticles_]        *
+*Br  169 :MCParticles.m_decayVertex_x : Float_t m_decayVertex_x[MCParticles_]*
+*Br  170 :MCParticles.m_decayVertex_y : Float_t m_decayVertex_y[MCParticles_]*
+*Br  171 :MCParticles.m_decayVertex_z : Float_t m_decayVertex_z[MCParticles_]*
+*Br  172 :MCParticles.m_mother : Int_t m_mother[MCParticles_]                *
+*Br  173 :MCParticles.m_firstDaughter : Int_t m_firstDaughter[MCParticles_]  *
+*Br  174 :MCParticles.m_lastDaughter : Int_t m_lastDaughter[MCParticles_]    *
+*Br  175 :MCParticles.m_secondaryPhysicsProcess :                            *
+*         | Int_t m_secondaryPhysicsProcess[MCParticles_]                    *
+*Br  176 :MCParticles.m_seenIn.m_bits : UShort_t m_bits[MCParticles_]        *
+
+*Br  177 :PIDLikelihoods : Int_t PIDLikelihoods_                             *
+*Br  178 :PIDLikelihoods.fUniqueID : UInt_t fUniqueID[PIDLikelihoods_]       *
+*Br  179 :PIDLikelihoods.fBits : UInt_t fBits[PIDLikelihoods_]               *
+*Br  180 :PIDLikelihoods.m_detectors.m_bits :                                *
+*         | UShort_t m_bits[PIDLikelihoods_]                                 *
+*Br  181 :PIDLikelihoods.m_logl[6][6] : Float_t m_logl[PIDLikelihoods_]      *
+
+*Branch  :SoftwareTriggerResult                                              *
+*Br  182 :fUniqueID : UInt_t                                                 *
+*Br  183 :fBits     : UInt_t                                                 *
+*Br  184 :m_results : Int_t m_results_                                       *
+*Br  185 :m_results.first : string first[m_results_]                         *
+*Br  186 :m_results.second.first : Int_t first[m_results_]                   *
+*Br  187 :m_results.second.second : Int_t second[m_results_]                 *
+
+*Br  188 :TrackFitResults : Int_t TrackFitResults_                           *
+*Br  189 :TrackFitResults.fUniqueID : UInt_t fUniqueID[TrackFitResults_]     *
+*Br  190 :TrackFitResults.fBits : UInt_t fBits[TrackFitResults_]             *
+*Br  191 :TrackFitResults.m_pdg : UInt_t m_pdg[TrackFitResults_]             *
+*Br  192 :TrackFitResults.m_pValue : Double32_t m_pValue[TrackFitResults_]   *
+*Br  193 :TrackFitResults.m_tau[5] : Double32_t m_tau[TrackFitResults_]      *
+*Br  194 :TrackFitResults.m_cov5[15] : Double32_t m_cov5[TrackFitResults_]   *
+*Br  195 :TrackFitResults.m_hitPatternCDCInitializer :                       *
+*         | ULong_t m_hitPatternCDCInitializer[TrackFitResults_]             *
+*Br  196 :TrackFitResults.m_hitPatternVXDInitializer :                       *
+*         | UInt_t m_hitPatternVXDInitializer[TrackFitResults_]              *
+
+*Br  197 :Tracks    : Int_t Tracks_                                          *
+*Br  198 :Tracks.fUniqueID : UInt_t fUniqueID[Tracks_]                       *
+*Br  199 :Tracks.fBits : UInt_t fBits[Tracks_]                               *
+*Br  200 :Tracks.m_trackFitIndices[6] : Short_t m_trackFitIndices[Tracks_]   *
+*Br  201 :Tracks.m_qualityIndicator : Float_t m_qualityIndicator[Tracks_]    *
+
+*Branch  :TracksToECLClusters                                                *
+*Br  202 :fUniqueID : UInt_t                                                 *
+*Br  203 :fBits     : UInt_t                                                 *
+*Br  204 :m_elements : Int_t m_elements_                                     *
+*Br  205 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br  206 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br  207 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br  208 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br  209 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br  210 :m_fromName : string                                                *
+*Br  211 :m_fromDurability : Int_t                                           *
+*Br  212 :m_toName  : string                                                 *
+*Br  213 :m_toDurability : Int_t                                             *
+
+*Branch  :TracksToKLMClusters                                                *
+*Br  214 :fUniqueID : UInt_t                                                 *
+*Br  215 :fBits     : UInt_t                                                 *
+*Br  216 :m_elements : Int_t m_elements_                                     *
+*Br  217 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br  218 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br  219 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br  220 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br  221 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br  222 :m_fromName : string                                                *
+*Br  223 :m_fromDurability : Int_t                                           *
+*Br  224 :m_toName  : string                                                 *
+*Br  225 :m_toDurability : Int_t                                             *
+
+*Branch  :TracksToMCParticles                                                *
+*Br  226 :fUniqueID : UInt_t                                                 *
+*Br  227 :fBits     : UInt_t                                                 *
+*Br  228 :m_elements : Int_t m_elements_                                     *
+*Br  229 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br  230 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br  231 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br  232 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br  233 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br  234 :m_fromName : string                                                *
+*Br  235 :m_fromDurability : Int_t                                           *
+*Br  236 :m_toName  : string                                                 *
+*Br  237 :m_toDurability : Int_t                                             *
+
+*Branch  :TracksToPIDLikelihoods                                             *
+*Br  238 :fUniqueID : UInt_t                                                 *
+*Br  239 :fBits     : UInt_t                                                 *
+*Br  240 :m_elements : Int_t m_elements_                                     *
+*Br  241 :m_elements.fUniqueID : UInt_t fUniqueID[m_elements_]               *
+*Br  242 :m_elements.fBits : UInt_t fBits[m_elements_]                       *
+*Br  243 :m_elements.m_from : UInt_t m_from[m_elements_]                     *
+*Br  244 :m_elements.m_to : vector<unsigned int> m_to[m_elements_]           *
+*Br  245 :m_elements.m_weights : vector<float> m_weights[m_elements_]        *
+*Br  246 :m_fromName : string                                                *
+*Br  247 :m_fromDurability : Int_t                                           *
+*Br  248 :m_toName  : string                                                 *
+*Br  249 :m_toDurability : Int_t                                             *
+
+*Br  250 :V0s       : Int_t V0s_                                             *
+*Br  251 :V0s.fUniqueID : UInt_t fUniqueID[V0s_]                             *
+*Br  252 :V0s.fBits : UInt_t fBits[V0s_]                                     *
+*Br  253 :V0s.m_trackIndexPositive : Short_t m_trackIndexPositive[V0s_]      *
+*Br  254 :V0s.m_trackIndexNegative : Short_t m_trackIndexNegative[V0s_]      *
+*Br  255 :V0s.m_trackFitResultIndexPositive :                                *
+*         | Short_t m_trackFitResultIndexPositive[V0s_]                      *
+*Br  256 :V0s.m_trackFitResultIndexNegative :                                *
+*         | Short_t m_trackFitResultIndexNegative[V0s_]                      *

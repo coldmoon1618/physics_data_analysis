@@ -1,0 +1,11 @@
+First try re-download
+then rescheduule if needed:
+/home/belle2/zhai/extraSpace/hashMC14ri/hashtagJan08_2/sub00/mainOut_00066_job221636793_02.root
+
+Many mcHash files crashed or failed to download
+Write a script to list missing GRID outputs
+[Leave local outputs to just 300/fb for now]
+
+Double check missing Data outputs are due to low event count [check mDST] 
+
+Jan 16, 2022

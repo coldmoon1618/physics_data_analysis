@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.root
+*.pdf
+*err*
+*log*
+*.swp
+conditions/
+Tag_side_reco/HashData/decSets
+Tag_side_reco/HashData/readDecayTree.py

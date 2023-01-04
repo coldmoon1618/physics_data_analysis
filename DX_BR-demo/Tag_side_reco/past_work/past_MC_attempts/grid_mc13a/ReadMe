@@ -1,0 +1,9 @@
+TODO:
+Wait for all the Rec files to complete downloading, then save to candidate
+the same way I saved real data candidates.
+
+Try loose truth matching criteria and fitting with different functions
+
+When this is decent, submit MC14 jobs over 800/fb
+
+Nov 8, 2021

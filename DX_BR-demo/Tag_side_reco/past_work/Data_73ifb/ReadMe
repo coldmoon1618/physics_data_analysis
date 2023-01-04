@@ -1,0 +1,22 @@
+[zhai@ccw07 mc_1ifb]$ b2info-luminosity --exp 7-12
+Read 3055 runs for experiment 7-8-9-10-11-12
+TOTAL offline   : L = 72817612.00 /nb = 72817.61 /pb =   72.818 /fb =   0.0728 /ab
+
+Only the one available on KEKCC
+
+Using the same real data eventBased output Data_Rec.root
+
+Then save single best candidate according to desired cuts.
+
+    SaveRound1Cand.C
+        No exclusion of any modes
+    SaveRound2Cand.C
+        Exclude the certainly bad channels
+    SaveRound3Cand.C
+        Exclude additional 'not sure' channels
+
+Then locally, use PlotData.C and FitMbcBDTcut for each mode for these three stages
+Expectation: Dropping the bad channels improve fitting
+To check:    If dropping not sure channels improve fitting
+
+Nov 5, 2021

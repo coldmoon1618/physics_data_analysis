@@ -1,0 +1,16 @@
+import sys, os
+import glob
+
+ratio_list = [255,270,803,201,192,665]
+
+print('saving to missing.sh')
+with open('missing.sh','w') as f:
+    print('#!/bin/csh\n', file=f)
+    for iDir in range(0,48):#max=60
+        for index in range(0,ratio_list[iDir//8]):
+            outputName = os.path.join('Oct27_{}'.format(iDir+1),'sub00', 'Rec_{:0=5d}*'.format(index))
+            count = len(glob.glob(outputName+'.root'))
+            if(count==0):
+                print('gb2_ds_get '+outputName+' --force &', file=f)
+            elif(count>1):
+                print('rm 1 out of ',count,' ',outputName)
