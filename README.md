@@ -1,5 +1,5 @@
 # Portfolio
-Showcases repos of codes developed for different data analysis.
+Showcases repos of codes developed for different collider physics data analysis
 
 -------------------------------
 Cloud computing:
